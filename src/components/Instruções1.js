@@ -10,18 +10,21 @@ const Instruções1 = () => {
   return (
     <div style={themeInstruções}>
       <img
-        style={{ position: "absolute", top: "20%", left: "10%" }}
+        style={{
+          width: "auto",
+          maxHeight: "25%",
+          margin: "auto",
+          paddingTop: "40%",
+        }}
         src={instruções1Img}
       ></img>
       <h3
         style={{
           margin: "auto",
           textAlign: "center",
-          position: "absolute",
-          top: "55%",
-          left: "30%",
           fontSize: "25px",
           fontFamily: "ManropeBold",
+          paddingTop: "15%",
         }}
       >
         Descobre rotas
@@ -30,33 +33,32 @@ const Instruções1 = () => {
         style={{
           margin: "auto",
           textAlign: "center",
-          position: "absolute",
-          top: "62.5%",
-          left: "25%",
           fontSize: "18px",
           fontFamily: "ManropeRegular",
           width: "50%",
+          paddingTop: "5%",
         }}
       >
-        Explora rotas categorizadas por temas
+        Explora rotas<br></br>categorizadas por temas
       </p>
       <img
         src={instruçõesbg}
         style={{
           position: "absolute",
-          bottom: "0%",
-          width: "100vw",
+          bottom: "0",
+          left: "0",
+          width: "100%",
+          height: "auto",
           zIndex: "1",
         }}
       ></img>
       <div
         style={{
-          position: "absolute",
           zIndex: "2",
-          bottom: "5%",
-          left: "5%",
           width: "100vw",
           textAlign: "center",
+          position: "absolute",
+          bottom: "5%",
         }}
       >
         <img
@@ -76,11 +78,15 @@ const Instruções1 = () => {
             fontFamily: "ManropeBold",
             fontSize: "19px",
             display: "inline-block",
-            position: "relative",
-            left: "20%",
+            paddingLeft: "20%"
           }}
         >
-          <Link to={"/intro2"} style={{textDecoration: "none", color: "#393C6A"}}>Next</Link>
+          <Link
+            to={"/intro2"}
+            style={{ textDecoration: "none", color: "#393C6A" }}
+          >
+            Next
+          </Link>
         </h1>
       </div>
     </div>

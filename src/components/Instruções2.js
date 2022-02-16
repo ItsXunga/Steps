@@ -10,18 +10,16 @@ const Instruções2 = () => {
   return (
     <div style={themeInstruções}>
       <img
-        style={{ position: "absolute", top: "20%", left: "10%" }}
+        style={{ width: "100%", maxHeight: "25%", margin: "auto", paddingTop: "40%" }}
         src={instruções2Img}
       ></img>
       <h3
         style={{
           margin: "auto",
           textAlign: "center",
-          position: "absolute",
-          top: "55%",
-          left: "25%",
           fontSize: "25px",
           fontFamily: "ManropeBold",
+          paddingTop: "15%"
         }}
       >
         Cria as tuas rotas
@@ -30,12 +28,10 @@ const Instruções2 = () => {
         style={{
           margin: "auto",
           textAlign: "center",
-          position: "absolute",
-          top: "62.5%",
-          left: "10%",
           fontSize: "18px",
           fontFamily: "ManropeRegular",
-          width: "80%",
+          width: "70%",
+          paddingTop: "5%"
         }}
       >
         Rotas personalizadas para dar a conhecer os teus locais favoritos
@@ -44,19 +40,20 @@ const Instruções2 = () => {
         src={instruçõesbg}
         style={{
           position: "absolute",
-          bottom: "0%",
-          width: "100vw",
+          bottom: "0",
+          left: "0",
+          width: "100%",
+          height: "auto",
           zIndex: "1",
         }}
       ></img>
       <div
         style={{
-          position: "absolute",
           zIndex: "2",
-          bottom: "5%",
-          left: "5%",
           width: "100vw",
           textAlign: "center",
+          position: "absolute",
+          bottom: "5%",
         }}
       >
         <img
@@ -76,8 +73,7 @@ const Instruções2 = () => {
             fontFamily: "ManropeBold",
             fontSize: "19px",
             display: "inline-block",
-            position: "relative",
-            left: "20%",
+            paddingLeft: "20%"
           }}
         >
           <Link
