@@ -11,5 +11,6 @@ export const themeInstruções = {
   background: "#FFFFFF",
   width: "100vw",
   height: "100vh",
-  color: "#393C6A"
+  color: "#393C6A",
+  textAlign: "center"
 };
