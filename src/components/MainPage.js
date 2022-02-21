@@ -1,5 +1,4 @@
 import mapboxgl from "mapbox-gl";
-import { theme } from "../assets/gradient";
 import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import menu_settings from "../assets/img/menu_settings.svg";
@@ -36,7 +35,7 @@ function MainPage() {
   });
 
   return (
-    <div style={theme}>
+    <div>
       <div
         style={{
           position: "fixed",
