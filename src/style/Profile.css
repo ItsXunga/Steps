@@ -1,0 +1,22 @@
+.selectedTab {
+  width: 50%;
+  border: none;
+  border-radius: 50px;
+  background: #393c6a;
+  color: white;
+  font-size: 12px;
+  padding: 0.5rem;
+}
+
+.defaultTab {
+  width: 50%;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9) 5%,
+    rgba(255, 255, 255, 0.5) 95%
+  );
+  font-size: 12px;
+  padding: 0.5rem;
+}
