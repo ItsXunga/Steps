@@ -1,5 +1,4 @@
 import React from "react";
-import { themeInstruções } from "../assets/gradient";
 import instruções3Img from "../assets/img/instruções3.svg";
 import instruçõesbg from "../assets/img/intruções_top_bg.png";
 import instruções_dot_selected from "../assets/img/instruções_dot_selected.png";
@@ -7,7 +6,7 @@ import instruções_dot_unselected from "../assets/img/instruções_dot_unselect
 
 const Instruções3 = () => {
   return (
-    <div style={themeInstruções}>
+    <div style={{background: "#FFFFFF", width: "100vw", height: "100vh", color: "#393C6A", textAlign: "center"}}>
       <img
         style={{
           width: "100%",

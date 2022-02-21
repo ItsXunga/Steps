@@ -51,3 +51,8 @@ body {
   margin: 0;
   font-family: "ManropeRegular";
 }
+
+.mapboxgl-ctrl-logo {
+  display: none !important;
+}
+/*Não é permitido remover desta maneira, viola os Terms of Service. Pelo que vi assim por alto, teríamos de pagar para remover. Mas well por agora fica assim ¯\_(ツ)_/¯*/

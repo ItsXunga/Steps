@@ -1,5 +1,4 @@
 import React from "react";
-import { themeInstruções } from "../assets/gradient";
 import instruções2Img from "../assets/img/instruções2.svg";
 import instruçõesbg from "../assets/img/instruções_bg.svg";
 import instruções_dot_selected from "../assets/img/instruções_dot_selected.png";
@@ -8,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Instruções2 = () => {
   return (
-    <div style={themeInstruções}>
+    <div style={{background: "#FFFFFF", width: "100vw", height: "100vh", color: "#393C6A", textAlign: "center"}}>
       <img
         style={{ width: "100%", maxHeight: "25%", margin: "auto", paddingTop: "40%" }}
         src={instruções2Img}
