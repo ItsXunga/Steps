@@ -1,0 +1,20 @@
+.main {
+  background: linear-gradient(180deg, #fcdfb9 15%, #f4b79e 90%);
+  min-width: "100vw";
+  min-height: "100vh";
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.arrowRight {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0.75rem;
+  padding: 0.75rem;
+}

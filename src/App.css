@@ -1,4 +1,34 @@
 * {
   color: #393c6a;
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.blueButton {
+  width: 100%;
+  border: none;
+  border-radius: 50px;
+  background: #393c6a;
+  color: white;
+  font-size: 15px;
+  height: 3rem;
+}
+
+.orangeButton {
+  width: 100%;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #fce0ba 15%, #f4b59d 90%);
+  color: white;
+  height: 3rem;
+  font-size: 15px;
+}
+
+.backArrow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0.75rem;
+  padding: 0.75rem;
 }
