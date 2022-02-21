@@ -1,7 +1,10 @@
 .main {
-  background: linear-gradient(180deg, #fcdfb9 15%, #f4b79e 90%);
-  min-width: "100vw";
-  min-height: "100vh";
+  background: linear-gradient(rgb(252, 223, 185) 15%, rgb(244, 183, 158) 90%);
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .logo {
