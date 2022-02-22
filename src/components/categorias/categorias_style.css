@@ -27,9 +27,9 @@
   backdrop-filter: blur(0.724515px);
   border: white 2px solid;
   border-radius: 20px;
-  padding: 3rem;
-  min-width: 13rem;
-  max-width: 13rem;
+  padding: 2rem;
+  min-width: 11rem;
+  max-width: 11rem;
   margin: auto;
   text-align: center;
 }
