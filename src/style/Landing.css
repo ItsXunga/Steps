@@ -1,0 +1,23 @@
+.main {
+  background: linear-gradient(rgb(252, 223, 185) 15%, rgb(244, 183, 158) 90%);
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.arrowRight {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0.75rem;
+  padding: 0.75rem;
+}
