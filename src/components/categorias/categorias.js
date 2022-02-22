@@ -1,7 +1,7 @@
 import { lightBlue } from "@mui/material/colors"
 import { textAlign } from "@mui/system"
 import React from "react"
-import { theme, allcolors } from "../../assets/gradient"
+import { theme, allcolors } from "../../assets/global_styles"
 import "./categorias_style.css"
 const Categorias = () => {
   return (
