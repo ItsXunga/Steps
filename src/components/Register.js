@@ -15,8 +15,8 @@ const Register = () => {
         </div>
 
         <div style={{height: '2rem'}}>
-            <p style={{fontSize: 25}}>Primeira vez na Steps?</p>
-            <p style={{fontSize: 25}}>Cria uma conta!</p>
+            <p style={{fontSize: 25, fontFamily: 'ManropeBold'}}>Primeira vez na Steps?</p>
+            <p style={{fontSize: 25, fontFamily: 'ManropeBold'}}>Cria uma conta!</p>
         </div>
         <section className="form">
             <div className="innerForm">

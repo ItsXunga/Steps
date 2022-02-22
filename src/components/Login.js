@@ -10,7 +10,7 @@ const Login = () => {
     return(
         <div className="maindiv">
                 <div style={{height: '2rem'}}>
-                    <p style={{fontSize: 25}}>Olá outra vez!</p>
+                    <p style={{fontSize: 25, fontFamily: 'ManropeBold'}}>Olá outra vez!</p>
                 </div>
                 <section className="form">
                     <div className="innerForm">
