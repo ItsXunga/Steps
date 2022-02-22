@@ -1,0 +1,38 @@
+.background {
+  background: linear-gradient(180deg, #fcdacc 15%, #f9ecdb 90%);
+  min-height: 100vh;
+}
+.container {
+  width: auto;
+  margin: 0 auto;
+  padding: 3rem 0 5rem 0;
+  max-width: max-content;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  justify-items: center;
+  grid-column-gap: 25px;
+  grid-row-gap: 25px;
+}
+.categoria {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9) 20%,
+    rgba(255, 255, 255, 0.5) 90%
+  );
+  box-shadow: 2px 2px 7px 0px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(0.724515px);
+  border: white 2px solid;
+  border-radius: 20px;
+  padding: 3rem;
+  min-width: 13rem;
+  max-width: 13rem;
+  margin: auto;
+  text-align: center;
+}
+.categoria:hover {
+  transform: scale(1.03);
+}
