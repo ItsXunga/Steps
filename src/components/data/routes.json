@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "name": "Domingo à Patrão",
+    "creator": "Mário Andrade",
+    "category": "Único",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In.",
+    "pins": [
+      {
+        "pinName": "Taberna do Zé",
+        "pinDesc": "algures em Aveiro",
+        "lat": "40.640506",
+        "long": "-8.653754",
+        "start": true,
+        "end": false
+      },
+
+      {
+        "pinName": "Parque Jose Saramago",
+        "pinDesc": "algures em Aveiro",
+        "lat": "40.631375",
+        "long": "-8.659969",
+        "start": false,
+        "end": false
+      },
+
+      {
+        "pinName": "Cafe Cuba",
+        "pinDesc": "algures em Aveiro",
+        "lat": "40.628976",
+        "long": "-8.649486",
+        "start": false,
+        "end": true
+      }
+    ]
+  },
+
+  {
+    "id": 2,
+    "name": "Canto da Gastronomia",
+    "creator": "António Costa",
+    "category": "Gastronomia",
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In.",
+    "pins": [
+      {
+        "pinName": "Restaurante O Carpinteiro",
+        "pinDesc": "algures em Aveiro",
+        "lat": "40.640506",
+        "long": "-8.653754",
+        "start": true,
+        "end": false
+      },
+
+      {
+        "pinName": "Bar 5 Maravilhas",
+        "pinDesc": "algures em Aveiro",
+        "lat": "40.631375",
+        "long": "-8.659969",
+        "start": false,
+        "end": false
+      }
+    ]
+  }
+]

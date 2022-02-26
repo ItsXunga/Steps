@@ -1,8 +1,8 @@
-import { Route, Routes } from "react-router-dom"
-import "./App.css"
-import Landing from "./components/Landing"
-import Login from "./components/Login"
-import Categorias from "./components/categorias/categorias"
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Landing from "./components/Landing";
+import Login from "./components/Login";
+import Categorias from "./components/categorias/categorias";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import Instruções1 from "./components/Instruções1";
@@ -23,7 +23,7 @@ function App() {
       <Route path="/intro3" element={<Instruções3 />} />
       <Route path="/main" element={<MainPage />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;
