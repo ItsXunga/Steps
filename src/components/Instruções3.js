@@ -6,7 +6,15 @@ import instruções_dot_unselected from "../assets/img/instruções_dot_unselect
 
 const Instruções3 = () => {
   return (
-    <div style={{background: "#FFFFFF", width: "100vw", height: "100vh", color: "#393C6A", textAlign: "center"}}>
+    <div
+      style={{
+        background: "#FFFFFF",
+        width: "100vw",
+        height: "100vh",
+        color: "#393C6A",
+        textAlign: "center",
+      }}
+    >
       <img
         style={{
           width: "100%",
@@ -14,7 +22,7 @@ const Instruções3 = () => {
           margin: "auto",
           paddingTop: "48.5%",
           position: "relative",
-          zIndex: "2"
+          zIndex: "2",
         }}
         src={instruções3Img}
       ></img>

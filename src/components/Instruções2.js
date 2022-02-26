@@ -7,9 +7,22 @@ import { Link } from "react-router-dom";
 
 const Instruções2 = () => {
   return (
-    <div style={{background: "#FFFFFF", width: "100vw", height: "100vh", color: "#393C6A", textAlign: "center"}}>
+    <div
+      style={{
+        background: "#FFFFFF",
+        width: "100vw",
+        height: "100vh",
+        color: "#393C6A",
+        textAlign: "center",
+      }}
+    >
       <img
-        style={{ width: "100%", maxHeight: "25%", margin: "auto", paddingTop: "40%" }}
+        style={{
+          width: "100%",
+          maxHeight: "25%",
+          margin: "auto",
+          paddingTop: "40%",
+        }}
         src={instruções2Img}
       ></img>
       <h3
@@ -18,7 +31,7 @@ const Instruções2 = () => {
           textAlign: "center",
           fontSize: "25px",
           fontFamily: "ManropeBold",
-          paddingTop: "15%"
+          paddingTop: "15%",
         }}
       >
         Cria as tuas rotas
@@ -30,7 +43,7 @@ const Instruções2 = () => {
           fontSize: "18px",
           fontFamily: "ManropeRegular",
           width: "70%",
-          paddingTop: "5%"
+          paddingTop: "5%",
         }}
       >
         Rotas personalizadas para dar a conhecer os teus locais favoritos
@@ -72,7 +85,7 @@ const Instruções2 = () => {
             fontFamily: "ManropeBold",
             fontSize: "19px",
             display: "inline-block",
-            paddingLeft: "20%"
+            paddingLeft: "20%",
           }}
         >
           <Link

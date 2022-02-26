@@ -7,7 +7,15 @@ import { Link } from "react-router-dom";
 
 const Instruções1 = () => {
   return (
-    <div style={{background: "#FFFFFF", width: "100vw", height: "100vh", color: "#393C6A", textAlign: "center"}}>
+    <div
+      style={{
+        background: "#FFFFFF",
+        width: "100vw",
+        height: "100vh",
+        color: "#393C6A",
+        textAlign: "center",
+      }}
+    >
       <img
         style={{
           width: "auto",
@@ -77,7 +85,7 @@ const Instruções1 = () => {
             fontFamily: "ManropeBold",
             fontSize: "19px",
             display: "inline-block",
-            paddingLeft: "20%"
+            paddingLeft: "20%",
           }}
         >
           <Link

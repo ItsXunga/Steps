@@ -1,8 +1,8 @@
-import { lightBlue } from "@mui/material/colors"
-import { textAlign } from "@mui/system"
-import React from "react"
-import { theme, allcolors } from "../../assets/global_styles"
-import "./categorias_style.css"
+import { lightBlue } from "@mui/material/colors";
+import { textAlign } from "@mui/system";
+import React from "react";
+import { theme, allcolors } from "../../assets/global_styles";
+import "./categorias_style.css";
 const Categorias = () => {
   return (
     <div className="background">
@@ -264,7 +264,7 @@ const Categorias = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Categorias
+export default Categorias;
