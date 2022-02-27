@@ -1,12 +1,19 @@
 .background {
   background: linear-gradient(180deg, #fcdacc 15%, #f9ecdb 90%);
   min-height: 100vh;
+  width: auto;
 }
 .container {
   width: auto;
   margin: 0 auto;
   padding: 3rem 0 5rem 0;
   max-width: max-content;
+}
+
+.backarrow {
+  position: absolute;
+  top: 4rem;
+  left: 4rem;
 }
 
 .grid {

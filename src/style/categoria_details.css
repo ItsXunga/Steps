@@ -1,0 +1,8 @@
+/* as classes background, container, backarrow estão na categorias.css */
+
+.grid_categoria {
+  display: grid;
+  justify-items: center;
+  grid-column-gap: 25px;
+  grid-row-gap: 25px;
+}
