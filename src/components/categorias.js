@@ -1,13 +1,12 @@
-import { lightBlue } from "@mui/material/colors";
-import { textAlign } from "@mui/system";
-import React from "react";
-import { theme, allcolors } from "../../assets/global_styles";
-import "./categorias_style.css";
+import React from "react"
+import { allcolors } from "../style/global_styles"
+import "../style/categorias.css"
+
 const Categorias = () => {
   return (
     <div className="background">
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <div style={{ position: "absolute", top: "4rem", left: "4rem" }}>
+        <div className="backarrow">
           <svg
             width="15"
             height="27"
@@ -264,7 +263,7 @@ const Categorias = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Categorias;
+export default Categorias
