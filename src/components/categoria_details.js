@@ -1,6 +1,6 @@
-import React from "react"
-import { allcolors } from "../style/global_styles"
-import "../style/categoria_details.css"
+import React from "react";
+import { allcolors } from "../style/global_styles";
+import "../style/categoria_details.css";
 
 const Categoria_details = () => {
   return (
@@ -47,7 +47,7 @@ const Categoria_details = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Categoria_details
+export default Categoria_details;
