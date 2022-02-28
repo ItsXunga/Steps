@@ -1,57 +1,63 @@
 import React from "react";
 import instruções3Img from "../assets/img/instruções3.svg";
 import instruçõesbg from "../assets/img/intruções_top_bg.png";
-import instruções_dot_selected from "../assets/img/instruções_dot_selected.png";
-import instruções_dot_unselected from "../assets/img/instruções_dot_unselected.png";
+import intro3_dots from "../assets/img/intro3_dots.svg";
+import "../style/OnBoarding.css";
 
 const Instruções3 = () => {
   return (
-    <div style={{background: "#FFFFFF", width: "100vw", height: "100vh", color: "#393C6A", textAlign: "center"}}>
-      <img
+    <div
+      className="introdiv"
+      style={{
+        backgroundImage: `url(${instruçõesbg})`,
+        backgroundPosition: "100% 0%",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "100vw",
+      }}
+    >
+      <div
         style={{
-          width: "100%",
-          maxHeight: "25%",
-          margin: "auto",
-          paddingTop: "48.5%",
-          position: "relative",
-          zIndex: "2"
-        }}
-        src={instruções3Img}
-      ></img>
-      <h3
-        style={{
-          margin: "auto",
-          textAlign: "center",
-          fontSize: "25px",
-          fontFamily: "ManropeBold",
-          paddingTop: "6.5%",
+          flexDirection: "column",
+          display: "flex",
+          height: "60vh",
+          justifyContent: "space-evenly",
+          padding: "2.75rem",
         }}
       >
-        Partilha as tuas rotas
-      </h3>
-      <p
-        style={{
-          margin: "auto",
-          textAlign: "center",
-          fontSize: "18px",
-          fontFamily: "ManropeRegular",
-          width: "70%",
-          paddingTop: "5%",
-        }}
-      >
-        Interage com outros utilizadores para partilhares a tua experiência
-      </p>
-      <img
-        src={instruçõesbg}
-        style={{
-          position: "absolute",
-          top: "0",
-          left: "0",
-          width: "100%",
+        <img
+         style={{
+          width: "-webkit-fill-available",
           height: "auto",
-          zIndex: "1",
         }}
-      ></img>
+          src={instruções3Img}
+        ></img>
+        <h3
+          style={{
+            fontSize: "25px",
+            fontFamily: "ManropeBold",
+          }}
+        >
+          Partilha as tuas rotas
+        </h3>
+        <div>
+          <p
+            style={{
+              fontSize: "18px",
+              fontFamily: "ManropeRegular",
+            }}
+          >
+            Interage com outros utilizadores
+          </p>
+          <p
+            style={{
+              fontSize: "18px",
+              fontFamily: "ManropeRegular",
+            }}
+          >
+            para partilhares a tua experiência
+          </p>
+        </div>
+      </div>
       <div
         style={{
           zIndex: "2",
@@ -61,18 +67,7 @@ const Instruções3 = () => {
           bottom: "5%",
         }}
       >
-        <img
-          style={{ paddingRight: "1%", paddingLeft: "1%" }}
-          src={instruções_dot_unselected}
-        ></img>
-        <img
-          style={{ paddingRight: "1%", paddingLeft: "1%" }}
-          src={instruções_dot_unselected}
-        ></img>
-        <img
-          style={{ paddingRight: "1%", paddingLeft: "1%" }}
-          src={instruções_dot_selected}
-        ></img>
+        <img src={intro3_dots}></img>
         <h1
           style={{
             fontFamily: "ManropeBold",
