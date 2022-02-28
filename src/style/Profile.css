@@ -53,8 +53,8 @@
 }
 
 .profileButton {
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   border: 0.17px solid #d0d1d8;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
@@ -62,9 +62,9 @@
 }
 
 .profileCard {
-  display: flex;
+  display: flex !important;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   height: 45vh;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.5);
@@ -75,8 +75,9 @@
 
 .cardButton {
   display: flex;
-  justify-content: right;
-  margin: 0.75rem 0.5rem 1rem 0.5rem !important;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0rem 0.5rem 0rem 0.5rem;
 }
 
 .slick-slide div {

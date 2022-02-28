@@ -25,10 +25,10 @@ const Instruções3 = () => {
         }}
       >
         <img
-         style={{
-          width: "-webkit-fill-available",
-          height: "auto",
-        }}
+          style={{
+            width: "-webkit-fill-available",
+            height: "auto",
+          }}
           src={instruções3Img}
         ></img>
         <h3
