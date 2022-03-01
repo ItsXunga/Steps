@@ -63,10 +63,15 @@ const Profile = () => {
       </div>
 
       <div>
-          <ProfileBG />
-
+        <ProfileBG />
         <div>
-          <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
             <img
               style={{ height: "15vh", width: "auto", zIndex: 1 }}
               src={require("../assets/img/profile/avatar.png")}
@@ -80,7 +85,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <div style={{ height: "60vh" }}>
+      <div style={{ height: "60vh", zIndex: 1 }}>
         <div className="buttonPlacement">
           <button
             onClick={() => changeOwn()}
@@ -129,7 +134,7 @@ const Profile = () => {
           {selectedTabArray.map((props) => (
             <div className="profileCard" key={props.id} id="main">
               <section className="cardButton">
-                <p>{props.category}</p>
+                <h1>{props.category}</h1>
                 <section>
                   <button
                     className="profileButton"
