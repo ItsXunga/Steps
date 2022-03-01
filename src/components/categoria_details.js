@@ -59,7 +59,7 @@ const Categoria_details = () => {
                 </p>
               </div>
               <div style={{ display: "grid" }}>
-                <button className="button">
+                <button className="buttonfav">
                   <svg
                     style={{ display: "block", margin: "auto" }}
                     width="16"
@@ -74,7 +74,7 @@ const Categoria_details = () => {
                     />
                   </svg>
                 </button>
-                <button className="button">
+                <button className="buttonroute">
                   <svg
                     style={{ display: "block", margin: "auto" }}
                     width="16"
@@ -94,10 +94,17 @@ const Categoria_details = () => {
           ))}
           <div className="categoriacardopen">
             <div className="textcategorias">
-              <h1 style={{ lineHeight: "1.5rem", alignSelf: "center" }}>
+              <h1
+                style={{
+                  lineHeight: "1.5rem",
+                  alignSelf: "center",
+                  fontSize: "20px",
+                  fontFamily: "manropeBold",
+                }}
+              >
                 Coisinhas
               </h1>
-              <p style={{ alignSelf: "center" }}>
+              <p style={{ alignSelf: "center", fontSize: "12px" }}>
                 Lorem lorem lorem lorem lorem lorem lorem lorem
               </p>
             </div>
