@@ -10,6 +10,7 @@ import Instruções1 from "./components/Instruções1"
 import Instruções2 from "./components/Instruções2"
 import Instruções3 from "./components/Instruções3"
 import MainPage from "./components/MainPage"
+import SecondPage from "./components/SecondPage"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path="/intro2" element={<Instruções2 />} />
       <Route path="/intro3" element={<Instruções3 />} />
       <Route path="/main" element={<MainPage />} />
+      <Route path="/second" element={<SecondPage />} />
     </Routes>
   )
 }

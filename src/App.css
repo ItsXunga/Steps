@@ -32,3 +32,53 @@
   margin: 0.75rem;
   padding: 0.75rem;
 }
+
+.marker {
+  background-image: url("assets/img/point.svg");
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: "ManropeBold";
+}
+
+.mapboxgl-ctrl-geocoder--input {
+  width: 100%!important;
+  height: 5vh!important;
+  color: #393C6A!important;
+  padding-left: 10px!important;
+}
+
+.mapboxgl-ctrl-geocoder {
+  background: transparent!important;
+  width: 80%!important;
+  float: none !important;
+  position: fixed!important;
+  z-index: 1 !important;
+  text-align: left !important;
+  top: 2.5vh !important;
+  left: 2.5vh !important;
+  background-image: url("./assets/img/search_icon.svg")!important;
+  background-position: 95% 50%!important;
+  background-repeat: no-repeat!important;
+  color: #393C6A!important;
+  font-family: "ManropeBold"!important;
+  font-size: 19px!important;
+  border: 2px solid #ffffff!important;
+  background-color: 	rgb(255, 255, 255, 0.6)!important;
+  border-radius: 40vw!important;
+}
+
+.mapboxgl-ctrl-geocoder--icon {
+  display: none !important;
+  color: #393C6A!important;
+}
