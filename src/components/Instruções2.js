@@ -1,91 +1,70 @@
 import React from "react";
 import instruções2Img from "../assets/img/instruções2.svg";
 import instruçõesbg from "../assets/img/instruções_bg.svg";
-import instruções_dot_selected from "../assets/img/instruções_dot_selected.png";
-import instruções_dot from "../assets/img/instruções_dot.png";
+import intro2_dots from "../assets/img/intro2_dots.svg";
 import { Link } from "react-router-dom";
+import "../style/OnBoarding.css";
 
 const Instruções2 = () => {
   return (
     <div
+      className="introdiv"
       style={{
-        background: "#FFFFFF",
-        width: "100vw",
-        height: "100vh",
-        color: "#393C6A",
-        textAlign: "center",
+        backgroundImage: `url(${instruçõesbg})`,
+        backgroundPosition: "100% 100%",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "100vw",
       }}
     >
-      <img
-        style={{
-          width: "100%",
-          maxHeight: "25%",
-          margin: "auto",
-          paddingTop: "40%",
-        }}
-        src={instruções2Img}
-      ></img>
-      <h3
-        style={{
-          margin: "auto",
-          textAlign: "center",
-          fontSize: "25px",
-          fontFamily: "ManropeBold",
-          paddingTop: "15%",
-        }}
-      >
-        Cria as tuas rotas
-      </h3>
-      <p
-        style={{
-          margin: "auto",
-          textAlign: "center",
-          fontSize: "18px",
-          fontFamily: "ManropeRegular",
-          width: "70%",
-          paddingTop: "5%",
-        }}
-      >
-        Rotas personalizadas para dar a conhecer os teus locais favoritos
-      </p>
-      <img
-        src={instruçõesbg}
-        style={{
-          position: "absolute",
-          bottom: "0",
-          left: "0",
-          width: "100%",
-          height: "auto",
-          zIndex: "1",
-        }}
-      ></img>
       <div
         style={{
-          zIndex: "2",
-          width: "100vw",
-          textAlign: "center",
-          position: "absolute",
-          bottom: "5%",
+          flexDirection: "column",
+          display: "flex",
+          height: "60vh",
+          justifyContent: "space-evenly",
+          padding: "2.75rem",
         }}
       >
         <img
-          style={{ paddingRight: "1%", paddingLeft: "1%" }}
-          src={instruções_dot}
+          style={{
+            width: "-webkit-fill-available",
+          }}
+          src={instruções2Img}
         ></img>
-        <img
-          style={{ paddingRight: "1%", paddingLeft: "1%" }}
-          src={instruções_dot_selected}
-        ></img>
-        <img
-          style={{ paddingRight: "1%", paddingLeft: "1%" }}
-          src={instruções_dot}
-        ></img>
+        <h3
+          style={{
+            fontSize: "25px",
+            fontFamily: "ManropeBold",
+          }}
+        >
+          Cria as tuas rotas
+        </h3>
+        <div>
+          <p
+            style={{
+              fontSize: "18px",
+              fontFamily: "ManropeRegular",
+            }}
+          >
+            Rotas personalizadas para dar a
+          </p>
+          <p
+            style={{
+              fontSize: "18px",
+              fontFamily: "ManropeRegular",
+            }}
+          >
+            conhecer os teus locais favoritos
+          </p>
+        </div>
+      </div>
+      <div>
+        <img src={intro2_dots}></img>
         <h1
           style={{
             fontFamily: "ManropeBold",
             fontSize: "19px",
             display: "inline-block",
-            paddingLeft: "20%",
           }}
         >
           <Link

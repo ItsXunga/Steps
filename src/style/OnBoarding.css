@@ -1,0 +1,10 @@
+.introdiv {
+  background: #ffffff;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  color: #393c6a;
+  text-align: center;
+}

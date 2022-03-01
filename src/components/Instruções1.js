@@ -1,91 +1,70 @@
 import React from "react";
 import instruções1Img from "../assets/img/instruções1.svg";
 import instruçõesbg from "../assets/img/instruções_bg.svg";
-import instruções_dot_selected from "../assets/img/instruções_dot_selected.png";
-import instruções_dot from "../assets/img/instruções_dot.png";
+import intro1_dots from "../assets/img/intro1_dots.svg";
 import { Link } from "react-router-dom";
+import "../style/OnBoarding.css";
 
 const Instruções1 = () => {
   return (
     <div
+      className="introdiv"
       style={{
-        background: "#FFFFFF",
-        width: "100vw",
-        height: "100vh",
-        color: "#393C6A",
-        textAlign: "center",
+        backgroundImage: `url(${instruçõesbg})`,
+        backgroundPosition: "100% 100%",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "100vw",
       }}
     >
-      <img
-        style={{
-          width: "auto",
-          maxHeight: "25%",
-          margin: "auto",
-          paddingTop: "40%",
-        }}
-        src={instruções1Img}
-      ></img>
-      <h3
-        style={{
-          margin: "auto",
-          textAlign: "center",
-          fontSize: "25px",
-          fontFamily: "ManropeBold",
-          paddingTop: "15%",
-        }}
-      >
-        Descobre rotas
-      </h3>
-      <p
-        style={{
-          margin: "auto",
-          textAlign: "center",
-          fontSize: "18px",
-          fontFamily: "ManropeRegular",
-          width: "50%",
-          paddingTop: "5%",
-        }}
-      >
-        Explora rotas<br></br>categorizadas por temas
-      </p>
-      <img
-        src={instruçõesbg}
-        style={{
-          position: "absolute",
-          bottom: "0",
-          left: "0",
-          width: "100%",
-          height: "auto",
-          zIndex: "1",
-        }}
-      ></img>
       <div
         style={{
-          zIndex: "2",
-          width: "100vw",
-          textAlign: "center",
-          position: "absolute",
-          bottom: "5%",
+          flexDirection: "column",
+          display: "flex",
+          height: "60vh",
+          justifyContent: "space-evenly",
+          padding: "2.75rem",
         }}
       >
         <img
-          style={{ paddingRight: "1%", paddingLeft: "1%" }}
-          src={instruções_dot_selected}
+          style={{
+            width: "-webkit-fill-available",
+          }}
+          src={instruções1Img}
         ></img>
-        <img
-          style={{ paddingRight: "1%", paddingLeft: "1%" }}
-          src={instruções_dot}
-        ></img>
-        <img
-          style={{ paddingRight: "1%", paddingLeft: "1%" }}
-          src={instruções_dot}
-        ></img>
+        <h3
+          style={{
+            fontSize: "25px",
+            fontFamily: "ManropeBold",
+          }}
+        >
+          Descobre rotas
+        </h3>
+        <div>
+          <p
+            style={{
+              fontSize: "18px",
+              fontFamily: "ManropeRegular",
+            }}
+          >
+            Explora rotas
+          </p>
+          <p
+            style={{
+              fontSize: "18px",
+              fontFamily: "ManropeRegular",
+            }}
+          >
+            categorizadas por temas
+          </p>
+        </div>
+      </div>
+      <div>
+        <img src={intro1_dots}></img>
         <h1
           style={{
             fontFamily: "ManropeBold",
             fontSize: "19px",
             display: "inline-block",
-            paddingLeft: "20%",
           }}
         >
           <Link

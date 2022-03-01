@@ -1,6 +1,6 @@
-import React from "react"
-import { allcolors } from "../style/global_styles"
-import "../style/categorias.css"
+import React from "react";
+import { allcolors } from "../style/global_styles";
+import "../style/categorias.css";
 
 const Categorias = () => {
   return (
@@ -263,7 +263,7 @@ const Categorias = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Categorias
+export default Categorias;
