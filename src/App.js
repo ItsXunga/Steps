@@ -24,7 +24,6 @@ function App() {
       <Route path="/intro2" element={<Instruções2 />} />
       <Route path="/intro3" element={<Instruções3 />} />
       <Route path="/main" element={<MainPage />} />
-      <Route path="/second" element={<SecondPage />} />
     </Routes>
   );
 }
