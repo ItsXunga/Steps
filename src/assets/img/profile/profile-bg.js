@@ -4,6 +4,7 @@ export const ProfileBG = () => {
   return (
     <>
       <svg
+        style={{ position: "absolute", left: 0, top: "-40vh" }}
         width="100vw"
         height="auto"
         viewBox="0 0 375 213"

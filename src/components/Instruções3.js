@@ -1,36 +1,31 @@
 import React from "react";
-import instruções3Img from "../assets/img/instruções3.svg";
-import instruçõesbg from "../assets/img/intruções_top_bg.png";
+import { Link } from "react-router-dom";
 import intro3_dots from "../assets/img/intro3_dots.svg";
 import "../style/OnBoarding.css";
 
 const Instruções3 = () => {
   return (
     <div
-      className="introdiv"
-      style={{
-        backgroundImage: `url(${instruçõesbg})`,
-        backgroundPosition: "100% 0%",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "100vw",
-      }}
+      className="introdiv3"
     >
       <div
         style={{
           flexDirection: "column",
           display: "flex",
-          height: "60vh",
-          justifyContent: "space-evenly",
-          padding: "2.75rem",
+          height: "20vh",
         }}
       >
         <img
           style={{
-            width: "-webkit-fill-available",
-            height: "auto",
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100vw',
           }}
-          src={instruções3Img}
-        ></img>
+         src={require('../assets/img/instrucoes/instrucoes3BG.png')}
+         alt='ilustracao'
+        />
+        <div>
         <h3
           style={{
             fontSize: "25px",
@@ -39,7 +34,7 @@ const Instruções3 = () => {
         >
           Partilha as tuas rotas
         </h3>
-        <div>
+        <div style={{marginTop: '3rem'}}>
           <p
             style={{
               fontSize: "18px",
@@ -57,28 +52,39 @@ const Instruções3 = () => {
             para partilhares a tua experiência
           </p>
         </div>
+        </div>
       </div>
-      <div
-        style={{
-          zIndex: "2",
-          width: "100vw",
-          textAlign: "center",
-          position: "absolute",
-          bottom: "5%",
-        }}
-      >
-        <img src={intro3_dots}></img>
-        <h1
-          style={{
-            fontFamily: "ManropeBold",
-            fontSize: "19px",
-            display: "inline-block",
-            paddingLeft: "20%",
-          }}
-        >
-          Next
-        </h1>
-      </div>
+      <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '13vh', marginBottom: '1.25rem'}}>
+           <h1
+            style={{
+              fontFamily: "ManropeBold",
+              fontSize: "19px",
+              display: "inline-block",
+              color: 'white'
+            }}
+          >
+            Next
+          </h1>
+          <img style={{zIndex: 1}} src={intro3_dots}  alt='asset'/>
+          <div style={{display: 'flex'}}>
+          <h1
+            style={{
+              fontFamily: "ManropeBold",
+              fontSize: "19px",
+              display: "inline-block",
+              zIndex: 1,
+              
+            }}
+          >
+            <Link
+              to={"/main"}
+              style={{ textDecoration: "none", color: "#393C6A" }}
+            >
+              Next
+            </Link>
+          </h1>
+          </div>
+          </div>
     </div>
   );
 };

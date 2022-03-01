@@ -63,12 +63,15 @@ const Profile = () => {
       </div>
 
       <div>
-        <div style={{ position: "absolute", top: 0, left: 0, zIndex: 0 }}>
-          <ProfileBG />
-        </div>
-
+        <ProfileBG />
         <div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
             <img
               style={{ height: "15vh", width: "auto", zIndex: 1 }}
               src={require("../assets/img/profile/avatar.png")}
@@ -82,7 +85,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <div style={{ height: "60vh" }}>
+      <div style={{ height: "60vh", zIndex: 1 }}>
         <div className="buttonPlacement">
           <button
             onClick={() => changeOwn()}
@@ -131,7 +134,7 @@ const Profile = () => {
           {selectedTabArray.map((props) => (
             <div className="profileCard" key={props.id} id="main">
               <section className="cardButton">
-                <p>{props.category}</p>
+                <h1>{props.category}</h1>
                 <section>
                   <button
                     className="profileButton"
@@ -184,6 +187,24 @@ const Profile = () => {
                     <p>{pin.pinName}</p>
                   </div>
                 ))}
+              </section>
+
+              <section className="sideButton">
+                <button className="goButton">
+                  <svg
+                    style={{ display: "flex", margin: "auto" }}
+                    width="12"
+                    height="11"
+                    viewBox="0 0 12 11"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M2.21745 10.9793L0.296229 9.05811L6.31881 3.03553L1.31246 3.0659L1.33431 0.335123L11.0179 0.257654L10.9404 9.94125L8.20966 9.9631L8.24003 4.95675L2.21745 10.9793Z"
+                      fill="#393C6A"
+                    />
+                  </svg>
+                </button>
               </section>
             </div>
           ))}
