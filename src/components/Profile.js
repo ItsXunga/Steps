@@ -8,6 +8,11 @@ import { ProfileBG } from "../assets/img/profile/profile-bg";
 import Rotas from "../components/data/routes.json";
 
 const Profile = () => {
+  const [selectedTabArray, setSelectedTabArray] = useState(
+    Rotas.filter(function (value) {
+      return value.creator === "John Lee";
+    })
+  );
   const [favSelected, setFavSelected] = useState(false);
   const settings = {
     dots: true,
@@ -16,6 +21,24 @@ const Profile = () => {
     slideToScroll: 1,
     arrows: false,
     infinite: false,
+  };
+
+  const changeFav = () => {
+    setSelectedTabArray(
+      Rotas.filter(function (value) {
+        return value.creator !== "John Lee";
+      })
+    );
+    setFavSelected(true);
+  };
+
+  const changeOwn = () => {
+    setSelectedTabArray(
+      Rotas.filter(function (value) {
+        return value.creator === "John Lee";
+      })
+    );
+    setFavSelected(false);
   };
 
   return (
@@ -40,12 +63,15 @@ const Profile = () => {
       </div>
 
       <div>
-        <div style={{ position: "absolute", top: 0, left: 0, zIndex: 0 }}>
-          <ProfileBG />
-        </div>
-
+        <ProfileBG />
         <div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
             <img
               style={{ height: "15vh", width: "auto", zIndex: 1 }}
               src={require("../assets/img/profile/avatar.png")}
@@ -59,10 +85,10 @@ const Profile = () => {
         </div>
       </div>
 
-      <div>
+      <div style={{ height: "60vh", zIndex: 1 }}>
         <div className="buttonPlacement">
           <button
-            onClick={() => setFavSelected(false)}
+            onClick={() => changeOwn()}
             className={favSelected === true ? "defaultTab" : "selectedTab"}
           >
             <svg
@@ -84,7 +110,7 @@ const Profile = () => {
           </button>
 
           <button
-            onClick={() => setFavSelected(true)}
+            onClick={() => changeFav()}
             className={favSelected === true ? "selectedTab" : "defaultTab"}
           >
             <svg
@@ -105,48 +131,81 @@ const Profile = () => {
         </div>
 
         <Slider {...settings}>
-          {Rotas.map((props) => (
-            <div className="profileCard" key={props.id}>
-              <div className="cardButton">
-                <button
-                  className="profileButton"
-                  style={{ marginRight: "0.30rem" }}
-                >
-                  <svg
-                    style={{ display: "flex", margin: "auto" }}
-                    width="16"
-                    height="15"
-                    viewBox="0 0 15 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+          {selectedTabArray.map((props) => (
+            <div className="profileCard" key={props.id} id="main">
+              <section className="cardButton">
+                <h1>{props.category}</h1>
+                <section>
+                  <button
+                    className="profileButton"
+                    style={{ marginRight: "0.6rem" }}
                   >
-                    <path
-                      d="M2.76225 12.0044C2.58693 12.0041 2.41979 11.9351 2.30163 11.8142C2.18128 11.6943 2.12148 11.5322 2.13725 11.3686L2.29038 9.79705L9.36413 3.19722L11.5748 5.25988L4.50288 11.8591L2.81913 12.0021C2.79975 12.0038 2.78038 12.0044 2.76225 12.0044ZM12.016 4.84747L9.806 2.7848L11.1316 1.54755C11.2489 1.43801 11.4079 1.37646 11.5738 1.37646C11.7397 1.37646 11.8988 1.43801 12.016 1.54755L13.3416 2.7848C13.459 2.89421 13.5249 3.04269 13.5249 3.19751C13.5249 3.35233 13.459 3.5008 13.3416 3.61022L12.0166 4.84688L12.016 4.84747Z"
-                      fill="#393C6A"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      style={{ display: "flex", margin: "auto" }}
+                      width="16"
+                      height="15"
+                      viewBox="0 0 15 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2.76225 12.0044C2.58693 12.0041 2.41979 11.9351 2.30163 11.8142C2.18128 11.6943 2.12148 11.5322 2.13725 11.3686L2.29038 9.79705L9.36413 3.19722L11.5748 5.25988L4.50288 11.8591L2.81913 12.0021C2.79975 12.0038 2.78038 12.0044 2.76225 12.0044ZM12.016 4.84747L9.806 2.7848L11.1316 1.54755C11.2489 1.43801 11.4079 1.37646 11.5738 1.37646C11.7397 1.37646 11.8988 1.43801 12.016 1.54755L13.3416 2.7848C13.459 2.89421 13.5249 3.04269 13.5249 3.19751C13.5249 3.35233 13.459 3.5008 13.3416 3.61022L12.0166 4.84688L12.016 4.84747Z"
+                        fill="#393C6A"
+                      />
+                    </svg>
+                  </button>
 
-                <button className="profileButton">
+                  <button className="profileButton">
+                    <svg
+                      style={{ display: "flex", margin: "auto" }}
+                      width="16"
+                      height="15"
+                      viewBox="0 0 13 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.625 11.8334H3.375C2.68464 11.8334 2.125 11.3111 2.125 10.6667V3.08341H0.875V1.91675H3.375V1.33341C3.375 0.689083 3.93464 0.166748 4.625 0.166748H8.375C9.06536 0.166748 9.625 0.689083 9.625 1.33341V1.91675H12.125V3.08341H10.875V10.6667C10.875 11.3111 10.3154 11.8334 9.625 11.8334ZM3.375 3.08341V10.6667H9.625V3.08341H3.375ZM4.625 1.33341V1.91675H8.375V1.33341H4.625ZM8.375 9.50008H7.125V4.25008H8.375V9.50008ZM5.875 9.50008H4.625V4.25008H5.875V9.50008Z"
+                        fill="#393C6A"
+                      />
+                    </svg>
+                  </button>
+                </section>
+              </section>
+
+              <section style={{ margin: "0rem .5rem 0rem .5rem" }}>
+                <h1 style={{ fontSize: "18px", fontFamily: "ManropeBold" }}>
+                  {props.name}
+                </h1>
+                <p style={{ marginTop: ".5rem" }}>{props.desc}</p>
+              </section>
+              <section
+                style={{ margin: "0rem .5rem 0rem .5rem", height: "13vh" }}
+              >
+                {props.pins.map((pin) => (
+                  <div style={{ marginLeft: 0, width: "100%" }}>
+                    <p>{pin.pinName}</p>
+                  </div>
+                ))}
+              </section>
+
+              <section className="sideButton">
+                <button className="goButton">
                   <svg
                     style={{ display: "flex", margin: "auto" }}
-                    width="16"
-                    height="15"
-                    viewBox="0 0 13 12"
+                    width="12"
+                    height="11"
+                    viewBox="0 0 12 11"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M9.625 11.8334H3.375C2.68464 11.8334 2.125 11.3111 2.125 10.6667V3.08341H0.875V1.91675H3.375V1.33341C3.375 0.689083 3.93464 0.166748 4.625 0.166748H8.375C9.06536 0.166748 9.625 0.689083 9.625 1.33341V1.91675H12.125V3.08341H10.875V10.6667C10.875 11.3111 10.3154 11.8334 9.625 11.8334ZM3.375 3.08341V10.6667H9.625V3.08341H3.375ZM4.625 1.33341V1.91675H8.375V1.33341H4.625ZM8.375 9.50008H7.125V4.25008H8.375V9.50008ZM5.875 9.50008H4.625V4.25008H5.875V9.50008Z"
+                      d="M2.21745 10.9793L0.296229 9.05811L6.31881 3.03553L1.31246 3.0659L1.33431 0.335123L11.0179 0.257654L10.9404 9.94125L8.20966 9.9631L8.24003 4.95675L2.21745 10.9793Z"
                       fill="#393C6A"
                     />
                   </svg>
                 </button>
-              </div>
-              <div>
-                <h1>{props.name}</h1>
-                <p>{props.desc}</p>
-              </div>
+              </section>
             </div>
           ))}
         </Slider>

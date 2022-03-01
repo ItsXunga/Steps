@@ -1,8 +1,68 @@
 /* as classes background, container, backarrow estão na categorias.css */
 
 .grid_categoria {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   justify-items: center;
   grid-column-gap: 25px;
   grid-row-gap: 25px;
+}
+
+.categoriacard {
+  height: 18vh;
+  width: 80vw;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 7px 0px #00000033;
+  border-radius: 25px;
+  display: grid;
+  grid-template-columns: 6fr 1fr;
+  grid-column-gap: 20px;
+}
+
+.categoriacardopen {
+  height: 30vh;
+  width: 80vw;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 7px 0px #00000033;
+  border-radius: 25px;
+  display: grid;
+  grid-template-columns: 6fr 1fr;
+  grid-column-gap: 20px;
+}
+
+.textcategorias {
+  display: grid;
+  grid-template-rows: 1fr 1fr 4fr;
+}
+
+.button {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 0.17px solid #d0d1d8;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  align-self: center;
+}
+
+.buttonfav {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 0.17px solid #d0d1d8;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  align-self: start;
+}
+
+.buttonroute {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 0.17px solid #d0d1d8;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  align-self: end;
 }

@@ -7,4 +7,4 @@ export const allcolors = {
     gray: "#D0D1D8",
     lightgray: "#E6E6E6",
   },
-}
+};
