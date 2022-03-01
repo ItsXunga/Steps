@@ -44,10 +44,19 @@ const Categoria_details = () => {
           {Rotas.map((props) => (
             <div className="categoriacard">
               <div style={{ display: "grid" }}>
-                <h1 style={{ lineHeight: "1.5rem", alignSelf: "center" }}>
+                <h1
+                  style={{
+                    lineHeight: "1.5rem",
+                    alignSelf: "center",
+                    fontSize: "20px",
+                    fontFamily: "manropeBold",
+                  }}
+                >
                   {props.name}
                 </h1>
-                <p style={{ alignSelf: "center" }}>{props.desc}</p>
+                <p style={{ alignSelf: "center", fontSize: "12px" }}>
+                  {props.desc}
+                </p>
               </div>
               <div style={{ display: "grid" }}>
                 <button className="button">
