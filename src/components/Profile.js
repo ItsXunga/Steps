@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { ProfileBG } from "../assets/img/profile/profile-bg";
 import Rotas from "../components/data/routes.json";
+import { PinColor } from "../assets/img/profile/pin";
 
 const Profile = () => {
   const [selectedTabArray, setSelectedTabArray] = useState(
@@ -39,6 +40,52 @@ const Profile = () => {
       })
     );
     setFavSelected(false);
+  };
+
+  const CheckPin = (start, end, name) => {
+    if (start === true && end === false) {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#5F61F3" />
+          <p>{name}</p>
+        </div>
+      );
+    } else if (start === false && end === false) {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#8283F5" />
+          <p>{name}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#A5A6F6" />
+          <p>{name}</p>
+        </div>
+      );
+    }
   };
 
   return (
@@ -183,9 +230,7 @@ const Profile = () => {
                 style={{ margin: "0rem .5rem 0rem .5rem", height: "13vh" }}
               >
                 {props.pins.map((pin) => (
-                  <div style={{ marginLeft: 0, width: "100%" }}>
-                    <p>{pin.pinName}</p>
-                  </div>
+                  <>{CheckPin(pin.start, pin.end, pin.pinName)}</>
                 ))}
               </section>
 

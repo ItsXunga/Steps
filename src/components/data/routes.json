@@ -57,7 +57,7 @@
         "lat": "40.631375",
         "long": "-8.659969",
         "start": false,
-        "end": false
+        "end": true
       }
     ]
   },
@@ -120,7 +120,7 @@
         "lat": "40.631375",
         "long": "-8.659969",
         "start": false,
-        "end": false
+        "end": true
       }
     ]
   }
