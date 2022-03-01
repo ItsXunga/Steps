@@ -12,8 +12,11 @@
 
 .backarrow {
   position: absolute;
-  top: 4rem;
-  left: 4rem;
+  left: 0;
+  top: 0;
+  margin: 2rem;
+  padding: 0;
+  z-index: 1;
 }
 
 .grid {
@@ -35,8 +38,8 @@
   border: white 2px solid;
   border-radius: 20px;
   padding: 2rem;
-  min-width: 11rem;
-  max-width: 11rem;
+  min-width: 9rem;
+  max-width: 9rem;
   margin: auto;
   text-align: center;
 }
