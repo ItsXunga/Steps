@@ -1,11 +1,17 @@
-import React from "react";
-import { allcolors } from "../style/global_styles";
-import "../style/categorias.css";
+import React from "react"
+import { allcolors } from "../style/global_styles"
+import "../style/categorias.css"
 
 const Categorias = () => {
   return (
     <div className="background">
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          paddingTop: "2rem",
+        }}
+      >
         <div className="backarrow">
           <svg
             width="15"
@@ -22,8 +28,13 @@ const Categorias = () => {
             />
           </svg>
         </div>
-        <h1 style={{ color: allcolors.colors.darkblue, marginTop: "4rem" }}>
-          Categorias
+        <h1
+          style={{
+            color: allcolors.colors.darkblue,
+            fontSize: "24px",
+          }}
+        >
+          Gastronomia
         </h1>
       </div>
       <div className="container">
@@ -263,7 +274,7 @@ const Categorias = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Categorias;
+export default Categorias

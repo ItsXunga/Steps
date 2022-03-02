@@ -1,10 +1,59 @@
-import React from "react";
-import { allcolors } from "../style/global_styles";
-import "../style/categoria_details.css";
-import { AnimateSharedLayout } from "framer-motion";
-import Rotas from "../components/data/routes.json";
+import React, { useState } from "react"
+import { allcolors } from "../style/global_styles"
+import "../style/categoria_details.css"
+import { PinColor } from "../assets/img/profile/pin"
+import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion"
+import Rotas from "../components/data/routes.json"
 
-const CategoriaDetails = () => {
+const Categoria_details = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const CheckPin = (start, end, name) => {
+    if (start === true && end === false) {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#5F61F3" />
+          <p>{name}</p>
+        </div>
+      )
+    } else if (start === false && end === false) {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#8283F5" />
+          <p>{name}</p>
+        </div>
+      )
+    } else {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#A5A6F6" />
+          <p>{name}</p>
+        </div>
+      )
+    }
+  }
+
   return (
     <div className="background">
       <div
@@ -92,6 +141,7 @@ const CategoriaDetails = () => {
               </div>
             </div>
           ))}
+
           <div className="categoriacardopen">
             <div className="textcategorias">
               <h1
@@ -107,6 +157,44 @@ const CategoriaDetails = () => {
               <p style={{ alignSelf: "center", fontSize: "12px" }}>
                 Lorem lorem lorem lorem lorem lorem lorem lorem
               </p>
+              <div>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    marginLeft: 0,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <PinColor color="#8283F5" />
+                  <p>pontinho</p>
+                </div>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    marginLeft: 0,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <PinColor color="#8283F5" />
+                  <p>pontinho</p>
+                </div>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    marginLeft: 0,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <PinColor color="#8283F5" />
+                  <p>pontinho</p>
+                </div>
+              </div>
             </div>
             <div style={{ display: "grid" }}>
               <button className="buttonfav">
@@ -144,7 +232,7 @@ const CategoriaDetails = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CategoriaDetails;
+export default Categoria_details
