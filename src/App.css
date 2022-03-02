@@ -42,6 +42,15 @@
   cursor: pointer;
 }
 
+.user_marker {
+  background-image: url("assets/img/user_point.svg");
+  background-size: cover;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 .mapboxgl-popup {
   max-width: 200px;
 }
@@ -81,4 +90,24 @@
 .mapboxgl-ctrl-geocoder--icon {
   display: none !important;
   color: #393C6A!important;
+}
+
+.directions-control  {
+  display: block!important;
+}
+
+.directions-control-instructions {
+  display: block!important;
+}
+
+.info-box {
+  position: absolute;
+  margin: 20px;
+  width: 25%;
+  top: 0;
+  bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+  overflow-y: scroll;
+  z-index: 1;
 }
