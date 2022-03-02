@@ -106,9 +106,6 @@ const Categoria_details = () => {
                 <p style={{ alignSelf: "center", fontSize: "12px" }}>
                   {props.desc}
                 </p>
-                {props.pins.map((pin) => (
-                  <>{CheckPin(pin.start, pin.end, pin.pinName)}</>
-                ))}
               </div>
               <div style={{ display: "grid" }}>
                 <button className="buttonfav">
@@ -160,6 +157,44 @@ const Categoria_details = () => {
               <p style={{ alignSelf: "center", fontSize: "12px" }}>
                 Lorem lorem lorem lorem lorem lorem lorem lorem
               </p>
+              <div>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    marginLeft: 0,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <PinColor color="#8283F5" />
+                  <p>pontinho</p>
+                </div>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    marginLeft: 0,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <PinColor color="#8283F5" />
+                  <p>pontinho</p>
+                </div>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    marginLeft: 0,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <PinColor color="#8283F5" />
+                  <p>pontinho</p>
+                </div>
+              </div>
             </div>
             <div style={{ display: "grid" }}>
               <button className="buttonfav">
