@@ -5,7 +5,7 @@ import "../style/Login_Register.css";
 const Register = () => {
   return (
     <div className="maindiv">
-      <div className="backArrow">
+      <div className="backarrow">
         <Link to={"/login"}>
           <svg
             width="15"

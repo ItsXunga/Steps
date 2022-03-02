@@ -5,6 +5,11 @@
   margin: 0;
 }
 
+h1 {
+  font-family: ManropeBold;
+  font-size: 28px;
+}
+
 .blueButton {
   width: 100%;
   border: none;
@@ -23,14 +28,16 @@
   color: white;
   height: 2.5rem;
   font-size: 15px;
+  font-family: ManropeBold;
 }
 
-.backArrow {
+.backarrow {
   position: absolute;
   left: 0;
   top: 0;
-  margin: 0.75rem;
-  padding: 0.75rem;
+  margin: 2rem;
+  padding: 0;
+  z-index: 1;
 }
 
 .marker {
@@ -52,33 +59,33 @@
 }
 
 .mapboxgl-ctrl-geocoder--input {
-  width: 100%!important;
-  height: 5vh!important;
-  color: #393C6A!important;
-  padding-left: 10px!important;
+  width: 100% !important;
+  height: 5vh !important;
+  color: #393c6a !important;
+  padding-left: 10px !important;
 }
 
 .mapboxgl-ctrl-geocoder {
-  background: transparent!important;
-  width: 80%!important;
+  background: transparent !important;
+  width: 80% !important;
   float: none !important;
-  position: fixed!important;
+  position: fixed !important;
   z-index: 1 !important;
   text-align: left !important;
   top: 2.5vh !important;
   left: 2.5vh !important;
-  background-image: url("./assets/img/search_icon.svg")!important;
-  background-position: 95% 50%!important;
-  background-repeat: no-repeat!important;
-  color: #393C6A!important;
-  font-family: "ManropeBold"!important;
-  font-size: 19px!important;
-  border: 2px solid #ffffff!important;
-  background-color: 	rgb(255, 255, 255, 0.6)!important;
-  border-radius: 40vw!important;
+  background-image: url("./assets/img/search_icon.svg") !important;
+  background-position: 95% 50% !important;
+  background-repeat: no-repeat !important;
+  color: #393c6a !important;
+  font-family: "ManropeBold" !important;
+  font-size: 19px !important;
+  border: 2px solid #ffffff !important;
+  background-color: rgb(255, 255, 255, 0.6) !important;
+  border-radius: 40vw !important;
 }
 
 .mapboxgl-ctrl-geocoder--icon {
   display: none !important;
-  color: #393C6A!important;
+  color: #393c6a !important;
 }

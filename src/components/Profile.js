@@ -125,8 +125,15 @@ const Profile = () => {
               alt="avatar"
             />
           </div>
-          <div style={{ textAlign: "center", marginTop: ".5rem" }}>
-            <h1>John Lee</h1>
+          <div style={{textAlign: "center", marginTop: ".5rem"}}>
+            <div style={{display: 'inline-flex', alignItems: 'center'}}>
+              <h1>John Lee</h1>
+              <Link to={"/editProfile"}>
+              <div style={{display: 'flex'}}>
+                <img style={{paddingLeft: '.5rem', zIndex: 1}} src={require("../assets/img/profile/profileSettings.png")} alt="profile settings" />
+              </div>
+              </Link>
+            </div>
             <p>Engenheiro Software</p>
           </div>
         </div>
