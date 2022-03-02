@@ -5,7 +5,7 @@ import { PinColor } from "../assets/img/profile/pin"
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion"
 import Rotas from "../components/data/routes.json"
 
-const Categoria_details = () => {
+const CategoriaDetails = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const CheckPin = (start, end, name) => {
@@ -235,4 +235,4 @@ const Categoria_details = () => {
   )
 }
 
-export default Categoria_details
+export default CategoriaDetails
