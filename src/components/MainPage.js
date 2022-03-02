@@ -15,7 +15,6 @@ import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
-import * as MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
 
 Modal.setAppElement("#root");
 
@@ -65,7 +64,7 @@ const SecondPage = () => {
       {
         type: "Feature",
         geometry: {
-          type: "Point",
+          type: "MultiPoint",
           coordinates: [Rotas[0].pins[0].long, Rotas[0].pins[0].lat],
         },
         properties: {
@@ -108,7 +107,7 @@ const SecondPage = () => {
     getRotas();
 
     getMatch(
-      "-8.65599354837289,40.63363090756229;-8.653213663330945,40.637160643840645;-8.655121427575523,40.64031794511777",
+      "-8.65599354837289,40.63363090756229;-8.646306792590423,40.624402272740326;-8.655121427575523,40.64031794511777",
       [50, 50, 50],
       "walking"
     );
@@ -186,9 +185,7 @@ const SecondPage = () => {
       const response = await query.json();
       // Handle errors
       if (response.code !== "Ok") {
-        alert(
-          `${response.code} - ${response.message}.\n\nFor more information: https://docs.mapbox.com/api/navigation/map-matching/#map-matching-api-errors`
-        );
+        alert(`${response.code} - ${response.message}.`);
         return;
       }
       const coords = response.matchings[0].geometry;
@@ -235,7 +232,6 @@ const SecondPage = () => {
         longitude: position.coords.longitude,
         latitude: position.coords.latitude,
       };
-      console.log(location);
       geojson.features.push({
         type: "Feature",
         geometry: {
@@ -373,26 +369,31 @@ const SecondPage = () => {
           zIndex: "1",
           bottom: "0",
           width: "100vw",
-          padding: '1rem',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          alignItems: 'baseline',
-          
+          padding: "1rem",
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "baseline",
         }}
       >
-        
         <Link to="/">
-          <img style={{margin: '0rem .2rem'}} id="menu2" src={menu_categorias} />
+          <img
+            style={{ margin: "0rem .2rem" }}
+            id="menu2"
+            src={menu_categorias}
+          />
         </Link>
         <Link to="/">
-          <img style={{margin: '0rem .2rem'}} id="menu3" src={menu_add_route} />
+          <img
+            style={{ margin: "0rem .2rem" }}
+            id="menu3"
+            src={menu_add_route}
+          />
         </Link>
         <Link to="/">
-          <img style={{margin: '0rem .2rem'}} id="menu4" src={menu_perfil} />
+          <img style={{ margin: "0rem .2rem" }} id="menu4" src={menu_perfil} />
         </Link>
-        <img style={{margin: '0rem .2rem'}}  src={menuOpened} />
+        <img style={{ margin: "0rem .2rem" }} src={menuOpened} />
       </div>
-
 
       <div>
         <Modal
