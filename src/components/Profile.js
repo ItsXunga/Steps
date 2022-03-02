@@ -242,6 +242,7 @@ const Profile = () => {
               </section>
 
               <section className="sideButton">
+                <Link to={'/main'} state={{id: props.id}}>
                 <button className="goButton">
                   <svg
                     style={{ display: "flex", margin: "auto" }}
@@ -257,6 +258,7 @@ const Profile = () => {
                     />
                   </svg>
                 </button>
+                </Link>
               </section>
             </div>
           ))}
