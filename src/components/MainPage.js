@@ -14,11 +14,45 @@ import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import Modal from "react-modal";
+import * as MapboxDirections from "@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions";
+
+Modal.setAppElement("#root");
 
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
 const SecondPage = () => {
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+    document.getElementById("menu_bar").style.display = "none";
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+    document.getElementById("menu_bar").style.display = "block";
+  }
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      zIndex: 2,
+    },
+  };
+
   const geojson = {
     type: "FeatureCollection",
     features: [
@@ -33,17 +67,6 @@ const SecondPage = () => {
           description: Rotas[0].desc,
         },
       },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [Rotas[1].pins[0].long, Rotas[1].pins[0].lat],
-        },
-        properties: {
-          title: Rotas[1].name,
-          description: Rotas[1].desc,
-        },
-      },
     ],
   };
 
@@ -55,17 +78,36 @@ const SecondPage = () => {
   const [pitch, setPitch] = useState(0);
   const [bearing, setBearing] = useState(0);
 
+  async function teste() {
+    const query = await fetch(
+      `https://api.mapbox.com/directions/v5/mapbox/walking/-8.65599354837289,40.63363090756229;-8.653213663330945,40.637160643840645;-8.655121427575523,40.64031794511777?geometries=geojson&access_token=${mapboxgl.accessToken}`,
+
+      { method: "GET" }
+    );
+    console.log(query);
+  }
+
   // Initialize map when component mounts
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/stepsua/ckzso6k1f001114ngcorbs021",
+      style: "mapbox://styles/stepsua/cl08ksukn001415muzw480uke",
       center: [lng, lat],
       pitch: pitch, // pitch in degrees
       bearing: bearing, // bearing in degrees
       zoom: zoom,
       attributionControl: false,
     });
+
+    getRotas();
+
+    getMatch(
+      "-8.65599354837289,40.63363090756229;-8.653213663330945,40.637160643840645;-8.655121427575523,40.64031794511777",
+      [50, 50, 50],
+      "walking"
+    );
+
+    teste();
 
     map.on("move", () => {
       setLng(map.getCenter().lng.toFixed(4));
@@ -103,10 +145,25 @@ const SecondPage = () => {
       const data = draw.getAll();
       const lastFeature = data.features.length - 1;
       const coords = data.features[lastFeature].geometry.coordinates;
-      console.log(coords, "here");
       // Format the coordinates
       const newCoords = coords.join(";");
+      openModal();
       // Set the radius for each coordinate pair to 25 meters
+      const radius = coords.map(() => 50);
+      getMatch(newCoords, radius, profile);
+    }
+
+    function getRotas() {
+      const profile = "walking"; // Set the profile
+
+      const coords = [
+        [Rotas[0].pins[0].long, Rotas[0].pins[0].lat],
+        [Rotas[0].pins[1].long, Rotas[0].pins[1].lat],
+        [Rotas[0].pins[2].long, Rotas[0].pins[2].lat],
+      ];
+
+      const newCoords = coords.join(";");
+
       const radius = coords.map(() => 50);
       getMatch(newCoords, radius, profile);
     }
@@ -117,7 +174,7 @@ const SecondPage = () => {
       const radiuses = radius.join(";");
       // Create the query
       const query = await fetch(
-        `https://api.mapbox.com/matching/v5/mapbox/${profile}/${coordinates}?geometries=geojson&radiuses=${radiuses}&steps=true&access_token=${mapboxgl.accessToken}`,
+        `https://api.mapbox.com/matching/v5/mapbox/${profile}/${coordinates}?geometries=geojson&radiuses=${radiuses}&steps=true&language=pt&access_token=${mapboxgl.accessToken}`,
         { method: "GET" }
       );
       const response = await query.json();
@@ -131,7 +188,7 @@ const SecondPage = () => {
       const coords = response.matchings[0].geometry;
       // Draw the route on the map
       addRoute(coords);
-      // getInstructions(response.matchings[0]);
+      getInstructions(response.matchings[0]);
     }
 
     const geocoder = new MapboxGeocoder({
@@ -148,21 +205,57 @@ const SecondPage = () => {
     // Add the geocoder to the map
     map.addControl(geocoder);
 
-    // function getInstructions(data) {
-    //   // Target the sidebar to add the instructions
-    //   const directions = document.getElementById("directions");
-    //   let tripDirections = "";
-    //   // Output the instructions for each step of each leg in the response object
-    //   for (const leg of data.legs) {
-    //     const steps = leg.steps;
-    //     for (const step of steps) {
-    //       tripDirections += `<li>${step.maneuver.instruction}</li>`;
-    //     }
-    //   }
-    //   directions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
-    //     data.duration / 60
-    //   )} min.</strong></p><ol>${tripDirections}</ol>`;
-    // }
+    // var directions = new MapboxDirections({
+    //   accessToken: mapboxgl.accessToken,
+    //   unit: "metric",
+    //   profile: "mapbox/walking",
+    //   language: "pt-PT",
+    //   interactive: false,
+    // });
+
+    // // add to your mapboxgl map
+    // map.addControl(directions, "top-left");
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        console.log("Geo Location not supported by browser");
+      }
+    }
+
+    function showPosition(position) {
+      var location = {
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      };
+      console.log(location);
+      geojson.features.push({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [location.longitude, location.latitude],
+        },
+      });
+    }
+
+    getLocation();
+
+    function getInstructions(data) {
+      // Target the sidebar to add the instructions
+      const directions = document.getElementById("directions");
+      let tripDirections = "";
+      // Output the instructions for each step of each leg in the response object
+      for (const leg of data.legs) {
+        const steps = leg.steps;
+        for (const step of steps) {
+          tripDirections += `<li>${step.maneuver.instruction}</li>`;
+        }
+      }
+      directions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
+        data.duration / 60
+      )} min.</strong></p><ol>${tripDirections}</ol>`;
+    }
 
     // Draw the Map Matching route as a new layer on the map
     function addRoute(coords) {
@@ -194,6 +287,20 @@ const SecondPage = () => {
         });
       }
     }
+
+    const userteste = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      // When active the map will receive updates to the device's location as it changes.
+      trackUserLocation: true,
+      // Draw an arrow next to the location dot to indicate which direction the device is heading.
+      showUserHeading: true,
+    });
+    map.addControl(userteste);
+    map.on("load", () => {
+      userteste.trigger();
+    });
 
     // If the user clicks the delete draw button, remove the layer if it exists
     function removeRoute() {
@@ -277,8 +384,32 @@ const SecondPage = () => {
         <Link to="/">
           <img style={{margin: '0rem .2rem'}} id="menu4" src={menu_perfil} />
         </Link>
-        <img /*onClick={() => setMenu(!menu)}*/style={{margin: '0rem .2rem'}}  src={menuOpened} />
+        <img style={{margin: '0rem .2rem'}}  src={menuOpened} />
       </div>
+
+
+      <div>
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Título da Rota</h2>
+          <input type="text"></input>
+          <div>Primeiro Ponto de Interesse</div>
+          <input type="text"></input>
+          <div>Segundo Ponto de Interesse</div>
+          <input type="text"></input>
+          <div>
+            <button onClick={closeModal}>close</button>
+          </div>
+        </Modal>
+      </div>
+      {/* <div class="info-box">
+        <div id="directions"></div>
+      </div> */}
       <div
         className="map-container"
         ref={mapContainerRef}
