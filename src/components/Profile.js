@@ -1,19 +1,20 @@
-import React, { useState } from "react";
-import Slider from "react-slick";
-import "../style/Profile.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
-import { ProfileBG } from "../assets/img/profile/profile-bg";
-import Rotas from "../components/data/routes.json";
+import React, { useState } from "react"
+import Slider from "react-slick"
+import "../style/Profile.css"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import { Link } from "react-router-dom"
+import { ProfileBG } from "../assets/img/profile/profile-bg"
+import Rotas from "../components/data/routes.json"
+import { PinColor } from "../assets/img/profile/pin"
 
 const Profile = () => {
   const [selectedTabArray, setSelectedTabArray] = useState(
     Rotas.filter(function (value) {
-      return value.creator === "John Lee";
+      return value.creator === "John Lee"
     })
-  );
-  const [favSelected, setFavSelected] = useState(false);
+  )
+  const [favSelected, setFavSelected] = useState(false)
   const settings = {
     dots: true,
     speed: 800,
@@ -21,25 +22,71 @@ const Profile = () => {
     slideToScroll: 1,
     arrows: false,
     infinite: false,
-  };
+  }
 
   const changeFav = () => {
     setSelectedTabArray(
       Rotas.filter(function (value) {
-        return value.creator !== "John Lee";
+        return value.creator !== "John Lee"
       })
-    );
-    setFavSelected(true);
-  };
+    )
+    setFavSelected(true)
+  }
 
   const changeOwn = () => {
     setSelectedTabArray(
       Rotas.filter(function (value) {
-        return value.creator === "John Lee";
+        return value.creator === "John Lee"
       })
-    );
-    setFavSelected(false);
-  };
+    )
+    setFavSelected(false)
+  }
+
+  const CheckPin = (start, end, name) => {
+    if (start === true && end === false) {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#5F61F3" />
+          <p>{name}</p>
+        </div>
+      )
+    } else if (start === false && end === false) {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#8283F5" />
+          <p>{name}</p>
+        </div>
+      )
+    } else {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#A5A6F6" />
+          <p>{name}</p>
+        </div>
+      )
+    }
+  }
 
   return (
     <section className="profileMain">
@@ -78,8 +125,15 @@ const Profile = () => {
               alt="avatar"
             />
           </div>
-          <div style={{ textAlign: "center", marginTop: ".5rem" }}>
-            <h1>John Lee</h1>
+          <div style={{textAlign: "center", marginTop: ".5rem"}}>
+            <div style={{display: 'inline-flex', alignItems: 'center'}}>
+              <h1>John Lee</h1>
+              <Link to={"/editProfile"}>
+              <div style={{display: 'flex'}}>
+                <img style={{paddingLeft: '.5rem', zIndex: 1}} src={require("../assets/img/profile/profileSettings.png")} alt="profile settings" />
+              </div>
+              </Link>
+            </div>
             <p>Engenheiro Software</p>
           </div>
         </div>
@@ -183,9 +237,7 @@ const Profile = () => {
                 style={{ margin: "0rem .5rem 0rem .5rem", height: "13vh" }}
               >
                 {props.pins.map((pin) => (
-                  <div style={{ marginLeft: 0, width: "100%" }}>
-                    <p>{pin.pinName}</p>
-                  </div>
+                  <>{CheckPin(pin.start, pin.end, pin.pinName)}</>
                 ))}
               </section>
 
@@ -211,7 +263,7 @@ const Profile = () => {
         </Slider>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

@@ -19,55 +19,70 @@ const Instruções1 = () => {
           alt="grafismo"
         />
         <div>
-        <h3
-          style={{
-            fontSize: "25px",
-            fontFamily: "ManropeBold",
-          }}
-        >
-          Descobre rotas
-        </h3>
-        <div style={{marginTop: '1.5rem'}}>
-          <p
+          <h3
             style={{
-              fontSize: "18px",
-              fontFamily: "ManropeRegular",
+              fontSize: "25px",
+              fontFamily: "ManropeBold",
             }}
           >
-            Explora rotas
-          </p>
-          <p
-            style={{
-              fontSize: "18px",
-              fontFamily: "ManropeRegular",
-            }}
-          >
-            categorizadas por temas
-          </p>
-        </div>
+            Descobre rotas
+          </h3>
+          <div style={{ marginTop: "1.5rem" }}>
+            <p
+              style={{
+                fontSize: "18px",
+                fontFamily: "ManropeRegular",
+              }}
+            >
+              Explora rotas
+            </p>
+            <p
+              style={{
+                fontSize: "18px",
+                fontFamily: "ManropeRegular",
+              }}
+            >
+              categorizadas por temas
+            </p>
+          </div>
         </div>
       </div>
-      
-        <img style={{width: '100vw', height: 'auto', position: 'absolute', bottom: 0, left: 0}} src={require("../assets/img/instrucoes/instrucoesBG.png")}  alt='background shape'/>
-        <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '15vh'}}>
-           <h1
-            style={{
-              fontFamily: "ManropeBold",
-              fontSize: "19px",
-              display: "inline-block",
-            }}
-          >
-            Next
-          </h1>
-          <img style={{zIndex: 1}} src={intro1_dots}  alt='asset'/>
-          <div style={{display: 'flex'}}>
+
+      <img
+        style={{
+          width: "100vw",
+          height: "auto",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+        }}
+        src={require("../assets/img/instrucoes/instrucoesBG.png")}
+        alt="background shape"
+      />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "15vh",
+        }}
+      >
+        <h1
+          style={{
+            fontFamily: "ManropeBold",
+            fontSize: "19px",
+            display: "inline-block",
+          }}
+        >
+          Next
+        </h1>
+        <img style={{ zIndex: 1 }} src={intro1_dots} alt="asset" />
+        <div style={{ display: "flex" }}>
           <h1
             style={{
               fontFamily: "ManropeBold",
               fontSize: "19px",
               display: "inline-block",
               zIndex: 1,
-              
             }}
           >
             <Link
@@ -77,10 +92,9 @@ const Instruções1 = () => {
               Next
             </Link>
           </h1>
-          </div>
         </div>
       </div>
-   
+    </div>
   );
 };
 

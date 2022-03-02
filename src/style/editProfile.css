@@ -1,0 +1,32 @@
+.editDiv {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.8rem 2.75rem 2.75rem 2.75rem;
+  }
+  
+  .EditLabel {
+    display: flex;
+    font-family: ManropeBold;
+    font-size: 13px;
+    margin-bottom: 0.5rem;
+    color: #8991a7;
+  }
+  
+  .EditInput {
+    border-bottom: 1.5px solid #393c6a;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    padding: 0.5rem 0rem;
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  ::placeholder {
+    color: #393c6a;
+    font-family: ManropeMedium;
+  }
+  
