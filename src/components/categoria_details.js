@@ -4,7 +4,7 @@ import "../style/categoria_details.css";
 import { AnimateSharedLayout } from "framer-motion";
 import Rotas from "../components/data/routes.json";
 
-const Categoria_details = () => {
+const CategoriaDetails = () => {
   return (
     <div className="background">
       <div
@@ -147,4 +147,4 @@ const Categoria_details = () => {
   );
 };
 
-export default Categoria_details;
+export default CategoriaDetails;

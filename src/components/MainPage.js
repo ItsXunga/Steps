@@ -9,6 +9,8 @@ import menu_add_route from "../assets/img/menu_add_route.svg";
 import menu_perfil from "../assets/img/menu_perfil.svg";
 import menu_avatar from "../assets/img/menu_avatar.svg";
 import search_icon from "../assets/img/search_icon.svg";
+import menuClosed from "../assets/img/menu/hamburguerClosed.svg";
+import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
@@ -265,9 +267,7 @@ const SecondPage = () => {
           
         }}
       >
-        <Link to="/">
-          <img style={{margin: '0rem .2rem'}} id="menu1" src={menu_settings} />
-        </Link>
+        
         <Link to="/">
           <img style={{margin: '0rem .2rem'}} id="menu2" src={menu_categorias} />
         </Link>
@@ -277,7 +277,7 @@ const SecondPage = () => {
         <Link to="/">
           <img style={{margin: '0rem .2rem'}} id="menu4" src={menu_perfil} />
         </Link>
-        <img /*onClick={() => setMenu(!menu)}*/style={{margin: '0rem .2rem'}}  src={menu_avatar}></img>
+        <img /*onClick={() => setMenu(!menu)}*/style={{margin: '0rem .2rem'}}  src={menuOpened} />
       </div>
       <div
         className="map-container"
