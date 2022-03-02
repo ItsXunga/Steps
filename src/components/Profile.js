@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import Slider from "react-slick";
-import "../style/Profile.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
-import { ProfileBG } from "../assets/img/profile/profile-bg";
-import Rotas from "../components/data/routes.json";
-import { PinColor } from "../assets/img/profile/pin";
+import React, { useState } from "react"
+import Slider from "react-slick"
+import "../style/Profile.css"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import { Link } from "react-router-dom"
+import { ProfileBG } from "../assets/img/profile/profile-bg"
+import Rotas from "../components/data/routes.json"
+import { PinColor } from "../assets/img/profile/pin"
 
 const Profile = () => {
   const [selectedTabArray, setSelectedTabArray] = useState(
     Rotas.filter(function (value) {
-      return value.creator === "John Lee";
+      return value.creator === "John Lee"
     })
-  );
-  const [favSelected, setFavSelected] = useState(false);
+  )
+  const [favSelected, setFavSelected] = useState(false)
   const settings = {
     dots: true,
     speed: 800,
@@ -22,25 +22,25 @@ const Profile = () => {
     slideToScroll: 1,
     arrows: false,
     infinite: false,
-  };
+  }
 
   const changeFav = () => {
     setSelectedTabArray(
       Rotas.filter(function (value) {
-        return value.creator !== "John Lee";
+        return value.creator !== "John Lee"
       })
-    );
-    setFavSelected(true);
-  };
+    )
+    setFavSelected(true)
+  }
 
   const changeOwn = () => {
     setSelectedTabArray(
       Rotas.filter(function (value) {
-        return value.creator === "John Lee";
+        return value.creator === "John Lee"
       })
-    );
-    setFavSelected(false);
-  };
+    )
+    setFavSelected(false)
+  }
 
   const CheckPin = (start, end, name) => {
     if (start === true && end === false) {
@@ -56,7 +56,7 @@ const Profile = () => {
           <PinColor color="#5F61F3" />
           <p>{name}</p>
         </div>
-      );
+      )
     } else if (start === false && end === false) {
       return (
         <div
@@ -70,7 +70,7 @@ const Profile = () => {
           <PinColor color="#8283F5" />
           <p>{name}</p>
         </div>
-      );
+      )
     } else {
       return (
         <div
@@ -84,9 +84,9 @@ const Profile = () => {
           <PinColor color="#A5A6F6" />
           <p>{name}</p>
         </div>
-      );
+      )
     }
-  };
+  }
 
   return (
     <section className="profileMain">
@@ -256,7 +256,7 @@ const Profile = () => {
         </Slider>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
