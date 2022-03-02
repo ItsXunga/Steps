@@ -3,18 +3,11 @@ import mapboxgl from "mapbox-gl";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import { route_styles } from "../style/route_styles";
 import { Link, useLocation } from "react-router-dom";
-import menu_settings from "../assets/img/menu_settings.svg";
-import menu_categorias from "../assets/img/menu_categorias.svg";
-import menu_add_route from "../assets/img/menu_add_route.svg";
-import menu_perfil from "../assets/img/menu_perfil.svg";
-import menu_avatar from "../assets/img/menu_avatar.svg";
-import search_icon from "../assets/img/search_icon.svg";
-import menuClosed from "../assets/img/menu/hamburguerClosed.svg";
-import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
+import Nav from "./nav";
 
 Modal.setAppElement("#root");
 
@@ -347,16 +340,7 @@ const SecondPage = () => {
           alignItems: "baseline",
         }}
       >
-        <Link to="/">
-          <img style={{ margin: "0rem .2rem" }} src={menu_categorias} />
-        </Link>
-        <Link to="/">
-          <img style={{ margin: "0rem .2rem" }} src={menu_add_route} />
-        </Link>
-        <Link to="/">
-          <img style={{ margin: "0rem .2rem" }} src={menu_perfil} />
-        </Link>
-        <img style={{ margin: "0rem .2rem" }} src={menuOpened} />
+        <Nav />
       </div>
 
       <div>
