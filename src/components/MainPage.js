@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import { route_styles } from "../style/route_styles";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import menu_settings from "../assets/img/menu_settings.svg";
 import menu_categorias from "../assets/img/menu_categorias.svg";
 import menu_add_route from "../assets/img/menu_add_route.svg";
@@ -23,6 +23,12 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
 const SecondPage = () => {
+  const pinId = useLocation()
+  if (pinId.state != null) {
+    const { id } = pinId.state // id da rota que vem do profile
+  } 
+ 
+ 
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -38,7 +44,7 @@ const SecondPage = () => {
 
   function closeModal() {
     setIsOpen(false);
-    document.getElementById("menu_bar").style.display = "block";
+    document.getElementById("menu_bar").style.display = "flex";
   }
 
   const customStyles = {
@@ -361,10 +367,10 @@ const SecondPage = () => {
         />
       </div> */}
       <div
+        id="menu_bar"
         style={{
           position: "fixed",
           zIndex: "1",
-          textAlign: "center",
           bottom: "0",
           width: "100vw",
           padding: '1rem',
