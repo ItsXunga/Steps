@@ -359,30 +359,32 @@ const SecondPage = () => {
         />
       </div> */}
       <div
-        id="menu_bar"
         style={{
           position: "fixed",
           zIndex: "1",
           textAlign: "center",
-          bottom: "2.5vh",
-          verticalAlign: "middle",
+          bottom: "0",
           width: "100vw",
+          padding: '1rem',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'baseline',
+          
         }}
       >
+        
         <Link to="/">
-          <img id="menu1" src={menu_settings}></img>
+          <img style={{margin: '0rem .2rem'}} id="menu2" src={menu_categorias} />
         </Link>
         <Link to="/">
-          <img id="menu2" src={menu_categorias}></img>
+          <img style={{margin: '0rem .2rem'}} id="menu3" src={menu_add_route} />
         </Link>
         <Link to="/">
-          <img id="menu3" src={menu_add_route}></img>
+          <img style={{margin: '0rem .2rem'}} id="menu4" src={menu_perfil} />
         </Link>
-        <Link to="/">
-          <img id="menu4" src={menu_perfil}></img>
-        </Link>
-        <img /*onClick={() => setMenu(!menu)}*/ src={menu_avatar}></img>
+        <img /*onClick={() => setMenu(!menu)}*/style={{margin: '0rem .2rem'}}  src={menuOpened} />
       </div>
+
 
       <div>
         <Modal
