@@ -22,12 +22,11 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
 const SecondPage = () => {
-  const pinId = useLocation()
+  const pinId = useLocation();
   if (pinId.state != null) {
-    const { id } = pinId.state // id da rota que vem do profile
-  } 
- 
- 
+    const { id } = pinId.state; // id da rota que vem do profile
+  }
+
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -64,7 +63,7 @@ const SecondPage = () => {
       {
         type: "Feature",
         geometry: {
-          type: "MultiPoint",
+          type: "Point",
           coordinates: [Rotas[0].pins[0].long, Rotas[0].pins[0].lat],
         },
         properties: {
@@ -290,7 +289,7 @@ const SecondPage = () => {
       }
     }
 
-    const userteste = new mapboxgl.GeolocateControl({
+    const userLocation = new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
       },
@@ -299,9 +298,9 @@ const SecondPage = () => {
       // Draw an arrow next to the location dot to indicate which direction the device is heading.
       showUserHeading: true,
     });
-    map.addControl(userteste);
+    map.addControl(userLocation);
     map.on("load", () => {
-      userteste.trigger();
+      userLocation.trigger();
     });
 
     // If the user clicks the delete draw button, remove the layer if it exists
@@ -335,33 +334,6 @@ const SecondPage = () => {
 
   return (
     <div>
-      {/* <div
-        style={{
-          position: "fixed",
-          zIndex: "1",
-          textAlign: "center",
-          top: "2.5vh",
-          verticalAlign: "middle",
-          width: "100vw",
-        }}
-      >
-        <input
-          style={{
-            width: "80%",
-            height: "5vh",
-            borderRadius: "40vw",
-            border: "2px solid #FFFFFF",
-            backgroundColor: "#FFFFFF",
-            opacity: "60%",
-            fontFamily: "ManropeRegular",
-            fontSize: "19px",
-            color: "#393C6A",
-            backgroundImage: `url(${search_icon})`,
-            backgroundPosition: "95% 50%",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-      </div> */}
       <div
         id="menu_bar"
         style={{
@@ -376,21 +348,13 @@ const SecondPage = () => {
         }}
       >
         <Link to="/">
-          <img
-            style={{ margin: "0rem .2rem" }}
-            id="menu2"
-            src={menu_categorias}
-          />
+          <img style={{ margin: "0rem .2rem" }} src={menu_categorias} />
         </Link>
         <Link to="/">
-          <img
-            style={{ margin: "0rem .2rem" }}
-            id="menu3"
-            src={menu_add_route}
-          />
+          <img style={{ margin: "0rem .2rem" }} src={menu_add_route} />
         </Link>
         <Link to="/">
-          <img style={{ margin: "0rem .2rem" }} id="menu4" src={menu_perfil} />
+          <img style={{ margin: "0rem .2rem" }} src={menu_perfil} />
         </Link>
         <img style={{ margin: "0rem .2rem" }} src={menuOpened} />
       </div>
