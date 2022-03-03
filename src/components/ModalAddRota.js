@@ -2,15 +2,15 @@ import React, { useState } from "react"
 import Modal from "react-modal"
 import { modalStyles } from "../style/modal_styles"
 
-function ModalInfo(params) {
-  const [modalIsOpen, setIsOpen] = useState(false);
+function ModalAddRota(params) {
+  const [modalIsOpen, setIsOpen] = useState(false)
 
   function openModal() {
-    setIsOpen(true);
+    setIsOpen(true)
   }
 
   function closeModal() {
-    setIsOpen(false);
+    setIsOpen(false)
   }
 
   return (
@@ -33,19 +33,13 @@ function ModalInfo(params) {
                 fontFamily: "ManropeRegular",
               }}
             >
-              Pressiona no mapa para marcares o teu ponto
+              A tua rota foi adicionada com sucesso!
             </p>
-
-            <div style={{ padding: "1rem 2rem" }}>
-              <button onClick={closeModal} className="orangeButton">
-                Guardar
-              </button>
-            </div>
           </div>
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalInfo;
+export default ModalAddRota
