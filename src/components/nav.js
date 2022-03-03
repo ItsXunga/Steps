@@ -218,6 +218,7 @@ const Nav = (props) => {
             zIndex: 5,
             boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.25)",
             borderRadius: "50%",
+            cursor: "pointer"
           }}
           onClick={openMenu}
           alt="menu"
@@ -230,6 +231,7 @@ const Nav = (props) => {
             zIndex: 5,
             boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.25)",
             borderRadius: "50%",
+            cursor: "pointer"
           }}
           onClick={openMenu}
           alt="menu"
