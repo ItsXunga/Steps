@@ -13,7 +13,10 @@ Modal.setAppElement("#root");
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
-const Map = () => {
+const Map = (props) => {
+
+  console.log(props.modo);
+
   const pinId = useLocation();
   if (pinId.state !== null) {
     const { id } = pinId.state; // id da rota que vem do profile~
