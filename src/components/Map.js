@@ -252,7 +252,7 @@ const Map = (props) => {
             {new mapboxgl.Marker()
               .setLngLat(element.features[0].geometry.coordinates)
               .setPopup(
-                new mapboxgl.Popup({ offset: 25 }) // add popups
+                new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
                   .setHTML(
                     `
                     <button onClick=${getRotas()}}>click here</button>
