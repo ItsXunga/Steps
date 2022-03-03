@@ -1,42 +1,42 @@
 [
-    {
-        "category":"Cultura",
-        "img":"cultura.png",
-        "color": "#5D5FEF"
-    },
-    {
-        "category":"Shopping",
-        "img":"shopping.png",
-        "color": "#F178B6"
-    },
-    {
-        "category":"Desporto",
-        "img":"desporto.png",
-        "color": "#68BDFA"
-    },
-    {
-        "category":"Natureza",
-        "img":"natureza.png",
-        "color": "#98D99A"
-    },
-    {
-        "category":"Gastronomia",
-        "img":"gastronomia.png",
-        "color": "#F69E7C"
-    },
-    {
-        "category":"Bares",
-        "img":"bares.png",
-        "color": "#F85EDF"
-    },
-    {
-        "category":"Experiência",
-        "img":"experiencia.png",
-        "color": "#316DE2"
-    },
-    {
-        "category":"Único",
-        "img":"unico.png",
-        "color": "#FF6968"
-    }
+  {
+    "category": "Cultura",
+    "img": "cultura.png",
+    "color": "#5D5FEF"
+  },
+  {
+    "category": "Shopping",
+    "img": "shopping.png",
+    "color": "#F178B6"
+  },
+  {
+    "category": "Desporto",
+    "img": "desporto.png",
+    "color": "#68BDFA"
+  },
+  {
+    "category": "Natureza",
+    "img": "natureza.png",
+    "color": "#98D99A"
+  },
+  {
+    "category": "Gastronomia",
+    "img": "gastronomia.png",
+    "color": "#F69E7C"
+  },
+  {
+    "category": "Bares",
+    "img": "bares.png",
+    "color": "#F85EDF"
+  },
+  {
+    "category": "Experiência",
+    "img": "experiencia.png",
+    "color": "#316DE2"
+  },
+  {
+    "category": "Único",
+    "img": "unico.png",
+    "color": "#FF6968"
+  }
 ]

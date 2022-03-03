@@ -3,12 +3,11 @@ import Nav from "./nav";
 import Map from "./Map";
 
 const SecondPage = () => {
-
-  const [mode, setMode] = useState()
+  const [mode, setMode] = useState();
 
   const pull_modo = (value) => {
-    setMode(value)
-  }
+    setMode(value);
+  };
 
   return (
     <div>
@@ -27,7 +26,7 @@ const SecondPage = () => {
       >
         <Nav checkModo={pull_modo} />
       </div>
-      <Map modo={mode}/>
+      <Map modo={mode} />
     </div>
   );
 };

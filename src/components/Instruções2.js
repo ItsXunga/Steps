@@ -1,7 +1,7 @@
-import React from "react"
-import intro2_dots from "../assets/img/intro2_dots.svg"
-import { Link } from "react-router-dom"
-import "../style/OnBoarding.css"
+import React from "react";
+import intro2_dots from "../assets/img/intro2_dots.svg";
+import { Link } from "react-router-dom";
+import "../style/OnBoarding.css";
 
 const Instruções2 = () => {
   return (
@@ -94,7 +94,7 @@ const Instruções2 = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Instruções2
+export default Instruções2;

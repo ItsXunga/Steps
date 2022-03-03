@@ -1,16 +1,16 @@
-import React, { useState } from "react"
-import Modal from "react-modal"
-import { modalStyles, modalPinInfo } from "../style/modal_styles"
+import React, { useState } from "react";
+import Modal from "react-modal";
+import { modalStyles, modalPinInfo } from "../style/modal_styles";
 
 function ModalInfo(params) {
-  const [modalIsOpen, setIsOpen] = useState(false)
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
-    setIsOpen(true)
+    setIsOpen(true);
   }
 
   function closeModal() {
-    setIsOpen(false)
+    setIsOpen(false);
   }
 
   return (
@@ -45,7 +45,7 @@ function ModalInfo(params) {
         </div>
       </Modal>
     </div>
-  )
+  );
 }
 
-export default ModalInfo
+export default ModalInfo;

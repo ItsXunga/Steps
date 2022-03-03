@@ -1,20 +1,39 @@
-import React, { useState } from "react"
-import Slider from "react-slick"
-import "../style/Profile.css"
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
-import { Link } from "react-router-dom"
-import { ProfileBG } from "../assets/img/profile/profile-bg"
-import Rotas from "../components/data/routes.json"
-import { PinColor } from "../assets/img/profile/pin"
+import React, { useState } from "react";
+import Slider from "react-slick";
+import "../style/Profile.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
+import { ProfileBG } from "../assets/img/profile/profile-bg";
+import Rotas from "../components/data/routes.json";
+import { PinColor } from "../assets/img/profile/pin";
 
 const Profile = () => {
+  const geojson = Rotas.map((value) => ({
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [value.pins[0].long, value.pins[0].lat],
+        },
+        properties: {
+          title: value.name,
+          description: value.desc,
+        },
+      },
+    ],
+  }));
+
+  console.log(geojson);
+
   const [selectedTabArray, setSelectedTabArray] = useState(
     Rotas.filter(function (value) {
-      return value.creator === "John Lee"
+      return value.creator === "John Lee";
     })
-  )
-  const [favSelected, setFavSelected] = useState(false)
+  );
+  const [favSelected, setFavSelected] = useState(false);
   const settings = {
     dots: true,
     speed: 800,
@@ -22,25 +41,25 @@ const Profile = () => {
     slideToScroll: 1,
     arrows: false,
     infinite: false,
-  }
+  };
 
   const changeFav = () => {
     setSelectedTabArray(
       Rotas.filter(function (value) {
-        return value.creator !== "John Lee"
+        return value.creator !== "John Lee";
       })
-    )
-    setFavSelected(true)
-  }
+    );
+    setFavSelected(true);
+  };
 
   const changeOwn = () => {
     setSelectedTabArray(
       Rotas.filter(function (value) {
-        return value.creator === "John Lee"
+        return value.creator === "John Lee";
       })
-    )
-    setFavSelected(false)
-  }
+    );
+    setFavSelected(false);
+  };
 
   const CheckPin = (start, end, name) => {
     if (start === true && end === false) {
@@ -56,7 +75,7 @@ const Profile = () => {
           <PinColor color="#5F61F3" />
           <p>{name}</p>
         </div>
-      )
+      );
     } else if (start === false && end === false) {
       return (
         <div
@@ -70,7 +89,7 @@ const Profile = () => {
           <PinColor color="#8283F5" />
           <p>{name}</p>
         </div>
-      )
+      );
     } else {
       return (
         <div
@@ -84,9 +103,9 @@ const Profile = () => {
           <PinColor color="#A5A6F6" />
           <p>{name}</p>
         </div>
-      )
+      );
     }
-  }
+  };
 
   return (
     <section className="profileMain">
@@ -125,13 +144,17 @@ const Profile = () => {
               alt="avatar"
             />
           </div>
-          <div style={{textAlign: "center", marginTop: ".5rem"}}>
-            <div style={{display: 'inline-flex', alignItems: 'center'}}>
+          <div style={{ textAlign: "center", marginTop: ".5rem" }}>
+            <div style={{ display: "inline-flex", alignItems: "center" }}>
               <h1>John Lee</h1>
               <Link to={"/editProfile"}>
-              <div style={{display: 'flex'}}>
-                <img style={{paddingLeft: '.5rem', zIndex: 1}} src={require("../assets/img/profile/profileSettings.png")} alt="profile settings" />
-              </div>
+                <div style={{ display: "flex" }}>
+                  <img
+                    style={{ paddingLeft: ".5rem", zIndex: 1 }}
+                    src={require("../assets/img/profile/profileSettings.png")}
+                    alt="profile settings"
+                  />
+                </div>
               </Link>
             </div>
             <p>Engenheiro Software</p>
@@ -242,22 +265,22 @@ const Profile = () => {
               </section>
 
               <section className="sideButton">
-                <Link to={'/main'} state={{id: props.id}}>
-                <button className="goButton">
-                  <svg
-                    style={{ display: "flex", margin: "auto" }}
-                    width="12"
-                    height="11"
-                    viewBox="0 0 12 11"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M2.21745 10.9793L0.296229 9.05811L6.31881 3.03553L1.31246 3.0659L1.33431 0.335123L11.0179 0.257654L10.9404 9.94125L8.20966 9.9631L8.24003 4.95675L2.21745 10.9793Z"
-                      fill="#393C6A"
-                    />
-                  </svg>
-                </button>
+                <Link to={"/main"} state={{ id: props.id }}>
+                  <button className="goButton">
+                    <svg
+                      style={{ display: "flex", margin: "auto" }}
+                      width="12"
+                      height="11"
+                      viewBox="0 0 12 11"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2.21745 10.9793L0.296229 9.05811L6.31881 3.03553L1.31246 3.0659L1.33431 0.335123L11.0179 0.257654L10.9404 9.94125L8.20966 9.9631L8.24003 4.95675L2.21745 10.9793Z"
+                        fill="#393C6A"
+                      />
+                    </svg>
+                  </button>
                 </Link>
               </section>
             </div>
@@ -265,7 +288,7 @@ const Profile = () => {
         </Slider>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

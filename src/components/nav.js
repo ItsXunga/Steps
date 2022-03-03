@@ -7,17 +7,17 @@ import menuClosed from "../assets/img/menu/hamburguerClosed.svg";
 import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 
 const Nav = (props) => {
-  const [modoRota, setModoRota] = useState(false)
+  const [modoRota, setModoRota] = useState(false);
 
-    props.checkModo(modoRota);
+  props.checkModo(modoRota);
 
   const changeModoRota = () => {
-      if (modoRota === false) {
-          setModoRota(true);
-      } else {
-          setModoRota(false)
-      }
-  }
+    if (modoRota === false) {
+      setModoRota(true);
+    } else {
+      setModoRota(false);
+    }
+  };
 
   return (
     <>
@@ -28,14 +28,14 @@ const Nav = (props) => {
           src={menu_categorias}
         />
       </Link>
-      
-        <img
-          style={{ margin: "0rem .2rem" }}
-          alt="nova rota"
-          src={menu_add_route}
-          onClick={() => changeModoRota()}
-        />
-      
+
+      <img
+        style={{ margin: "0rem .2rem" }}
+        alt="nova rota"
+        src={menu_add_route}
+        onClick={() => changeModoRota()}
+      />
+
       <Link to="/profile">
         <img style={{ margin: "0rem .2rem" }} alt="perfil" src={menu_perfil} />
       </Link>

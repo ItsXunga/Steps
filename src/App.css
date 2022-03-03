@@ -40,7 +40,6 @@ h1 {
   z-index: 1;
 }
 
-
 .marker {
   background-image: url("assets/img/point.svg");
   background-size: cover;
@@ -100,12 +99,12 @@ h1 {
   color: #393c6a !important;
 }
 
-.directions-control  {
-  display: block!important;
+.directions-control {
+  display: block !important;
 }
 
 .directions-control-instructions {
-  display: block!important;
+  display: block !important;
 }
 
 .info-box {

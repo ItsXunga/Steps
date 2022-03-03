@@ -10,7 +10,7 @@ export const modalStyles = {
     margin: "auto",
     textAlign: "center",
   },
-}
+};
 
 export const modalPinInfo = {
   content: {
@@ -25,4 +25,4 @@ export const modalPinInfo = {
     textAlign: "center",
     overflow: "hidden",
   },
-}
+};
