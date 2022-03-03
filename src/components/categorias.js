@@ -1,8 +1,8 @@
-import React from "react";
-import { allcolors } from "../style/global_styles";
-import "../style/categorias.css";
-import CategoriasData from "../components/data/categorias.json";
-import { Link } from "react-router-dom";
+import React from "react"
+import { allcolors } from "../style/global_styles"
+import "../style/categorias.css"
+import CategoriasData from "../components/data/categorias.json"
+import { Link } from "react-router-dom"
 
 const Categorias = () => {
   return (
@@ -61,7 +61,7 @@ const Categorias = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Categorias;
+export default Categorias
