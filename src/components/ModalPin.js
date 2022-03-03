@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Modal from "react-modal"
-import { modalStyles, modalPinInfo } from "../style/modal_styles"
+import { modalStyles } from "../style/modal_styles"
 import "../style/modais_styles.css"
 
 function ModalPin(params) {
@@ -21,13 +21,14 @@ function ModalPin(params) {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={modalPinInfo}
+        style={modalStyles}
         contentLabel="Example Modal"
       >
         <div>
+          <h2 style={{ textAlign: "center", padding: "0.5rem" }}>Ponto 1</h2>
           <input className="inputpin" />
-          <input className="inputdescription" />
-          <div style={{ margin: "1.5rem 0" }}>
+          <textarea className="inputdescription" />
+          <div style={{ margin: "1rem 0" }}>
             <div style={{ padding: "0.5rem 1rem" }}>
               <button onClick={closeModal} className="orangeButton">
                 Adicionar
