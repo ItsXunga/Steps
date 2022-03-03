@@ -50,7 +50,7 @@ export default function CategoriaDetails() {
         </h1>
       </div>
       <AnimateSharedLayout>
-        <motion.ul layout initial={{ borderRadius: 25 }}>
+        <motion.ul className="ul" layout initial={{ borderRadius: 25 }}>
           {routeArray.map((item) => (
             <Item content={item} />
           ))}
@@ -69,6 +69,7 @@ function Item(props) {
 
   return (
     <motion.li
+    className="li"
       layout
       style={{ boxShadow: "0 2px 7px 0px #00000033" }}
       initial={{ borderRadius: 25 }}

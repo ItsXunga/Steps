@@ -90,7 +90,7 @@ const Nav = (props) => {
       )}
 
       {menuImage === menuClosed ? (
-        <Link to="/main">
+        <Link  to="/main">
           {menuImage === menuClosed ? (
             <motion.img
               animate={{
@@ -154,7 +154,7 @@ const Nav = (props) => {
       )}
 
       {menuImage === menuClosed ? (
-        <Link to="/profile">
+        <Link  to="/profile">
           {menuImage === menuClosed ? (
             <motion.img
               animate={{
