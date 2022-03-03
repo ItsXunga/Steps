@@ -15,8 +15,6 @@ mapboxgl.accessToken =
 
 const Map = (props) => {
 
-  console.log(props.modo);
-
   const pinId = useLocation();
   if (pinId.state !== null) {
     const { id } = pinId.state; // id da rota que vem do profile~

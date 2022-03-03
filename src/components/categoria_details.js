@@ -4,8 +4,18 @@ import "../style/categoria_details.css"
 import { PinColor } from "../assets/img/profile/pin"
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion"
 import Rotas from "../components/data/routes.json"
+import { Link, useLocation } from "react-router-dom"
 
 const CategoriaDetails = () => {
+  const name = useLocation()
+  const { category } = name.state;
+  const routeArray = 
+    Rotas.filter(function(value) {
+      return value.category === category
+    })
+
+    console.log(routeArray);
+
   const [isOpen, setIsOpen] = useState(false)
 
   const CheckPin = (start, end, name) => {
@@ -63,6 +73,7 @@ const CategoriaDetails = () => {
           paddingTop: "2rem",
         }}
       >
+        <Link to={'/categorias'}>
         <div className="backarrow">
           <svg
             width="15"
@@ -79,18 +90,19 @@ const CategoriaDetails = () => {
             />
           </svg>
         </div>
+        </Link>
         <h1
           style={{
             color: allcolors.colors.darkblue,
             fontSize: "24px",
           }}
         >
-          Gastronomia
+          {category}
         </h1>
       </div>
       <div className="container">
         <div className="grid_categoria">
-          {Rotas.map((props) => (
+          {routeArray.map((props) => (
             <div className="categoriacard">
               <div style={{ display: "grid" }}>
                 <h1
