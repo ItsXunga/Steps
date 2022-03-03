@@ -1,4 +1,3 @@
-ul,
 li {
   list-style: none;
   border-radius: 45px;
@@ -54,7 +53,7 @@ ul {
 }
 
 .categoriacardopen {
-  padding: 0rem 1.5rem 1.5rem 1.5rem;
+  padding: 1.5rem;
 }
 
 li {
