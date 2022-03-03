@@ -133,7 +133,7 @@ function Item(props) {
           ) : (
             <motion.button
               animate={{
-                y: [200, 0],
+                y: 0,
                 transition: {
                   ease: "easeInOut",
                   duration: 0.85,
