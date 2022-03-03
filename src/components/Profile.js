@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import Slider from "react-slick";
-import "../style/Profile.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
-import { ProfileBG } from "../assets/img/profile/profile-bg";
-import Rotas from "../components/data/routes.json";
-import { PinColor } from "../assets/img/profile/pin";
+import React, { useState } from "react"
+import Slider from "react-slick"
+import "../style/Profile.css"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import { Link } from "react-router-dom"
+import { ProfileBG } from "../assets/img/profile/profile-bg"
+import Rotas from "../components/data/routes.json"
+import { PinColor } from "../assets/img/profile/pin"
 
 const Profile = () => {
   const geojson = Rotas.map((value) => ({
@@ -24,16 +24,16 @@ const Profile = () => {
         },
       },
     ],
-  }));
+  }))
 
-  console.log(geojson);
+  console.log(geojson)
 
   const [selectedTabArray, setSelectedTabArray] = useState(
     Rotas.filter(function (value) {
-      return value.creator === "John Lee";
+      return value.creator === "John Lee"
     })
-  );
-  const [favSelected, setFavSelected] = useState(false);
+  )
+  const [favSelected, setFavSelected] = useState(false)
   const settings = {
     dots: true,
     speed: 800,
@@ -41,25 +41,25 @@ const Profile = () => {
     slideToScroll: 1,
     arrows: false,
     infinite: false,
-  };
+  }
 
   const changeFav = () => {
     setSelectedTabArray(
       Rotas.filter(function (value) {
-        return value.creator !== "John Lee";
+        return value.creator !== "John Lee"
       })
-    );
-    setFavSelected(true);
-  };
+    )
+    setFavSelected(true)
+  }
 
   const changeOwn = () => {
     setSelectedTabArray(
       Rotas.filter(function (value) {
-        return value.creator === "John Lee";
+        return value.creator === "John Lee"
       })
-    );
-    setFavSelected(false);
-  };
+    )
+    setFavSelected(false)
+  }
 
   const CheckPin = (start, end, name) => {
     if (start === true && end === false) {
@@ -75,7 +75,7 @@ const Profile = () => {
           <PinColor color="#5F61F3" />
           <p>{name}</p>
         </div>
-      );
+      )
     } else if (start === false && end === false) {
       return (
         <div
@@ -89,7 +89,7 @@ const Profile = () => {
           <PinColor color="#8283F5" />
           <p>{name}</p>
         </div>
-      );
+      )
     } else {
       return (
         <div
@@ -103,9 +103,9 @@ const Profile = () => {
           <PinColor color="#A5A6F6" />
           <p>{name}</p>
         </div>
-      );
+      )
     }
-  };
+  }
 
   return (
     <section className="profileMain">
@@ -211,7 +211,7 @@ const Profile = () => {
           {selectedTabArray.map((props) => (
             <div className="profileCard" key={props.id} id="main">
               <section className="cardButton">
-                <h1>{props.category}</h1>
+                <h3>{props.category}</h3>
                 <section>
                   <button
                     className="profileButton"
@@ -251,9 +251,9 @@ const Profile = () => {
               </section>
 
               <section style={{ margin: "0rem .5rem 0rem .5rem" }}>
-                <h1 style={{ fontSize: "18px", fontFamily: "ManropeBold" }}>
+                <h2 style={{ fontSize: "18px", fontFamily: "ManropeBold" }}>
                   {props.name}
-                </h1>
+                </h2>
                 <p style={{ marginTop: ".5rem" }}>{props.desc}</p>
               </section>
               <section
@@ -288,7 +288,7 @@ const Profile = () => {
         </Slider>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
