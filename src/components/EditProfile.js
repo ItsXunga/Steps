@@ -1,6 +1,6 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import "../style/editProfile.css"
+import React from "react";
+import { Link } from "react-router-dom";
+import "../style/editProfile.css";
 
 const EditProfile = () => {
   return (
@@ -84,7 +84,7 @@ const EditProfile = () => {
         <button className="orangeButton">Guardar</button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditProfile
+export default EditProfile;

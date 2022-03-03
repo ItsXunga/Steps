@@ -35,7 +35,7 @@ function App() {
       <Route path="/modalAddRota" element={<ModalAddRota />} />
       <Route path="/modalRota" element={<ModalRota />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

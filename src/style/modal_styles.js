@@ -11,7 +11,7 @@ export const modalStyles = {
     textAlign: "center",
     overflow: "auto",
   },
-}
+};
 
 export const modalRota = {
   content: {
@@ -27,4 +27,4 @@ export const modalRota = {
     overflow: "auto",
     border: "1px solid #5F61F3",
   },
-}
+};

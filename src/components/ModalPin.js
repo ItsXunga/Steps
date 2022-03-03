@@ -4,14 +4,14 @@ import { modalStyles } from "../style/modal_styles"
 import "../style/modais_styles.css"
 
 function ModalPin(params) {
-  const [modalIsOpen, setIsOpen] = useState(false)
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
-    setIsOpen(true)
+    setIsOpen(true);
   }
 
   function closeModal() {
-    setIsOpen(false)
+    setIsOpen(false);
   }
 
   return (
@@ -43,7 +43,7 @@ function ModalPin(params) {
         </div>
       </Modal>
     </div>
-  )
+  );
 }
 
-export default ModalPin
+export default ModalPin;
