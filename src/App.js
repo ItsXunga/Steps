@@ -14,6 +14,7 @@ import EditProfile from "./components/EditProfile"
 import ModalInfo from "./components/ModalInfo"
 import ModalPin from "./components/ModalPin"
 import ModalAddRota from "./components/ModalAddRota"
+import ModalRota from "./components/modalRota"
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Route path="/modalInfo" element={<ModalInfo />} />
       <Route path="/modalPin" element={<ModalPin />} />
       <Route path="/modalAddRota" element={<ModalAddRota />} />
+      <Route path="/modalRota" element={<ModalRota />} />
     </Routes>
   )
 }
