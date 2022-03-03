@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Nav from "./nav";
 import Map from "./Map";
 
 const SecondPage = () => {
+
+  const [mode, setMode] = useState()
+
+  const pull_modo = (value) => {
+    setMode(value)
+  }
+
   return (
     <div>
       <div
@@ -18,9 +25,9 @@ const SecondPage = () => {
           alignItems: "baseline",
         }}
       >
-        <Nav />
+        <Nav checkModo={pull_modo} />
       </div>
-      <Map />
+      <Map modo={mode}/>
     </div>
   );
 };
