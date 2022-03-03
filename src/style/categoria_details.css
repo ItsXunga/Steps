@@ -1,9 +1,9 @@
-li {
+.li {
   list-style: none;
   border-radius: 45px;
 }
 
-ul {
+.ul {
   width: auto;
   margin: 0 auto;
   padding: 3rem 0 5rem 0;
@@ -56,7 +56,7 @@ ul {
   padding: 1.5rem;
 }
 
-li {
+.li {
   background: rgba(255, 255, 255, 0.5);
   box-shadow: 0 2px 7px 0px #00000033;
   border-radius: 25px;
@@ -64,7 +64,7 @@ li {
   cursor: pointer;
 }
 
-li:last-child {
+.li:last-child {
   margin-bottom: 0px;
 }
 
