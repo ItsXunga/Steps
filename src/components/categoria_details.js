@@ -107,13 +107,13 @@ function Item(props) {
           </button>
           {isOpen === true ? (
             <motion.button
-              animate={{
-                y: 125,
-                transition: {
-                  ease: "easeInOut",
-                  duration: 0.35,
-                },
-              }}
+              // animate={{
+              //   y: 100,
+              //   transition: {
+              //     ease: "easeInOut",
+              //     duration: 0.35,
+              //   },
+              // }}
               className="buttonroute"
             >
               <svg
@@ -132,13 +132,13 @@ function Item(props) {
             </motion.button>
           ) : (
             <motion.button
-              animate={{
-                y: 0,
-                transition: {
-                  ease: "easeInOut",
-                  duration: 0.85,
-                },
-              }}
+              // animate={{
+              //   y: 0,
+              //   transition: {
+              //     ease: "easeInOut",
+              //     duration: 0.85,
+              //   },
+              // }}
               className="buttonroute"
             >
               <svg
