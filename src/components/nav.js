@@ -7,7 +7,6 @@ import menuClosed from "../assets/img/menu/hamburguerClosed.svg";
 import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 
 const Nav = () => {
-  const [modoRota, setModoRota] = useState(false)
   return (
     <>
       <Link to="/categorias">
