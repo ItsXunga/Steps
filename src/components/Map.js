@@ -122,7 +122,7 @@ const Map = (props) => {
         trash: true,
       },
       // Set the draw mode to draw LineStrings by default.
-      defaultMode: "draw_line_string",
+      defaultMode: "simple_select",
       styles: route_styles,
     });
 
