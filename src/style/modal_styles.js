@@ -6,13 +6,14 @@ export const modalStyles = {
     border: "white 2px solid",
     borderRadius: "20px",
     padding: "2rem",
-    maxHeight: "30vh",
+    maxHeight: "fit-content",
     margin: "auto",
     textAlign: "center",
+    overflow: "auto",
   },
 };
 
-export const modalPinInfo = {
+export const modalRota = {
   content: {
     background:
       "linear-gradient(\n    180deg,\n    rgba(255, 255, 255, 0.9) 20%,\n    rgba(255, 255, 255, 0.5) 90%\n  )",
@@ -20,9 +21,10 @@ export const modalPinInfo = {
     border: "white 2px solid",
     borderRadius: "20px",
     padding: "2rem",
-    maxHeight: "50vh",
+    maxHeight: "fit-content",
     margin: "auto",
     textAlign: "center",
-    overflow: "hidden",
+    overflow: "auto",
+    border: "1px solid #5F61F3",
   },
 };
