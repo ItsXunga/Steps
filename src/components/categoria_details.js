@@ -13,53 +13,7 @@ export default function CategoriaDetails() {
     return value.category === category;
   });
 
-  const CheckPin = (start, end, name) => {
-    if (start === true && end === false) {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#5F61F3" />
-          <p>{name}</p>
-        </div>
-      );
-    } else if (start === false && end === false) {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#8283F5" />
-          <p>{name}</p>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#A5A6F6" />
-          <p>{name}</p>
-        </div>
-      );
-    }
-  };
-
-  return (
+   return (
     <div className="background">
       <div
         style={{
@@ -98,7 +52,7 @@ export default function CategoriaDetails() {
       <AnimateSharedLayout>
         <motion.ul layout initial={{ borderRadius: 25 }}>
           {routeArray.map((item) => (
-            <Item key={item} />
+            <Item content={item} />
           ))}
         </motion.ul>
       </AnimateSharedLayout>
@@ -117,11 +71,11 @@ function Item(props) {
     <motion.li
       layout
       style={{ boxShadow: "0 2px 7px 0px #00000033" }}
-      onClick={toggleOpen}
       initial={{ borderRadius: 25 }}
+      id='#motionDiv'
     >
       <motion.div layout className="categoriacard">
-        <div style={{ display: "grid" }}>
+        <div style={{ display: "grid" }} onClick={toggleOpen}>
           <h1
             style={{
               lineHeight: "1.5rem",
@@ -130,9 +84,10 @@ function Item(props) {
               fontFamily: "manropeBold",
             }}
           >
-            {props.name}
+            {props.content.name}
           </h1>
-          <p style={{ alignSelf: "center", fontSize: "12px" }}>{props.desc}</p>
+          <p style={{ alignSelf: "center", fontSize: "12px" }}>{props.content.desc}</p>
+          <p style={{ alignSelf: "center", fontSize: "12px"}}> <span style={{fontFamily: 'ManropeBold'}}>Criador:</span> {props.content.creator}</p>
         </div>
         <div style={{ display: "grid" }}>
           <button className="buttonfav">
@@ -153,7 +108,7 @@ function Item(props) {
           {isOpen === true ? (
             <motion.button
               animate={{
-                y: 200,
+                y: 125,
                 transition: {
                   ease: "easeInOut",
                   duration: 0.35,
@@ -203,12 +158,60 @@ function Item(props) {
           )}
         </div>
       </motion.div>
-      <AnimatePresence>{isOpen && <Content />}</AnimatePresence>
+      <AnimatePresence>{isOpen && <Content content={props.content} />}</AnimatePresence>
     </motion.li>
   );
 }
 
-function Content() {
+function Content(props) {
+
+  const CheckPin = (start, end, name) => {
+    if (start === true && end === false) {
+      return (
+        <div
+          style={{
+            marginTop: "0",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#5F61F3" />
+          <p>{name}</p>
+        </div>
+      );
+    } else if (start === false && end === false) {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#8283F5" />
+          <p>{name}</p>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            marginLeft: 0,
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <PinColor color="#A5A6F6" />
+          <p>{name}</p>
+        </div>
+      );
+    }
+  };
+
+  console.log(props.content);
   return (
     <motion.div
       layout
@@ -217,46 +220,10 @@ function Content() {
       exit={{ opacity: 0 }}
       className="categoriacardopen"
     >
-      <div>
-        <div>
-          <div
-            style={{
-              marginTop: "1rem",
-              marginLeft: 0,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <PinColor color="#8283F5" />
-            <p>pontinho</p>
-          </div>
-          <div
-            style={{
-              marginTop: "1rem",
-              marginLeft: 0,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <PinColor color="#8283F5" />
-            <p>pontinho</p>
-          </div>
-          <div
-            style={{
-              marginTop: "1rem",
-              marginLeft: 0,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <PinColor color="#8283F5" />
-            <p>pontinho</p>
-          </div>
-        </div>
-      </div>
+         {props.content.pins.map((pin) => (
+            CheckPin(pin.start, pin.end, pin.pinName)
+         ))}
+        
     </motion.div>
   );
 }
