@@ -21,17 +21,11 @@ const Map = (props) => {
     const { id } = pinId.state; // id da rota que vem do profile~
   }
 
-  let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
     document.getElementById("menu_bar").style.display = "none";
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
   }
 
   function closeModal() {
@@ -373,15 +367,15 @@ const Map = (props) => {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Título da Rota</h2>
+          <h2>Título da Rota</h2>
           <input type="text"></input>
           <div>Primeiro Ponto de Interesse</div>
           <input type="text"></input>
           <div>Segundo Ponto de Interesse</div>
           <input type="text"></input>
-          <div class="info-box">
+          {/* <div class="info-box">
             <div id="directions"></div>
-          </div>
+          </div> */}
           <div>
             <button onClick={closeModal}>close</button>
           </div>
