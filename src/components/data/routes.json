@@ -45,8 +45,8 @@
       {
         "pinName": "Restaurante O Carpinteiro",
         "pinDesc": "algures em Aveiro",
-        "lat": "40.64031794511777",
-        "long": "-8.655121427575523",
+        "lat": "40.62945104980247",
+        "long": "-8.65486245633818",
         "start": true,
         "end": false
       },
@@ -54,8 +54,8 @@
       {
         "pinName": "Bar 5 Maravilhas",
         "pinDesc": "algures em Aveiro",
-        "lat": "40.631375",
-        "long": "-8.659969",
+        "lat": "40.63204719854758",
+        "long": "-8.650093406232827",
         "start": false,
         "end": true
       }
