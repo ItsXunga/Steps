@@ -14,7 +14,8 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
 const Map = (props) => {
-  console.log(props.modo);
+ 
+  const coords = []
   const pinId = useLocation();
   if (pinId.state !== null) {
     const { id } = pinId.state; // id da rota que vem do profile~
@@ -60,8 +61,17 @@ const Map = (props) => {
           coordinates: [value.pins[0].long, value.pins[0].lat],
         },
         properties: {
+          id: value.id,
           title: value.name,
           description: value.desc,
+          creator: value.creator,
+          category: value.category,
+          pins: [value.pins.map((val) => ({
+            pinName: val.pinName
+          })
+            )
+
+          ]
         },
       },
     ],
@@ -74,15 +84,6 @@ const Map = (props) => {
   const [zoom, setZoom] = useState(16);
   const [pitch, setPitch] = useState(0);
   const [bearing, setBearing] = useState(0);
-
-  async function teste() {
-    const query = await fetch(
-      `https://api.mapbox.com/directions/v5/mapbox/walking/-8.65599354837289,40.63363090756229;-8.653213663330945,40.637160643840645;-8.655121427575523,40.64031794511777?geometries=geojson&access_token=${mapboxgl.accessToken}`,
-
-      { method: "GET" }
-    );
-    console.log(query);
-  }
 
   // Initialize map when component mounts
   useEffect(() => {
@@ -115,11 +116,6 @@ const Map = (props) => {
       map.on("draw.update", updateRoute);
       map.on("draw.delete", removeRoute);
 
-      getMatch(
-        "-8.65599354837289,40.63363090756229;-8.646306792590423,40.624402272740326;-8.655121427575523,40.64031794511777",
-        [50, 50, 50],
-        "walking"
-      );
       function updateRoute() {
         removeRoute(); // Overwrite any existing layers
 
@@ -217,19 +213,34 @@ const Map = (props) => {
         getInstructions(response.matchings[0]);
       }
 
-      function getRotas() {
+      function getRotas(routeID) {
+        const selectedRoute = Rotas.filter(function (val) {
+          return val.id === routeID
+        })
+
         const profile = "walking"; // Set the profile
 
-        const coords = [
-          [Rotas[0].pins[0].long, Rotas[0].pins[0].lat],
-          [Rotas[0].pins[1].long, Rotas[0].pins[1].lat],
-          [Rotas[0].pins[2].long, Rotas[0].pins[2].lat],
-        ];
+        const setPin = () => {
+          selectedRoute.map((props) => (
+          props.pins.map((e) => (
+            coords.push([e.long, e.lat])
+          ))
+        ))}
+
+        setPin();
+        console.log(coords);
+          // [Rotas[0].pins[0].long, Rotas[0].pins[0].lat],
+          // [Rotas[0].pins[1].long, Rotas[0].pins[1].lat],
+          // [Rotas[0].pins[2].long, Rotas[0].pins[2].lat],
+      
 
         const newCoords = coords.join(";");
 
         const radius = coords.map(() => 50);
         getMatch(newCoords, radius, profile);
+
+        coords.splice(0, coords.length)
+
       }
 
       const geocoder = new MapboxGeocoder({
@@ -254,12 +265,21 @@ const Map = (props) => {
               .setPopup(
                 new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
                   .setHTML(
-                    `
-                    <button onClick=${getRotas()}}>click here</button>
-                    <h2>${element.features[0].properties.title}</h2>
-                    <p>${element.features[0].properties.description}</p>
+                    `<div class="modalRota">
+                      <h2 style="padding: .5rem">${element.features[0].properties.title}</h2>
+                      <div>
+                      <p>${element.features[0].properties.description}</p>
+                      <p> <span style="font-family: ManropeBold">Categoria:</span> ${element.features[0].properties.category}</p>
+                      <p><span style="font-family: ManropeBold">Criador:</span> ${element.features[0].properties.creator}</p>
+                      </div>
+                    </div>
                   `
                   )
+                  .on('open', () => {
+                    getRotas(element.features[0].properties.id)
+                  })
+                 
+                  
               )
               .addTo(map)}
           </div>
@@ -327,12 +347,10 @@ const Map = (props) => {
       map.addControl(userLocation);
       if (pinId.state === null) {
         map.on("load", () => {
-          console.log(userLocation, "teste");
+         
           userLocation.trigger();
         });
-      } else {
-        console.log("route");
-      }
+      } 
     }
 
     map.on("move", () => {

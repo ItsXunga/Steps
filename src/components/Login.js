@@ -35,7 +35,7 @@ const Login = () => {
           </div>
 
           <div style={{ paddingTop: "2rem" }}>
-            <Link to={"/profile"}>
+            <Link to={"/main"}>
               <button className="blueButton" type="submit">
                 Entrar
               </button>
