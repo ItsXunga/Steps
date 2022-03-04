@@ -362,7 +362,6 @@ const Map = (props) => {
       <div>
         <Modal
           isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={customStyles}
           contentLabel="Example Modal"
