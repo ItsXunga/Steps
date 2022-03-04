@@ -264,7 +264,7 @@ const Map = (props) => {
                     `<div class="modalRota">
                       <h2 style="padding: .5rem">${element.features[0].properties.title}</h2>
                       <div>
-                      <p>${element.features[0].properties.description}</p>
+                      <p style="padding: .5rem">${element.features[0].properties.description}</p>
                       <p> <span style="font-family: ManropeBold">Categoria:</span> ${element.features[0].properties.category}</p>
                       <p><span style="font-family: ManropeBold">Criador:</span> ${element.features[0].properties.creator}</p>
                       </div>
@@ -368,21 +368,23 @@ const Map = (props) => {
         style={modalStyles}
         contentLabel="Example Modal"
       >
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <div>
             <img src={require("../assets/img/pin.png")} alt="pin" />
             <p
               style={{
-                padding: "1rem 2rem",
+                padding: "2rem 2rem",
                 fontSize: "18px",
                 fontFamily: "ManropeRegular",
               }}
             >
               A tua rota foi adicionada com sucesso!
             </p>
+            <div style={{padding: "0.5rem 1rem"}}>
             <button onClick={closeModal} className="orangeButton">
                 Confirmar
               </button>
+              </div>
           </div>
         </div>
       </Modal>
