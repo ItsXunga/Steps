@@ -6,7 +6,7 @@ export const modalStyles = {
     border: "white 2px solid",
     borderRadius: "20px",
     padding: "2rem",
-    maxHeight: "fit-content",
+    height: "30vh",
     margin: "auto",
     textAlign: "center",
     overflow: "auto",

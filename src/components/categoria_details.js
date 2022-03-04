@@ -212,7 +212,6 @@ function Content(props) {
     }
   };
 
-  console.log(props.content);
   return (
     <motion.div
       layout

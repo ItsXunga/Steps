@@ -8,7 +8,7 @@ export const route_styles = [
       "line-join": "round",
     },
     paint: {
-      "line-color": "#438EE4",
+      "line-color": "#393C6A",
       "line-dasharray": [0.2, 2],
       "line-width": 4,
       "line-opacity": 0.7,
@@ -41,7 +41,7 @@ export const route_styles = [
     ],
     paint: {
       "circle-radius": 8,
-      "circle-color": "#438EE4",
+      "circle-color": "#393C6A",
     },
   },
 ];

@@ -7,6 +7,7 @@ import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
+import {modalStyles} from "../style/modal_styles"
 
 Modal.setAppElement("#root");
 
@@ -14,7 +15,6 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
 const Map = (props) => {
-  console.log(props.modo);
   const pinId = useLocation();
   if (pinId.state !== null) {
     const { id } = pinId.state; // id da rota que vem do profile~
@@ -81,7 +81,6 @@ const Map = (props) => {
 
       { method: "GET" }
     );
-    console.log(query);
   }
 
   // Initialize map when component mounts
@@ -131,6 +130,7 @@ const Map = (props) => {
         const coords = data.features[lastFeature].geometry.coordinates;
         // Format the coordinates
         const newCoords = coords.join(";");
+        console.log(newCoords)
         openModal();
         // Set the radius for each coordinate pair to 25 meters
         const radius = coords.map(() => 50);
@@ -180,7 +180,7 @@ const Map = (props) => {
               "line-cap": "round",
             },
             paint: {
-              "line-color": "#03AA46",
+              "line-color": "#F69E7C",
               "line-width": 8,
               "line-opacity": 0.8,
             },
@@ -255,7 +255,7 @@ const Map = (props) => {
                 new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
                   .setHTML(
                     `
-                    <button onClick=${getRotas()}}>click here</button>
+                    <button onClick=${getRotas}}>click here</button>
                     <h2>${element.features[0].properties.title}</h2>
                     <p>${element.features[0].properties.description}</p>
                   `
@@ -327,11 +327,9 @@ const Map = (props) => {
       map.addControl(userLocation);
       if (pinId.state === null) {
         map.on("load", () => {
-          console.log(userLocation, "teste");
           userLocation.trigger();
         });
       } else {
-        console.log("route");
       }
     }
 
@@ -348,26 +346,30 @@ const Map = (props) => {
   return (
     <div>
       <div>
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Título da Rota</h2>
-          <input type="text"></input>
-          <div>Primeiro Ponto de Interesse</div>
-          <input type="text"></input>
-          <div>Segundo Ponto de Interesse</div>
-          <input type="text"></input>
-          <div class="info-box">
-            <div id="directions"></div>
-          </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={modalStyles}
+        contentLabel="Example Modal"
+      >
+        <div style={{ display: "flex" }}>
           <div>
-            <button onClick={closeModal}>close</button>
+            <img src={require("../assets/img/pin.png")} alt="pin" />
+            <p
+              style={{
+                padding: "1rem 2rem",
+                fontSize: "18px",
+                fontFamily: "ManropeRegular",
+              }}
+            >
+              A tua rota foi adicionada com sucesso!
+            </p>
+            <button onClick={closeModal} className="orangeButton">
+                Confirmar
+              </button>
           </div>
-        </Modal>
+        </div>
+      </Modal>
       </div>
 
       <div
