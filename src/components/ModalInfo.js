@@ -1,6 +1,6 @@
-import React, { useState } from "react"
-import Modal from "react-modal"
-import { modalStyles } from "../style/modal_styles"
+import React, { useState } from "react";
+import Modal from "react-modal";
+import { modalStyles } from "../style/modal_styles";
 
 function ModalInfo(params) {
   const [modalIsOpen, setIsOpen] = useState(false);

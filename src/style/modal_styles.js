@@ -12,7 +12,7 @@ export const modalStyles = {
     flexDirection: "column",
     justifyContent: "space-evenly",
     margin: "auto",
-    minHeight: "35vh"
+    minHeight: "35vh",
   },
 };
 

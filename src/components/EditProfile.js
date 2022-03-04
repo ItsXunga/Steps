@@ -81,8 +81,8 @@ const EditProfile = () => {
       </div>
 
       <div style={{ padding: "0rem 3rem" }}>
-        <Link to={'/profile'}>
-        <button className="orangeButton">Guardar</button>
+        <Link to={"/profile"}>
+          <button className="orangeButton">Guardar</button>
         </Link>
       </div>
     </div>

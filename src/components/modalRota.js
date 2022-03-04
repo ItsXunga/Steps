@@ -1,18 +1,18 @@
-import React, { useState } from "react"
-import Modal from "react-modal"
-import { modalRota } from "../style/modal_styles"
-import { PinColor } from "../assets/img/profile/pin"
-import "../style/categoria_details.css"
+import React, { useState } from "react";
+import Modal from "react-modal";
+import { modalRota } from "../style/modal_styles";
+import { PinColor } from "../assets/img/profile/pin";
+import "../style/categoria_details.css";
 
 function ModalRota(params) {
-  const [modalIsOpen, setIsOpen] = useState(false)
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
-    setIsOpen(true)
+    setIsOpen(true);
   }
 
   function closeModal() {
-    setIsOpen(false)
+    setIsOpen(false);
   }
 
   const CheckPin = (start, end, name) => {
@@ -29,7 +29,7 @@ function ModalRota(params) {
           <PinColor color="#5F61F3" />
           <p>{name}</p>
         </div>
-      )
+      );
     } else if (start === false && end === false) {
       return (
         <div
@@ -43,7 +43,7 @@ function ModalRota(params) {
           <PinColor color="#8283F5" />
           <p>{name}</p>
         </div>
-      )
+      );
     } else {
       return (
         <div
@@ -57,9 +57,9 @@ function ModalRota(params) {
           <PinColor color="#A5A6F6" />
           <p>{name}</p>
         </div>
-      )
+      );
     }
-  }
+  };
 
   return (
     <div>
@@ -172,7 +172,7 @@ function ModalRota(params) {
         </div>
       </Modal>
     </div>
-  )
+  );
 }
 
-export default ModalRota
+export default ModalRota;
