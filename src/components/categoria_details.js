@@ -13,7 +13,7 @@ export default function CategoriaDetails() {
     return value.category === category;
   });
 
-   return (
+  return (
     <div className="background">
       <div
         style={{
@@ -69,11 +69,11 @@ function Item(props) {
 
   return (
     <motion.li
-    className="li"
+      className="li"
       layout
       style={{ boxShadow: "0 2px 7px 0px #00000033" }}
       initial={{ borderRadius: 25 }}
-      id='#motionDiv'
+      id="#motionDiv"
     >
       <motion.div layout className="categoriacard">
         <div style={{ display: "grid" }} onClick={toggleOpen}>
@@ -87,10 +87,22 @@ function Item(props) {
           >
             {props.content.name}
           </h1>
-          <p style={{ alignSelf: "center", fontSize: "12px" }}>{props.content.desc}</p>
-          <p style={{ alignSelf: "center", fontSize: "12px"}}> <span style={{fontFamily: 'ManropeBold'}}>Criador:</span> {props.content.creator}</p>
+          <p style={{ alignSelf: "center", fontSize: "12px" }}>
+            {props.content.desc}
+          </p>
+          <p style={{ alignSelf: "center", fontSize: "12px" }}>
+            {" "}
+            <span style={{ fontFamily: "ManropeBold" }}>Criador:</span>{" "}
+            {props.content.creator}
+          </p>
         </div>
-        <div style={{ display: "grid" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
           <button className="buttonfav">
             <svg
               style={{ display: "block", margin: "auto" }}
@@ -106,17 +118,8 @@ function Item(props) {
               />
             </svg>
           </button>
-          {isOpen === true ? (
-            <motion.button
-              // animate={{
-              //   y: 100,
-              //   transition: {
-              //     ease: "easeInOut",
-              //     duration: 0.35,
-              //   },
-              // }}
-              className="buttonroute"
-            >
+          <Link to={"/main"} state={{ id: props.content.id }}>
+            <button className="buttonroute">
               <svg
                 style={{ display: "block", margin: "auto" }}
                 width="16"
@@ -130,42 +133,18 @@ function Item(props) {
                   fill="#393C6A"
                 />
               </svg>
-            </motion.button>
-          ) : (
-            <motion.button
-              // animate={{
-              //   y: 0,
-              //   transition: {
-              //     ease: "easeInOut",
-              //     duration: 0.85,
-              //   },
-              // }}
-              className="buttonroute"
-            >
-              <svg
-                style={{ display: "block", margin: "auto" }}
-                width="16"
-                height="16"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2.94084 11.8392L0.960938 9.85925L7.06893 3.75126L1.95089 3.74136L1.95089 0.949708L11.8504 0.949707V10.8492L9.05872 10.8492L9.04883 5.73116L2.94084 11.8392Z"
-                  fill="#393C6A"
-                />
-              </svg>
-            </motion.button>
-          )}
+            </button>
+          </Link>
         </div>
       </motion.div>
-      <AnimatePresence>{isOpen && <Content content={props.content} />}</AnimatePresence>
+      <AnimatePresence>
+        {isOpen && <Content content={props.content} />}
+      </AnimatePresence>
     </motion.li>
   );
 }
 
 function Content(props) {
-
   const CheckPin = (start, end, name) => {
     if (start === true && end === false) {
       return (
@@ -220,10 +199,9 @@ function Content(props) {
       exit={{ opacity: 0 }}
       className="categoriacardopen"
     >
-         {props.content.pins.map((pin) => (
-            CheckPin(pin.start, pin.end, pin.pinName)
-         ))}
-        
+      {props.content.pins.map((pin) =>
+        CheckPin(pin.start, pin.end, pin.pinName)
+      )}
     </motion.div>
   );
 }

@@ -64,9 +64,9 @@ const Register = () => {
 
           <div style={{ paddingTop: "2rem" }}>
             <Link to="/login">
-            <button className="blueButton" type="submit">
-              Registar
-            </button>
+              <button className="blueButton" type="submit">
+                Registar
+              </button>
             </Link>
           </div>
         </div>

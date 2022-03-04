@@ -7,7 +7,7 @@ import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
-import {modalStyles} from "../style/modal_styles"
+import { modalStyles } from "../style/modal_styles";
 
 Modal.setAppElement("#root");
 
@@ -15,8 +15,7 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
 const Map = (props) => {
- 
-  const coords = []
+  const coords = [];
   const pinId = useLocation();
   if (pinId.state !== null) {
     const { id } = pinId.state; // id da rota que vem do profile~
@@ -61,12 +60,11 @@ const Map = (props) => {
           description: value.desc,
           creator: value.creator,
           category: value.category,
-          pins: [value.pins.map((val) => ({
-            pinName: val.pinName
-          })
-            )
-
-          ]
+          pins: [
+            value.pins.map((val) => ({
+              pinName: val.pinName,
+            })),
+          ],
         },
       },
     ],
@@ -122,7 +120,6 @@ const Map = (props) => {
         const coords = data.features[lastFeature].geometry.coordinates;
         // Format the coordinates
         const newCoords = coords.join(";");
-        console.log(newCoords)
         openModal();
         // Set the radius for each coordinate pair to 25 meters
         const radius = coords.map(() => 50);
@@ -186,8 +183,6 @@ const Map = (props) => {
         map.removeSource("route");
       }
     } else {
-     
-
       // Make a Map Matching request
       async function getMatch(coordinates, radius, profile) {
         // Separate the radiuses with semicolons
@@ -211,32 +206,25 @@ const Map = (props) => {
 
       function getRotas(routeID) {
         const selectedRoute = Rotas.filter(function (val) {
-          return val.id === routeID
-        })
+          return val.id === routeID;
+        });
 
         const profile = "walking"; // Set the profile
 
         const setPin = () => {
-          selectedRoute.map((props) => (
-          props.pins.map((e) => (
-            coords.push([e.long, e.lat])
-          ))
-        ))}
+          selectedRoute.map((props) =>
+            props.pins.map((e) => coords.push([e.long, e.lat]))
+          );
+        };
 
         setPin();
-        console.log(coords);
-          // [Rotas[0].pins[0].long, Rotas[0].pins[0].lat],
-          // [Rotas[0].pins[1].long, Rotas[0].pins[1].lat],
-          // [Rotas[0].pins[2].long, Rotas[0].pins[2].lat],
-      
 
         const newCoords = coords.join(";");
 
         const radius = coords.map(() => 50);
         getMatch(newCoords, radius, profile);
 
-        coords.splice(0, coords.length)
-
+        coords.splice(0, coords.length);
       }
 
       const geocoder = new MapboxGeocoder({
@@ -253,7 +241,7 @@ const Map = (props) => {
       // Add the geocoder to the map
       map.addControl(geocoder);
 
-      const insertRoutes = () => {
+      if (pinId.state === null) {
         geojson.map((element) => (
           <div className="marker">
             {new mapboxgl.Marker()
@@ -271,18 +259,74 @@ const Map = (props) => {
                     </div>
                   `
                   )
-                  .on('open', () => {
-                    getRotas(element.features[0].properties.id)
+                  .on("open", () => {
+                    getRotas(element.features[0].properties.id);
                   })
-                 
-                  
               )
               .addTo(map)}
           </div>
         ));
-      };
+      } else if (pinId.state != null) {
+        map.removeControl(geocoder);
 
-      insertRoutes();
+        const { id } = pinId.state;
+
+        props.checkSingleRoute(id);
+
+        const routeFromProfile = Rotas.filter(function (value) {
+          return value.id === id;
+        });
+
+        const geojson2 = routeFromProfile.map((value) => ({
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              geometry: {
+                type: "Point",
+                coordinates: [value.pins[0].long, value.pins[0].lat],
+              },
+              properties: {
+                id: value.id,
+                title: value.name,
+                description: value.desc,
+                creator: value.creator,
+                category: value.category,
+                pins: [
+                  value.pins.map((val) => ({
+                    pinName: val.pinName,
+                  })),
+                ],
+              },
+            },
+          ],
+        }));
+
+        geojson2.map((element) => (
+          <div className="marker">
+            {new mapboxgl.Marker()
+              .setLngLat(element.features[0].geometry.coordinates)
+              .setPopup(
+                new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
+                  .setHTML(
+                    `<div class="modalRota">
+                      <h2 style="padding: .5rem">${element.features[0].properties.title}</h2>
+                      <div>
+                      <p style="padding: .5rem">${element.features[0].properties.description}</p>
+                      <p> <span style="font-family: ManropeBold">Categoria:</span> ${element.features[0].properties.category}</p>
+                      <p><span style="font-family: ManropeBold">Criador:</span> ${element.features[0].properties.creator}</p>
+                      </div>
+                    </div>
+                  `
+                  )
+                  .on("open", () => {
+                    getRotas(element.features[0].properties.id);
+                  })
+              )
+              .addTo(map)}
+          </div>
+        ));
+      }
 
       function getInstructions(data) {
         // Target the sidebar to add the instructions
@@ -343,10 +387,9 @@ const Map = (props) => {
       map.addControl(userLocation);
       if (pinId.state === null) {
         map.on("load", () => {
-         
           userLocation.trigger();
         });
-      } 
+      }
     }
 
     map.on("move", () => {
@@ -362,32 +405,32 @@ const Map = (props) => {
   return (
     <div>
       <div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={modalStyles}
-        contentLabel="Example Modal"
-      >
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <div>
-            <img src={require("../assets/img/pin.png")} alt="pin" />
-            <p
-              style={{
-                padding: "2rem 2rem",
-                fontSize: "18px",
-                fontFamily: "ManropeRegular",
-              }}
-            >
-              A tua rota foi adicionada com sucesso!
-            </p>
-            <div style={{padding: "0.5rem 1rem"}}>
-            <button onClick={closeModal} className="orangeButton">
-                Confirmar
-              </button>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={modalStyles}
+          contentLabel="Example Modal"
+        >
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div>
+              <img src={require("../assets/img/pin.png")} alt="pin" />
+              <p
+                style={{
+                  padding: "2rem 2rem",
+                  fontSize: "18px",
+                  fontFamily: "ManropeRegular",
+                }}
+              >
+                A tua rota foi adicionada com sucesso!
+              </p>
+              <div style={{ padding: "0.5rem 1rem" }}>
+                <button onClick={closeModal} className="orangeButton">
+                  Confirmar
+                </button>
               </div>
+            </div>
           </div>
-        </div>
-      </Modal>
+        </Modal>
       </div>
 
       <div
