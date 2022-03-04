@@ -72,8 +72,8 @@
       {
         "pinName": "Taberna do Zé",
         "pinDesc": "algures em Aveiro",
-        "lat": "40.640506",
-        "long": "-8.653754",
+        "lat": "40.63818910932358",
+        "long": "-8.646089217708976",
         "start": true,
         "end": false
       },
@@ -81,8 +81,8 @@
       {
         "pinName": "Parque Jose Saramago",
         "pinDesc": "algures em Aveiro",
-        "lat": "40.631375",
-        "long": "-8.659969",
+        "lat": "40.63546771275847",
+        "long": "-8.648741196062304",
         "start": false,
         "end": false
       },
@@ -90,8 +90,8 @@
       {
         "pinName": "Cafe Cuba",
         "pinDesc": "algures em Aveiro",
-        "lat": "40.628976",
-        "long": "-8.649486",
+        "lat": "40.63112239585098",
+        "long": "-8.644220778413853",
         "start": false,
         "end": true
       }
@@ -108,8 +108,8 @@
       {
         "pinName": "Restaurante O Carpinteiro",
         "pinDesc": "algures em Aveiro",
-        "lat": "40.645177",
-        "long": "-8.652545",
+        "lat": "40.64204881242438",
+        "long": "-8.653199936589886",
         "start": true,
         "end": false
       },
@@ -117,8 +117,8 @@
       {
         "pinName": "Bar 5 Maravilhas",
         "pinDesc": "algures em Aveiro",
-        "lat": "40.631375",
-        "long": "-8.659969",
+        "lat": "40.645318726249826",
+        "long": "-8.649131560706365",
         "start": false,
         "end": true
       }
