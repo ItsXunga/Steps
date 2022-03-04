@@ -7,6 +7,7 @@ import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
+import {modalStyles} from "../style/modal_styles"
 
 Modal.setAppElement("#root");
 
@@ -121,6 +122,7 @@ const Map = (props) => {
         const coords = data.features[lastFeature].geometry.coordinates;
         // Format the coordinates
         const newCoords = coords.join(";");
+        console.log(newCoords)
         openModal();
         // Set the radius for each coordinate pair to 25 meters
         const radius = coords.map(() => 50);
@@ -170,7 +172,7 @@ const Map = (props) => {
               "line-cap": "round",
             },
             paint: {
-              "line-color": "#03AA46",
+              "line-color": "#F69E7C",
               "line-width": 8,
               "line-opacity": 0.8,
             },
@@ -360,25 +362,30 @@ const Map = (props) => {
   return (
     <div>
       <div>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <h2>Título da Rota</h2>
-          <input type="text"></input>
-          <div>Primeiro Ponto de Interesse</div>
-          <input type="text"></input>
-          <div>Segundo Ponto de Interesse</div>
-          <input type="text"></input>
-          {/* <div class="info-box">
-            <div id="directions"></div>
-          </div> */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={modalStyles}
+        contentLabel="Example Modal"
+      >
+        <div style={{ display: "flex" }}>
           <div>
-            <button onClick={closeModal}>close</button>
+            <img src={require("../assets/img/pin.png")} alt="pin" />
+            <p
+              style={{
+                padding: "1rem 2rem",
+                fontSize: "18px",
+                fontFamily: "ManropeRegular",
+              }}
+            >
+              A tua rota foi adicionada com sucesso!
+            </p>
+            <button onClick={closeModal} className="orangeButton">
+                Confirmar
+              </button>
           </div>
-        </Modal>
+        </div>
+      </Modal>
       </div>
 
       <div

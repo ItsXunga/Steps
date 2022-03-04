@@ -26,8 +26,6 @@ const Profile = () => {
     ],
   }))
 
-  console.log(geojson)
-
   const [selectedTabArray, setSelectedTabArray] = useState(
     Rotas.filter(function (value) {
       return value.creator === "John Lee"
