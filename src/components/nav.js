@@ -31,194 +31,131 @@ const Nav = (props) => {
 
   return (
     <>
-      {menuImage === menuClosed ? (
-        <Link to="/categorias">
-          {menuImage === menuClosed ? (
-            <motion.img
-              animate={{
-                x: 200,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 2 }}
-              alt="categorias"
-              src={menu_categorias}
-            />
-          ) : (
-            <motion.img
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 2 }}
-              alt="categorias"
-              src={menu_categorias}
-            />
-          )}
-        </Link>
-      ) : (
-        <Link to="/categorias">
-          {menuImage === menuClosed ? (
-            <motion.img
-              animate={{
-                x: 200,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 2 }}
-              alt="categorias"
-              src={menu_categorias}
-            />
-          ) : (
-            <motion.img
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 2 }}
-              alt="categorias"
-              src={menu_categorias}
-            />
-          )}
-        </Link>
-      )}
+      <Link to="/categorias">
+        {menuImage !== menuClosed ? (
+          <motion.img
+            animate={{
+              x: -200,
+              transition: {
+                duration: 0.5,
+              },
+            }}
+            style={{
+              margin: "0rem .2rem",
+              zIndex: 2,
+              position: "fixed",
+              bottom: "0.8rem",
+            }}
+            alt="categorias"
+            src={menu_categorias}
+          />
+        ) : (
+          <motion.img
+            animate={{
+              x: 0,
+              transition: {
+                duration: 0.5,
+              },
+            }}
+            style={{
+              margin: "0rem .2rem",
+              zIndex: 2,
+              position: "fixed",
+              bottom: "0.8rem",
+            }}
+            alt="categorias"
+            src={menu_categorias}
+          />
+        )}
+      </Link>
 
-      {menuImage === menuClosed ? (
-        <Link  to="/main">
-          {menuImage === menuClosed ? (
-            <motion.img
-              animate={{
-                x: 135,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 3 }}
-              alt="nova rota"
-              src={menu_add_route}
-              onClick={() => changeModoRota()}
-              className="testeCursor"
-            />
-          ) : (
-            <motion.img
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 3 }}
-              alt="nova rota"
-              src={menu_add_route}
-              onClick={() => changeModoRota()}
-            />
-          )}
-        </Link>
-      ) : (
-        <Link to="/main">
-          {menuImage === menuClosed ? (
-            <motion.img
-              animate={{
-                x: 135,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 3 }}
-              alt="nova rota"
-              src={menu_add_route}
-              onClick={() => changeModoRota()}
-              className="testeCursor"
-            />
-          ) : (
-            <motion.img
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 3 }}
-              alt="nova rota"
-              src={menu_add_route}
-              onClick={() => changeModoRota()}
-            />
-          )}
-        </Link>
-      )}
+      <Link to="/main">
+        {menuImage !== menuClosed ? (
+          <motion.img
+            animate={{
+              x: -135,
+              transition: {
+                duration: 0.5,
+              },
+            }}
+            style={{
+              margin: "0rem .2rem",
+              zIndex: 3,
+              position: "fixed",
+              bottom: "0.8rem",
+            }}
+            alt="nova rota"
+            src={menu_add_route}
+            onClick={() => changeModoRota()}
+            className="testeCursor"
+          />
+        ) : (
+          <motion.img
+            animate={{
+              x: 0,
+              transition: {
+                duration: 0.5,
+              },
+            }}
+            style={{
+              margin: "0rem .2rem",
+              zIndex: 3,
+              position: "fixed",
+              bottom: "0.8rem",
+            }}
+            alt="nova rota"
+            src={menu_add_route}
+            onClick={() => changeModoRota()}
+          />
+        )}
+      </Link>
 
-      {menuImage === menuClosed ? (
-        <Link  to="/profile">
-          {menuImage === menuClosed ? (
-            <motion.img
-              animate={{
-                x: 70,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 4 }}
-              alt="perfil"
-              src={menu_perfil}
-            />
-          ) : (
-            <motion.img
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 4 }}
-              alt="perfil"
-              src={menu_perfil}
-            />
-          )}
-        </Link>
-      ) : (
-        <Link to="/profile">
-          {menuImage === menuClosed ? (
-            <motion.img
-              animate={{
-                x: 70,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 4 }}
-              alt="perfil"
-              src={menu_perfil}
-            />
-          ) : (
-            <motion.img
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{ margin: "0rem .2rem", zIndex: 4 }}
-              alt="perfil"
-              src={menu_perfil}
-            />
-          )}
-        </Link>
-      )}
+      <Link to="/profile">
+        {menuImage !== menuClosed ? (
+          <motion.img
+            animate={{
+              x: -70,
+              transition: {
+                duration: 0.5,
+              },
+            }}
+            style={{
+              margin: "0rem .2rem",
+              zIndex: 4,
+              position: "fixed",
+              bottom: "0.8rem",
+            }}
+            alt="perfil"
+            src={menu_perfil}
+          />
+        ) : (
+          <motion.img
+            animate={{
+              x: 0,
+              transition: {
+                duration: 0.5,
+              },
+            }}
+            style={{
+              margin: "0rem .2rem",
+              zIndex: 4,
+              position: "fixed",
+              bottom: "0.8rem",
+            }}
+            alt="perfil"
+            src={menu_perfil}
+          />
+        )}
+      </Link>
 
-      {menuImage === menuClosed ? (
+      {menuImage !== menuClosed ? (
         <img
           style={{
-            margin: "0.3rem .2rem",
+            margin: "0rem .2rem",
             zIndex: 5,
             boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.25)",
             borderRadius: "50%",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
           onClick={openMenu}
           alt="menu"
@@ -231,7 +168,7 @@ const Nav = (props) => {
             zIndex: 5,
             boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.25)",
             borderRadius: "50%",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
           onClick={openMenu}
           alt="menu"
