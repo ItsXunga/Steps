@@ -5,11 +5,14 @@ export const modalStyles = {
     boxShadow: "2px 2px 7px 0px rgba(0, 0, 0, 0.2)",
     border: "white 2px solid",
     borderRadius: "20px",
-    padding: "2rem",
-    height: "30vh",
-    margin: "auto",
+    height: "35vh",
     textAlign: "center",
     overflow: "auto",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    margin: "auto",
+    minHeight: "35vh"
   },
 };
 
