@@ -117,6 +117,14 @@ h3 {
   display: block !important;
 }
 
+.mapbox-gl-draw_line:focus {
+  background-color: lightgray !important;
+}
+
+.mapbox-gl-draw_trash:focus {
+  background-color: lightgray !important;
+}
+
 .info-box {
   position: absolute;
   margin: 20px;
