@@ -20,7 +20,7 @@
     "react-mapbox-gl": "^5.1.1",
     "react-modal": "^3.14.4",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
+    "react-scripts": "^5.0.0",
     "react-slick": "^0.28.1",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"
