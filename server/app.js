@@ -1,9 +1,8 @@
 const express = require("express");
 require("dotenv").config();
-const routesRoutes = require("./routes/routesRoutes")
-const userRoutes = require("./routes/userRoutes")
-const categoriesRoutes = require("./routes/categoriesRoutes")
-const { mongoConnect } = require("./util/database")
+const db = require("./utils/database");
+const mongoose = require("mongoose");
+const Routes = require("./routes");
 
 const port = process.env.PORT | 3000;
 
@@ -12,15 +11,16 @@ const app = express();
 // Começar a processar o corpo dos requests
 app.use(express.json());
 
-app.use(routesRoutes);
-app.use(userRoutes);
-app.use(categoriesRoutes);
+app.use("/routes", Routes.RoutesRoutes);
+app.use("/users", Routes.UserRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-mongoConnect(() => {
-  app.listen(port, () => console.log("server running on port: ", port))
-})
+async function main() {
+  await mongoose.connect(db.uri);
+  app.listen(port, () => console.log("server running on port: ", port));
+}
 
+main().catch((err) => console.log(err));
