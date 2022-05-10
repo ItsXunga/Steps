@@ -1,9 +1,11 @@
 const UserController = require("./user");
-const RouteController = require("./route");
+const CircuitController = require("./circuit");
+const PointController = require("./point")
 
 const Controllers = {
   UserController,
-  RouteController,
+  CircuitController,
+  PointController,
 };
 
 module.exports = Controllers;
