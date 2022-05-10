@@ -1,9 +1,11 @@
 const UserRoutes = require("./user");
-const RoutesRoutes = require("./routes");
+const CircuitRoutes = require("./circuits");
+const PointRoutes = require("./points")
 
 const Routes = {
   UserRoutes,
-  RoutesRoutes,
+  CircuitRoutes,
+  PointRoutes,
 };
 
 module.exports = Routes;

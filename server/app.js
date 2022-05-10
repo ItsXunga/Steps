@@ -11,7 +11,8 @@ const app = express();
 // Começar a processar o corpo dos requests
 app.use(express.json());
 
-app.use("/routes", Routes.RoutesRoutes);
+app.use("/circuits", Routes.CircuitRoutes);
+app.use("/points", Routes.PointRoutes);
 app.use("/users", Routes.UserRoutes);
 
 app.get("/", (req, res) => {

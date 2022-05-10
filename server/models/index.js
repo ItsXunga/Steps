@@ -1,11 +1,13 @@
 const UserModel = require("./user");
-const RouteModel = require("./route");
+const CircuitModel = require("./circuit");
 const CategoryModel = require("./category");
+const PointModel = require("./point");
 
 const Models = {
   UserModel,
-  RouteModel,
+  CircuitModel,
   CategoryModel,
+  PointModel,
 };
 
 module.exports = Models;
