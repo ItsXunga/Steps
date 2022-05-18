@@ -1,13 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
+
 import mapboxgl from "mapbox-gl";
-import MapboxDraw from "@mapbox/mapbox-gl-draw";
-import { route_styles } from "../style/route_styles";
 import { Link, useLocation } from "react-router-dom";
 import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
 import { modalStyles } from "../style/modal_styles";
+import ModalAddRota from "./ModalAddRota";
+
 
 Modal.setAppElement("#root");
 
@@ -15,10 +17,15 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
 const Map = (props) => {
+
+  const { mapState } = useSelector((state) => state.mapState)
+  const { singleRouteState } = useSelector((state) => state.singleRouteState)
+  
   const coords = [];
+
   const pinId = useLocation();
   if (pinId.state !== null) {
-    const { id } = pinId.state; // id da rota que vem do profile~
+    const { id } = pinId.state; // id da rota que vem do profile
   }
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -32,18 +39,6 @@ const Map = (props) => {
     setIsOpen(false);
     document.getElementById("menu_bar").style.display = "flex";
   }
-
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      zIndex: 2,
-    },
-  };
 
   const geojson = Rotas.map((value) => ({
     type: "FeatureCollection",
@@ -90,98 +85,20 @@ const Map = (props) => {
       attributionControl: false,
     });
 
-    const draw = new MapboxDraw({
-      // Instead of showing all the draw tools, show only the line string and delete tools.
-      displayControlsDefault: false,
-      controls: {
-        line_string: true,
-        trash: true,
-      },
-      // Set the draw mode to draw LineStrings by default.
-      defaultMode: "simple_select",
-      styles: route_styles,
-    });
+    if (mapState === true) {
 
-    if (props.modo === true) {
-      map.addControl(draw);
+      var marker = new mapboxgl.Marker();
 
-      map.on("draw.create", updateRoute);
-      map.on("draw.update", updateRoute);
-      map.on("draw.delete", removeRoute);
+      map.on('click', (e) => {
+          var coordinates = e.lngLat;
+          marker.setLngLat(coordinates).addTo(map);
+          setTimeout(() => {
+            setIsOpen(true);
+          }, "500")
+                                                                           
+      })
 
-      function updateRoute() {
-        removeRoute(); // Overwrite any existing layers
 
-        const profile = "walking"; // Set the profile
-
-        // Get the coordinates
-        const data = draw.getAll();
-        const lastFeature = data.features.length - 1;
-        const coords = data.features[lastFeature].geometry.coordinates;
-        // Format the coordinates
-        const newCoords = coords.join(";");
-        openModal();
-        // Set the radius for each coordinate pair to 25 meters
-        const radius = coords.map(() => 50);
-        getMatch(newCoords, radius, profile);
-      }
-
-      // Make a Map Matching request
-      async function getMatch(coordinates, radius, profile) {
-        // Separate the radiuses with semicolons
-        const radiuses = radius.join(";");
-        // Create the query
-        const query = await fetch(
-          `https://api.mapbox.com/matching/v5/mapbox/${profile}/${coordinates}?geometries=geojson&radiuses=${radiuses}&steps=true&language=pt&access_token=${mapboxgl.accessToken}`,
-          { method: "GET" }
-        );
-        const response = await query.json();
-        // Handle errors
-        if (response.code !== "Ok") {
-          alert(`${response.code} - ${response.message}.`);
-          return;
-        }
-        const coords = response.matchings[0].geometry;
-        // Draw the route on the map
-        addRoute(coords);
-      }
-
-      // Draw the Map Matching route as a new layer on the map
-      function addRoute(coords) {
-        // If a route is already loaded, remove it
-        if (map.getSource("route")) {
-          map.removeLayer("route");
-          map.removeSource("route");
-        } else {
-          map.addLayer({
-            id: "route",
-            type: "line",
-            source: {
-              type: "geojson",
-              data: {
-                type: "Feature",
-                properties: {},
-                geometry: coords,
-              },
-            },
-            layout: {
-              "line-join": "round",
-              "line-cap": "round",
-            },
-            paint: {
-              "line-color": "#F69E7C",
-              "line-width": 8,
-              "line-opacity": 0.8,
-            },
-          });
-        }
-      }
-      // If the user clicks the delete draw button, remove the layer if it exists
-      function removeRoute() {
-        if (!map.getSource("route")) return;
-        map.removeLayer("route");
-        map.removeSource("route");
-      }
     } else {
       // Make a Map Matching request
       async function getMatch(coordinates, radius, profile) {
@@ -227,6 +144,7 @@ const Map = (props) => {
         coords.splice(0, coords.length);
       }
 
+      // Pesquisar Rotas
       const geocoder = new MapboxGeocoder({
         // Initialize the geocoder
         accessToken: mapboxgl.accessToken, // Set the access token
@@ -270,8 +188,6 @@ const Map = (props) => {
         map.removeControl(geocoder);
 
         const { id } = pinId.state;
-
-        props.checkSingleRoute(id);
 
         const routeFromProfile = Rotas.filter(function (value) {
           return value.id === id;
@@ -400,7 +316,7 @@ const Map = (props) => {
 
     // Clean up on unmount
     return () => map.remove();
-  }, [props.modo]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [mapState, singleRouteState]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
