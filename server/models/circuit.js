@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 const CircuitSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, "Please enter a name for your Route"],
+    unique: true,
   },
   creator: {
     type: Schema.Types.ObjectId,
@@ -16,6 +17,7 @@ const CircuitSchema = new Schema({
   },
   desc: {
     type: String,
+    required: [true, "Please enter a description for your Route"],
   },
   pins: [
     {

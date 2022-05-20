@@ -1,5 +1,25 @@
 const { CircuitModel, CategoryModel, PointModel } = require("../models");
 
+//handle errors
+const handleErrors = (err) => {
+  console.log(err.message, err.code);
+  let errors = { name: "", desc: "" };
+
+  if (err.code === 11000) {
+    //exists
+    errors.name = "A Route with that name already exists";
+  }
+
+  //validation errors
+  if (err.message.includes("User validation failed")) {
+    Object.values(err.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message;
+    });
+  }
+
+  return errors;
+};
+
 async function getById(req, res) {
   const { id } = req.params;
 
@@ -15,31 +35,35 @@ async function getById(req, res) {
 }
 
 async function getAll(req, res) {
-  const circuits = await CircuitModel.find()
-    .populate("creator")
-    .populate("category")
-    .populate("pins");
+  try {
+    const circuits = await CircuitModel.find()
+      .populate("creator")
+      .populate("category")
+      .populate("pins");
 
-  res.json(circuits);
+    res.json(circuits);
+  } catch (err) {
+    console.error(err.message);
+  }
 }
 
 async function create(req, res) {
   const { name, userID, categoryID, desc } = req.body;
 
-  const circuit = await CircuitModel.create({
-    name,
-    creator: userID,
-    category: categoryID,
-    desc,
-  });
+  //Falta Creator e Categoria -> Falta inserir id do criador logged-in e id da categoria através do nome desta
 
-  // category.circuits.push(circuit);
-  // circuit.categories.push(category);
-
-  // await circuit.save();
-  // await category.save();
-
-  res.json(circuit);
+  try {
+    const circuit = await CircuitModel.create({
+      name,
+      creator: userID,
+      category: categoryID,
+      desc,
+    });
+    res.status(201).json(circuit);
+  } catch (err) {
+    const errors = handleErrors(err);
+    res.status(400).json({ errors });
+  }
 }
 
 async function update(req, res) {
@@ -58,7 +82,7 @@ async function update(req, res) {
 
     await circuitData.save();
 
-    res.json(circuitData);
+    res.status(201).json(circuitData);
   }
 }
 

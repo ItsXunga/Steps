@@ -36,13 +36,8 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-UserSchema.post("save", function (doc, next) {
-  console.log("new user was created & saved", doc);
-  next();
-});
-
 //login
-UserSchema.static.login = async function (email, password) {
+UserSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
   if (user) {
     const auth = await bcrypt.compare(password, user.password);
