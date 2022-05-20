@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { enterSingleRoute } from "./redux/singleRouteState"
+
 import Slider from "react-slick";
 import "../style/Profile.css";
 import "slick-carousel/slick/slick.css";
@@ -8,7 +11,11 @@ import { ProfileBG } from "../assets/img/profile/profile-bg";
 import Rotas from "../components/data/routes.json";
 import { PinColor } from "../assets/img/profile/pin";
 
+
 const Profile = () => {
+
+  const dispatch = useDispatch();
+
   const geojson = Rotas.map((value) => ({
     type: "FeatureCollection",
     features: [
@@ -264,7 +271,7 @@ const Profile = () => {
 
               <section className="sideButton">
                 <Link to={"/main"} state={{ id: props.id }}>
-                  <button className="goButton">
+                  <button className="goButton" onClick={() => dispatch(enterSingleRoute())}>
                     <svg
                       style={{ display: "flex", margin: "auto" }}
                       width="12"

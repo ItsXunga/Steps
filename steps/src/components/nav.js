@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { enterCreation, exitCreation } from "./redux/creationState";
 import { Link } from "react-router-dom";
 import menu_categorias from "../assets/img/menu_categorias.svg";
 import menu_add_route from "../assets/img/menu_add_route.svg";
@@ -6,12 +8,15 @@ import menu_perfil from "../assets/img/menu_perfil.svg";
 import menuClosed from "../assets/img/menu/hamburguerClosed.svg";
 import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 import { motion } from "framer-motion";
+import { exitSingleRoute } from "./redux/singleRouteState";
+
 
 const Nav = (props) => {
-  const [modoRota, setModoRota] = useState(false);
   const [menuImage, setMenuImg] = useState(menuClosed);
 
-  props.checkModo(modoRota);
+  const { mapState } = useSelector((state) => state.mapState)
+  const { singleRouteState } = useSelector((state) => state.singleRouteState)
+  const dispatch = useDispatch();
 
   function openMenu() {
     if (menuImage === menuClosed) {
@@ -21,17 +26,15 @@ const Nav = (props) => {
     }
   }
 
-  const changeModoRota = () => {
-    setModoRota(true);
-  };
+
 
   return (
     <>
-      {modoRota === true ? (
+      {mapState === true ? (
         <div
           className="backarrow"
           onClick={() => {
-            setModoRota(false);
+            dispatch(exitCreation())
           }}
         >
           <Link to={"/main"}>
@@ -55,9 +58,12 @@ const Nav = (props) => {
         ""
       )}
 
-      {props.singleRoute != null ? (
+
+      {/* quando vimos para a main page apos clicar numa rota especifica */}
+
+      {singleRouteState === true ? (
         <div className="backarrow">
-          <Link to={"/main"} onClick={() => window.reload()}>
+          <Link to={"/main"} onClick={() => dispatch(exitSingleRoute())}>
             <svg
               width="15"
               height="27"
@@ -78,7 +84,10 @@ const Nav = (props) => {
         ""
       )}
 
-      <div
+      {mapState === true ? (
+        ''
+      ) : (
+        <div
         id="menu_bar"
         style={{
           position: "fixed",
@@ -146,7 +155,7 @@ const Nav = (props) => {
               }}
               alt="nova rota"
               src={menu_add_route}
-              onClick={() => changeModoRota()}
+              onClick={() => dispatch(enterCreation())}
               className="testeCursor"
             />
           ) : (
@@ -165,7 +174,7 @@ const Nav = (props) => {
               }}
               alt="nova rota"
               src={menu_add_route}
-              onClick={() => changeModoRota()}
+              onClick={() => dispatch(enterCreation())}
             />
           )}
         </Link>
@@ -236,6 +245,9 @@ const Nav = (props) => {
           />
         )}
       </div>
+      )}
+
+     
     </>
   );
 };
