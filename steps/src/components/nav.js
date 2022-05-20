@@ -84,7 +84,10 @@ const Nav = (props) => {
         ""
       )}
 
-      <div
+      {mapState === true ? (
+        ''
+      ) : (
+        <div
         id="menu_bar"
         style={{
           position: "fixed",
@@ -242,6 +245,9 @@ const Nav = (props) => {
           />
         )}
       </div>
+      )}
+
+     
     </>
   );
 };

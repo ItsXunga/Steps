@@ -5,8 +5,13 @@ import { PinColor } from "../assets/img/profile/pin";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 import Rotas from "../components/data/routes.json";
 import { Link, useLocation } from "react-router-dom";
+import { enterSingleRoute } from "./redux/singleRouteState";
+import { useDispatch } from 'react-redux';
 
 export default function CategoriaDetails() {
+
+  
+
   const name = useLocation();
   const { category } = name.state;
   const routeArray = Rotas.filter(function (value) {
@@ -62,6 +67,7 @@ export default function CategoriaDetails() {
 
 function Item(props) {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
@@ -119,7 +125,7 @@ function Item(props) {
             </svg>
           </button>
           <Link to={"/main"} state={{ id: props.content.id }}>
-            <button className="buttonroute">
+            <button className="buttonroute" onClick={() => {dispatch(enterSingleRoute())}}>
               <svg
                 style={{ display: "block", margin: "auto" }}
                 width="16"

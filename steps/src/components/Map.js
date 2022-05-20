@@ -16,7 +16,7 @@ Modal.setAppElement("#root");
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
-const Map = (props) => {
+const Map = () => {
 
   const { mapState } = useSelector((state) => state.mapState)
   const { singleRouteState } = useSelector((state) => state.singleRouteState)
@@ -64,6 +64,18 @@ const Map = (props) => {
       },
     ],
   }));
+       
+  // Pesquisar Rotas
+  const geocoder = new MapboxGeocoder({
+    // Initialize the geocoder
+    accessToken: mapboxgl.accessToken, // Set the access token
+    mapboxgl: mapboxgl, // Set the mapbox-gl instance
+    marker: false, // Do not use the default marker style
+    placeholder: "Pesquisa Rotas", // Placeholder text for the search bar
+    language: "pt",
+    country: "PT-01",
+    types: "poi, address",
+  });
 
   const mapContainerRef = useRef(null);
 
@@ -87,7 +99,7 @@ const Map = (props) => {
 
     if (mapState === true) {
 
-      var marker = new mapboxgl.Marker();
+      var marker = new mapboxgl.Marker({'color': '#F69E7C'});
 
       map.on('click', (e) => {
           var coordinates = e.lngLat;
@@ -144,25 +156,13 @@ const Map = (props) => {
         coords.splice(0, coords.length);
       }
 
-      // Pesquisar Rotas
-      const geocoder = new MapboxGeocoder({
-        // Initialize the geocoder
-        accessToken: mapboxgl.accessToken, // Set the access token
-        mapboxgl: mapboxgl, // Set the mapbox-gl instance
-        marker: false, // Do not use the default marker style
-        placeholder: "Pesquisa Rotas", // Placeholder text for the search bar
-        language: "pt",
-        country: "PT-01",
-        types: "poi, address",
-      });
-
       // Add the geocoder to the map
       map.addControl(geocoder);
 
       if (pinId.state === null) {
         geojson.map((element) => (
           <div className="marker">
-            {new mapboxgl.Marker()
+            {new mapboxgl.Marker({'color': '#F69E7C'})
               .setLngLat(element.features[0].geometry.coordinates)
               .setPopup(
                 new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
@@ -220,7 +220,7 @@ const Map = (props) => {
 
         geojson2.map((element) => (
           <div className="marker">
-            {new mapboxgl.Marker()
+            {new mapboxgl.Marker({'color': '#F69E7C'})
               .setLngLat(element.features[0].geometry.coordinates)
               .setPopup(
                 new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
