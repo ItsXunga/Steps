@@ -5,6 +5,7 @@ const PointSchema = new Schema({
   pinName: {
     type: String,
     required: true,
+    unique: true,
   },
   pinDesc: {
     type: String,

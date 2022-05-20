@@ -1,4 +1,9 @@
 const { UserModel } = require("../models");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET =
+  "sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhfjk";
 
 //handle errors
 const handleErrors = (err) => {
@@ -66,20 +71,13 @@ async function getAll(req, res) {
 }
 
 async function create(req, res) {
-  const { name, email, password, created_routes, favorite_routes } = req.body;
-
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   return res.status(422).json({ errors: errors.array() });
-  // }
+  const { name, email, password } = req.body;
 
   try {
     const user = await UserModel.create({
       name,
       email,
       password,
-      created_routes,
-      favorite_routes,
     });
     res.status(201).json(user);
   } catch (err) {
@@ -88,7 +86,9 @@ async function create(req, res) {
   }
 }
 
-async function update(req, res) {
+async function updateName(req, res) {
+//Preciso alterar o Update do UserName para receber o Id do user logged in
+
   const { id } = req.params;
   const { name } = req.body;
 
@@ -98,13 +98,46 @@ async function update(req, res) {
     res.status(404).json({
       message: "User not found",
     });
+  } else if (name === userData.name) {
+    res.status(400).json({
+      message: "User name already is " + name,
+    });
   } else {
     if (name) userData.name = name;
 
     await userData.save();
 
-    res.json(userData);
+    res.status(200).json("User name changed to " + userData.name);
   }
+}
+
+async function updateAvatar(req, res) {
+  //Preciso alterar o Update do Avatar para receber o Id do user logged in
+  
+    const { id } = req.params;
+    const { avatar } = req.body;
+  
+    const userData = await UserModel.findById(id);
+  
+    if (!userData) {
+      res.status(404).json({
+        message: "User not found",
+      });
+    } else if (avatar === userData.avatar) {
+      res.status(400).json({
+        message: "Profile Image already is " + avatar,
+      });
+    } else {
+      if (avatar) userData.avatar = avatar;
+  
+      await userData.save();
+  
+      res.status(200).json("Profile Image changed to " + userData.avatar);
+    }
+  }
+
+async function ChangePassword(req, res) {
+  //Por fazer!
 }
 
 async function destroy(req, res) {
@@ -118,16 +151,24 @@ async function destroy(req, res) {
 async function login(req, res) {
   const { email, password } = req.body;
 
-  try {
-    const user = await UserModel.findOne(
-      { email: email },
-      { password: password },
-      // not checking password
-    );
-    res.status(200).json({ user: user._id });
-  } catch (err) {
-    const errors = handleErrors(err);
-    res.status(400).json({ errors });
+  const user = await UserModel.findOne({ email }).lean();
+
+  if (!user) {
+    res.status(400).json({ error: "that email is not registered" });
+  } else {
+    if (await bcrypt.compare(password, user.password)) {
+      const token = jwt.sign(
+        {
+          id: user._id,
+          username: user.username,
+        },
+        JWT_SECRET
+      );
+
+      res.status(200).json({ user: user._id, data: token });
+    } else {
+      res.status(400).json({ error: "that password is not registered" });
+    }
   }
 }
 
@@ -135,7 +176,8 @@ const UserController = {
   getById,
   getAll,
   create,
-  update,
+  updateName,
+  updateAvatar,
   destroy,
   login,
 };
