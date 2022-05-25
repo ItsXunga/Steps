@@ -1,9 +1,9 @@
 const { UserModel } = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { SECRET } = process.env;
 
-const JWT_SECRET =
-  "sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhfjk";
+const JWT_SECRET = SECRET;
 
 //handle errors
 const handleErrors = (err) => {
@@ -33,6 +33,13 @@ const handleErrors = (err) => {
   }
 
   return errors;
+};
+
+const maxAge = 24 * 60 * 60;
+const createToken = (id) => {
+  return jwt.sign({ id }, JWT_SECRET, {
+    expiresIn: maxAge,
+  });
 };
 
 async function getById(req, res) {
@@ -79,7 +86,9 @@ async function create(req, res) {
       email,
       password,
     });
-    res.status(201).json(user);
+    const token = createToken(user._id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(201).json({ user: user._id, token: token });
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
@@ -87,7 +96,7 @@ async function create(req, res) {
 }
 
 async function updateName(req, res) {
-//Preciso alterar o Update do UserName para receber o Id do user logged in
+  //Preciso alterar o Update do UserName para receber o Id do user logged in
 
   const { id } = req.params;
   const { name } = req.body;
@@ -113,28 +122,28 @@ async function updateName(req, res) {
 
 async function updateAvatar(req, res) {
   //Preciso alterar o Update do Avatar para receber o Id do user logged in
-  
-    const { id } = req.params;
-    const { avatar } = req.body;
-  
-    const userData = await UserModel.findById(id);
-  
-    if (!userData) {
-      res.status(404).json({
-        message: "User not found",
-      });
-    } else if (avatar === userData.avatar) {
-      res.status(400).json({
-        message: "Profile Image already is " + avatar,
-      });
-    } else {
-      if (avatar) userData.avatar = avatar;
-  
-      await userData.save();
-  
-      res.status(200).json("Profile Image changed to " + userData.avatar);
-    }
+
+  const { id } = req.params;
+  const { avatar } = req.body;
+
+  const userData = await UserModel.findById(id);
+
+  if (!userData) {
+    res.status(404).json({
+      message: "User not found",
+    });
+  } else if (avatar === userData.avatar) {
+    res.status(400).json({
+      message: "Profile Image already is " + avatar,
+    });
+  } else {
+    if (avatar) userData.avatar = avatar;
+
+    await userData.save();
+
+    res.status(200).json("Profile Image changed to " + userData.avatar);
   }
+}
 
 async function ChangePassword(req, res) {
   //Por fazer!
