@@ -9,6 +9,7 @@ import menuClosed from "../assets/img/menu/hamburguerClosed.svg";
 import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 import { motion } from "framer-motion";
 import { exitSingleRoute } from "./redux/singleRouteState";
+import { routeID } from "./redux/routeID";
 
 
 const Nav = (props) => {
@@ -34,7 +35,8 @@ const Nav = (props) => {
         <div
           className="backarrow"
           onClick={() => {
-            dispatch(exitCreation())
+            dispatch(exitCreation());
+            dispatch(routeID(null))
           }}
         >
           <Link to={"/main"}>
@@ -63,7 +65,11 @@ const Nav = (props) => {
 
       {singleRouteState === true ? (
         <div className="backarrow">
-          <Link to={"/main"} onClick={() => dispatch(exitSingleRoute())}>
+          <Link to={"/main"} onClick={() => {
+            dispatch(exitSingleRoute());
+            dispatch(exitCreation());
+            dispatch(routeID(null))
+            }}>
             <svg
               width="15"
               height="27"

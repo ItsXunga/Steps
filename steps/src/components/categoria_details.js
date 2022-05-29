@@ -6,7 +6,9 @@ import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 import Rotas from "../components/data/routes.json";
 import { Link, useLocation } from "react-router-dom";
 import { enterSingleRoute } from "./redux/singleRouteState";
+import  { routeID } from "./redux/routeID";
 import { useDispatch } from 'react-redux';
+
 
 export default function CategoriaDetails() {
 
@@ -125,7 +127,10 @@ function Item(props) {
             </svg>
           </button>
           <Link to={"/main"} state={{ id: props.content.id }}>
-            <button className="buttonroute" onClick={() => {dispatch(enterSingleRoute())}}>
+            <button className="buttonroute" onClick={() => {
+              dispatch(enterSingleRoute());
+              dispatch(routeID(props.content.id))
+              }}>
               <svg
                 style={{ display: "block", margin: "auto" }}
                 width="16"

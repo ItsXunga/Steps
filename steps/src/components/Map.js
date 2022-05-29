@@ -20,6 +20,7 @@ const Map = () => {
 
   const { mapState } = useSelector((state) => state.mapState)
   const { singleRouteState } = useSelector((state) => state.singleRouteState)
+  const { routeID } = useSelector((state) => state.routeID) 
   
   const coords = [];
 
@@ -98,16 +99,17 @@ const Map = () => {
     });
 
     if (mapState === true) {
-
-      var marker = new mapboxgl.Marker({'color': '#F69E7C'});
+      // dentro do modo de criação
+      
 
       map.on('click', (e) => {
+          var marker = new mapboxgl.Marker({'color': '#F69E7C'});
           var coordinates = e.lngLat;
           marker.setLngLat(coordinates).addTo(map);
-          setTimeout(() => {
-            setIsOpen(true);
-          }, "500")
-                                                                           
+          // setTimeout(() => {
+          //   setIsOpen(true);
+          // }, "500")
+                                                                            
       })
 
 
@@ -159,7 +161,7 @@ const Map = () => {
       // Add the geocoder to the map
       map.addControl(geocoder);
 
-      if (pinId.state === null) {
+      if (routeID === null) {
         geojson.map((element) => (
           <div className="marker">
             {new mapboxgl.Marker({'color': '#F69E7C'})
@@ -184,13 +186,11 @@ const Map = () => {
               .addTo(map)}
           </div>
         ));
-      } else if (pinId.state != null) {
+      } else if (routeID != null) {
         map.removeControl(geocoder);
 
-        const { id } = pinId.state;
-
         const routeFromProfile = Rotas.filter(function (value) {
-          return value.id === id;
+          return value.id === routeID;
         });
 
         const geojson2 = routeFromProfile.map((value) => ({
@@ -300,6 +300,7 @@ const Map = () => {
         // Draw an arrow next to the location dot to indicate which direction the device is heading.
         showUserHeading: true,
       });
+      
       map.addControl(userLocation);
       if (pinId.state === null) {
         map.on("load", () => {
@@ -313,6 +314,8 @@ const Map = () => {
       setLat(map.getCenter().lat.toFixed(4));
       setZoom(map.getZoom().toFixed(2));
     });
+
+    
 
     // Clean up on unmount
     return () => map.remove();

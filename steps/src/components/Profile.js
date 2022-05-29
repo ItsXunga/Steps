@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { enterSingleRoute } from "./redux/singleRouteState"
+import { enterSingleRoute } from "./redux/singleRouteState";
+import { routeID } from "./redux/routeID";
 
 import Slider from "react-slick";
 import "../style/Profile.css";
@@ -10,6 +11,7 @@ import { Link } from "react-router-dom";
 import { ProfileBG } from "../assets/img/profile/profile-bg";
 import Rotas from "../components/data/routes.json";
 import { PinColor } from "../assets/img/profile/pin";
+
 
 
 const Profile = () => {
@@ -271,7 +273,10 @@ const Profile = () => {
 
               <section className="sideButton">
                 <Link to={"/main"} state={{ id: props.id }}>
-                  <button className="goButton" onClick={() => dispatch(enterSingleRoute())}>
+                  <button className="goButton" onClick={() => {
+                    dispatch(enterSingleRoute());
+                    dispatch(routeID(props.id))
+                    }}>
                     <svg
                       style={{ display: "flex", margin: "auto" }}
                       width="12"
