@@ -173,6 +173,9 @@ async function login(req, res) {
         },
         JWT_SECRET
       );
+      res.cookie('Authorization', token, { httpOnly: true,
+        sameSite: 'None', secure: true,
+        maxAge: 1000 * 60 * 60 * 24 });
 
       res.status(200).json({ user: user._id, data: token });
     } else {
