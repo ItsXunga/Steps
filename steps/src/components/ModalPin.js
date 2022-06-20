@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
-import { modalStyles } from "../style/modal_styles";
-import "../style/modais_styles.css";
+import React, { useState } from "react"
+import Modal from "react-modal"
+import { modalStyles } from "../style/modal_styles"
+import "../style/modais_styles.css"
+import ModalRota from "./modalRota"
 
 function ModalPin(params) {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false)
 
   function openModal() {
-    setIsOpen(true);
+    setIsOpen(true)
   }
 
   function closeModal() {
-    setIsOpen(false);
+    setIsOpen(false)
   }
 
   return (
@@ -22,10 +23,18 @@ function ModalPin(params) {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={modalStyles}
-        contentLabel="Example Modal"
+        contentLabel="Modal Pin"
       >
         <div>
-          <h2 style={{ textAlign: "center", padding: "0.5rem" }}>Ponto 1</h2>
+          <h2
+            style={{
+              textAlign: "center",
+              padding: "0.5rem",
+            }}
+          >
+            Ponto 1
+          </h2>
+
           <input className="inputpin" />
           <textarea className="inputdescription" />
           <div style={{ margin: "1rem 0" }}>
@@ -43,7 +52,7 @@ function ModalPin(params) {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalPin;
+export default ModalPin

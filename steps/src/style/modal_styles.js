@@ -5,7 +5,7 @@ export const modalStyles = {
     boxShadow: "2px 2px 7px 0px rgba(0, 0, 0, 0.2)",
     border: "white 2px solid",
     borderRadius: "20px",
-    height: "35vh",
+    height: "fit-content",
     textAlign: "center",
     overflow: "auto",
     display: "flex",
@@ -14,7 +14,7 @@ export const modalStyles = {
     margin: "auto",
     minHeight: "35vh",
   },
-};
+}
 
 export const modalRota = {
   content: {
@@ -30,4 +30,4 @@ export const modalRota = {
     overflow: "auto",
     border: "1px solid #5F61F3",
   },
-};
+}
