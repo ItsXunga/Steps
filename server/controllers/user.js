@@ -1,4 +1,4 @@
-const { UserModel } = require("../models");
+const { UserModel, CircuitModel } = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { SECRET } = process.env;
@@ -86,9 +86,6 @@ async function create(req, res) {
       email,
       password,
     });
-    const token = createToken(user._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ user: user._id, token: token });
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
@@ -117,6 +114,21 @@ async function updateName(req, res) {
     await userData.save();
 
     res.status(200).json("User name changed to " + userData.name);
+  }
+}
+
+async function favorite(req, res) {
+  const { id } = req.params;
+
+  const userData = await UserModel.findById(id);
+  const circuitData = await CircuitModel.findById(userData.favorite_routes);
+
+  if (circuitData) {
+    res.json(circuitData);
+  } else {
+    res.status(404).json({
+      message: "This user has not favorited this route",
+    });
   }
 }
 
@@ -166,15 +178,8 @@ async function login(req, res) {
     res.status(400).json({ error: "that email is not registered" });
   } else {
     if (await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign(
-        {
-          id: user._id,
-          username: user.username,
-        },
-        JWT_SECRET
-      );
-
-      res.status(200).json({ user: user._id, data: token });
+      const token = jwt.sign({ email: user.email, _id: user._id }, JWT_SECRET);
+      res.status(200).json({ token: token });
     } else {
       res.status(400).json({ error: "that password is not registered" });
     }
@@ -186,6 +191,7 @@ const UserController = {
   getAll,
   create,
   updateName,
+  favorite,
   updateAvatar,
   destroy,
   login,

@@ -3,7 +3,7 @@ require("dotenv").config();
 const db = require("./utils/database");
 const mongoose = require("mongoose");
 const Routes = require("./routes");
-const cookieParser = require("cookie-parser");
+const jwt = require('jsonwebtoken')
 
 const port = process.env.PORT | 3000;
 
@@ -15,23 +15,25 @@ app.use(express.json());
 app.use("/circuits", Routes.CircuitRoutes);
 app.use("/points", Routes.PointRoutes);
 app.use("/users", Routes.UserRoutes);
-app.use(cookieParser());
 
-// cookies
-app.get("/set-cookies", (req, res) => {
-  res.cookie("newUser", true, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true});
-
-  res.send("Cookies working!");
-});
-
-app.get("/", (req, res) => {
+app.get("/", authenticateToken, (req, res) => {
   res.send("Hello World!");
-  console.log('Cookies', req.cookies);
 });
 
 async function main() {
   await mongoose.connect(db.uri);
   app.listen(port, () => console.log("server running on port: ", port));
+}
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token == null) return res.sendStatus(401)
+
+  jwt.verify(token, process.env.SECRET, (err) => {
+    if (err) return res.sendStatus(403)
+    next()
+  })
 }
 
 main().catch((err) => console.log(err));
