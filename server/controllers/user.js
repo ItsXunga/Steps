@@ -1,32 +1,30 @@
-const { UserModel, CircuitModel } = require("../models");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const { UserModel, CircuitModel } = require('../models');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { SECRET } = process.env;
-
-const JWT_SECRET = SECRET;
 
 //handle errors
 const handleErrors = (err) => {
   console.log(err.message, err.code);
-  let errors = { email: "", password: "" };
+  let errors = { email: '', password: '' };
 
   //incorrect email
-  if (err.message === "incorrect email") {
-    errors.email = "that email is not registered";
+  if (err.message === 'incorrect email') {
+    errors.email = 'that email is not registered';
   }
 
   //incorrect password
-  if (err.message === "incorrect password") {
-    errors.email = "that password is incorrect";
+  if (err.message === 'incorrect password') {
+    errors.email = 'that password is incorrect';
   }
 
   if (err.code === 11000) {
     //exists
-    errors.email = "that email is already registered";
+    errors.email = 'that email is already registered';
   }
 
   //validation errors
-  if (err.message.includes("User validation failed")) {
+  if (err.message.includes('User validation failed')) {
     Object.values(err.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;
     });
@@ -51,7 +49,7 @@ async function getById(req, res) {
     res.json(userData);
   } else {
     res.status(404).json({
-      message: "User not found",
+      message: 'User not found',
     });
   }
 }
@@ -102,18 +100,18 @@ async function updateName(req, res) {
 
   if (!userData) {
     res.status(404).json({
-      message: "User not found",
+      message: 'User not found',
     });
   } else if (name === userData.name) {
     res.status(400).json({
-      message: "User name already is " + name,
+      message: 'User name already is ' + name,
     });
   } else {
     if (name) userData.name = name;
 
     await userData.save();
 
-    res.status(200).json("User name changed to " + userData.name);
+    res.status(200).json('User name changed to ' + userData.name);
   }
 }
 
@@ -121,13 +119,15 @@ async function favorite(req, res) {
   const { id } = req.params;
 
   const userData = await UserModel.findById(id);
-  const circuitData = await CircuitModel.findById(userData.favorite_routes);
+  const circuitData = await CircuitModel.find({
+    _id: { $in: userData.faorites_routes },
+  });
 
   if (circuitData) {
     res.json(circuitData);
   } else {
     res.status(404).json({
-      message: "This user has not favorited this route",
+      message: 'This user has not favorited this route',
     });
   }
 }
@@ -142,18 +142,18 @@ async function updateAvatar(req, res) {
 
   if (!userData) {
     res.status(404).json({
-      message: "User not found",
+      message: 'User not found',
     });
   } else if (avatar === userData.avatar) {
     res.status(400).json({
-      message: "Profile Image already is " + avatar,
+      message: 'Profile Image already is ' + avatar,
     });
   } else {
     if (avatar) userData.avatar = avatar;
 
     await userData.save();
 
-    res.status(200).json("Profile Image changed to " + userData.avatar);
+    res.status(200).json('Profile Image changed to ' + userData.avatar);
   }
 }
 
@@ -175,13 +175,13 @@ async function login(req, res) {
   const user = await UserModel.findOne({ email }).lean();
 
   if (!user) {
-    res.status(400).json({ error: "that email is not registered" });
+    res.status(400).json({ error: 'that email is not registered' });
   } else {
     if (await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ email: user.email, _id: user._id }, JWT_SECRET);
+      const token = jwt.sign({ email: user.email, _id: user._id }, SECRET);
       res.status(200).json({ token: token });
     } else {
-      res.status(400).json({ error: "that password is not registered" });
+      res.status(400).json({ error: 'that password is not registered' });
     }
   }
 }
