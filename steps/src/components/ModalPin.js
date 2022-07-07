@@ -1,26 +1,21 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { useDispatch, useSelector } from "react-redux";
 import { modalStyles } from "../style/modal_styles";
 import "../style/modais_styles.css";
+import { closeModal } from "./redux/modalState";
 
-function ModalPin(params) {
-  const [modalIsOpen, setIsOpen] = useState(false);
+function ModalPin() {
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
+  const dispatch = useDispatch();
+  const openModalPin = useSelector((state) => state.modalState.modalPin)
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
 
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={openModalPin}
+        onRequestClose={() => dispatch(closeModal())}
         style={modalStyles}
         contentLabel="Example Modal"
       >
@@ -30,12 +25,12 @@ function ModalPin(params) {
           <textarea className="inputdescription" />
           <div style={{ margin: "1rem 0" }}>
             <div style={{ padding: "0.5rem 1rem" }}>
-              <button onClick={closeModal} className="orangeButton">
+              <button className="orangeButton">
                 Adicionar
               </button>
             </div>
             <div style={{ padding: "0.5rem 1rem" }}>
-              <button onClick={closeModal} className="blueButton">
+              <button className="blueButton">
                 Remover
               </button>
             </div>

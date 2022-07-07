@@ -1,15 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
 import mapboxgl from "mapbox-gl";
-import { Link, useLocation } from "react-router-dom";
 import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
-import { modalStyles } from "../style/modal_styles";
-import ModalAddRota from "./ModalAddRota";
-
+import { addPin } from "./redux/pinStorage";
+import { openModalPin } from "./redux/modalState";
 
 Modal.setAppElement("#root");
 
@@ -20,14 +17,15 @@ const Map = () => {
 
   const { mapState } = useSelector((state) => state.mapState)
   const { singleRouteState } = useSelector((state) => state.singleRouteState)
-  const { routeID } = useSelector((state) => state.routeID) 
-  
-  const coords = [];
+  const { routeID } = useSelector((state) => state.routeID)
+  const { pinStorage } = useSelector((state) => state.pinStorage)
 
-  const pinId = useLocation();
-  if (pinId.state !== null) {
-    const { id } = pinId.state; // id da rota que vem do profile
-  }
+  const storage = useRef();
+  storage.current = pinStorage;
+
+  const dispatch = useDispatch();
+
+  const coords = [];
 
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -65,7 +63,7 @@ const Map = () => {
       },
     ],
   }));
-       
+
   // Pesquisar Rotas
   const geocoder = new MapboxGeocoder({
     // Initialize the geocoder
@@ -100,17 +98,44 @@ const Map = () => {
 
     if (mapState === true) {
       // dentro do modo de criação
-      
+
+      var marker = new mapboxgl.Marker({ 'color': '#F69E7C' });
 
       map.on('click', (e) => {
-          var marker = new mapboxgl.Marker({'color': '#F69E7C'});
-          var coordinates = e.lngLat;
+        var coordinates = e.lngLat;
+        if (coordinates) {
           marker.setLngLat(coordinates).addTo(map);
-          // setTimeout(() => {
-          //   setIsOpen(true);
-          // }, "500")
-                                                                            
+          const coordenadas = marker.getLngLat(coordinates);
+          dispatch(addPin({
+            lng: coordenadas.lng,
+            lat: coordenadas.lat,
+            id: coordenadas.lat
+          }))
+        }
+
+        setTimeout(() => {
+          dispatch(openModalPin())
+
+          // const geojsonCreate = storage.current.map((value) => ({
+          //   type: "FeatureCollection",
+          //   features: [
+          //     {
+          //       type: "Feature",
+          //       geometry: {
+          //         type: "Point",
+          //         coordinates: [value.pins[0].long, value.pins[0].lat],
+          //       },
+          //     },
+          //   ]
+          // }))
+
+          // console.log(geojsonCreate);
+          console.log(storage.current);
+        }, "500")
+
       })
+
+
 
 
     } else {
@@ -164,7 +189,7 @@ const Map = () => {
       if (routeID === null) {
         geojson.map((element) => (
           <div className="marker">
-            {new mapboxgl.Marker({'color': '#F69E7C'})
+            {new mapboxgl.Marker({ 'color': '#F69E7C' })
               .setLngLat(element.features[0].geometry.coordinates)
               .setPopup(
                 new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
@@ -220,7 +245,7 @@ const Map = () => {
 
         geojson2.map((element) => (
           <div className="marker">
-            {new mapboxgl.Marker({'color': '#F69E7C'})
+            {new mapboxgl.Marker({ 'color': '#F69E7C' })
               .setLngLat(element.features[0].geometry.coordinates)
               .setPopup(
                 new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
@@ -300,9 +325,9 @@ const Map = () => {
         // Draw an arrow next to the location dot to indicate which direction the device is heading.
         showUserHeading: true,
       });
-      
+
       map.addControl(userLocation);
-      if (pinId.state === null) {
+      if (routeID === null) {
         map.on("load", () => {
           userLocation.trigger();
         });
@@ -315,7 +340,7 @@ const Map = () => {
       setZoom(map.getZoom().toFixed(2));
     });
 
-    
+
 
     // Clean up on unmount
     return () => map.remove();
@@ -324,32 +349,7 @@ const Map = () => {
   return (
     <div>
       <div>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          style={modalStyles}
-          contentLabel="Example Modal"
-        >
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div>
-              <img src={require("../assets/img/pin.png")} alt="pin" />
-              <p
-                style={{
-                  padding: "2rem 2rem",
-                  fontSize: "18px",
-                  fontFamily: "ManropeRegular",
-                }}
-              >
-                A tua rota foi adicionada com sucesso!
-              </p>
-              <div style={{ padding: "0.5rem 1rem" }}>
-                <button onClick={closeModal} className="orangeButton">
-                  Confirmar
-                </button>
-              </div>
-            </div>
-          </div>
-        </Modal>
+
       </div>
 
       <div
