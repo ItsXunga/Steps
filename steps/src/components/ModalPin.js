@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import Modal from "react-modal"
 import { modalStyles } from "../style/modal_styles"
 import "../style/modais_styles.css"
-import ModalRota from "./modalRota"
 
 function ModalPin(params) {
   const [modalIsOpen, setIsOpen] = useState(false)
@@ -35,8 +34,15 @@ function ModalPin(params) {
             Ponto 1
           </h2>
 
+          <label className="label" for="password">
+            Nome
+          </label>
           <input className="inputpin" />
+          <label className="label" for="password">
+            Descrição
+          </label>
           <textarea className="inputdescription" />
+
           <div style={{ margin: "1rem 0" }}>
             <div style={{ padding: "0.5rem 1rem" }}>
               <button onClick={closeModal} className="orangeButton">

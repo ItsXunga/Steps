@@ -10,7 +10,7 @@
     "@mapbox/mapbox-gl-geocoder": "^4.7.4",
     "@mui/material": "^5.4.2",
     "@mui/styles": "^5.4.2",
-    "@reduxjs/toolkit": "^1.8.1",
+    "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.18.5",
     "prettier": "2.5.1"
   }
 }
