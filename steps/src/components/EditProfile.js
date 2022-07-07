@@ -40,7 +40,7 @@ const EditProfile = () => {
           display: "flex",
           justifyContent: "space-around",
           flexDirection: "column",
-          height: "35vh",
+          height: "45vh",
         }}
       >
         <div>
@@ -52,6 +52,18 @@ const EditProfile = () => {
             type="text"
             id="username"
             placeholder="johnlee123"
+          />
+        </div>
+
+        <div>
+          <label className="EditLabel" for="profissao">
+            Profissão
+          </label>
+          <input
+            className="EditInput"
+            type="text"
+            id="profissao"
+            placeholder="Engenheiro Software"
           />
         </div>
 
@@ -69,7 +81,19 @@ const EditProfile = () => {
 
         <div>
           <label className="EditLabel" for="password">
-            Password
+            Nova Password
+          </label>
+          <input
+            className="EditInput"
+            type="text"
+            id="password"
+            placeholder="*************"
+          />
+        </div>
+
+        <div>
+          <label className="EditLabel" for="password">
+            Confirme Password
           </label>
           <input
             className="EditInput"

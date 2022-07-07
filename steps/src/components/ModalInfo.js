@@ -1,25 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-modal";
+import { useDispatch, useSelector } from "react-redux";
 import { modalStyles } from "../style/modal_styles";
+import { closeModal } from "./redux/modalState";
 
-function ModalInfo(params) {
-  const [modalIsOpen, setIsOpen] = useState(false);
+function ModalInfo() {
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
+  const openModalInfo = useSelector((state) => state.modalState.modalInfo)
+  const dispatch = useDispatch();
+  
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
-
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={openModalInfo}
+        onRequestClose={() => dispatch(closeModal())}
         style={modalStyles}
         contentLabel="Example Modal"
       >
@@ -37,8 +31,8 @@ function ModalInfo(params) {
             </p>
 
             <div style={{ padding: "1rem 2rem" }}>
-              <button onClick={closeModal} className="orangeButton">
-                Guardar
+              <button onClick={() => dispatch(closeModal())} className="orangeButton">
+                Entendi
               </button>
             </div>
           </div>

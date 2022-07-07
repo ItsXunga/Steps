@@ -9,6 +9,8 @@ import menuClosed from "../assets/img/menu/hamburguerClosed.svg";
 import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 import { motion } from "framer-motion";
 import { exitSingleRoute } from "./redux/singleRouteState";
+import { routeID } from "./redux/routeID";
+import { closeModal, openModalInfo } from "./redux/modalState";
 
 
 const Nav = (props) => {
@@ -34,7 +36,9 @@ const Nav = (props) => {
         <div
           className="backarrow"
           onClick={() => {
-            dispatch(exitCreation())
+            dispatch(exitCreation());
+            dispatch(routeID(null));
+            dispatch(closeModal());
           }}
         >
           <Link to={"/main"}>
@@ -63,7 +67,13 @@ const Nav = (props) => {
 
       {singleRouteState === true ? (
         <div className="backarrow">
-          <Link to={"/main"} onClick={() => dispatch(exitSingleRoute())}>
+          <Link to={"/main"} onClick={() => {
+            dispatch(exitSingleRoute());
+            dispatch(exitCreation());
+            dispatch(routeID(null));
+            dispatch(closeModal());
+            }}>
+              
             <svg
               width="15"
               height="27"
@@ -155,7 +165,13 @@ const Nav = (props) => {
               }}
               alt="nova rota"
               src={menu_add_route}
-              onClick={() => dispatch(enterCreation())}
+              onClick={() => {
+                dispatch(enterCreation());
+                setTimeout(() => {
+                  dispatch(openModalInfo())
+                }, 2000);
+                
+              }}
               className="testeCursor"
             />
           ) : (
@@ -174,7 +190,10 @@ const Nav = (props) => {
               }}
               alt="nova rota"
               src={menu_add_route}
-              onClick={() => dispatch(enterCreation())}
+              onClick={() => {
+                dispatch(enterCreation());
+                dispatch(openModalInfo())
+              }}
             />
           )}
         </Link>
