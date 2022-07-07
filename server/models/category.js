@@ -5,6 +5,7 @@ const CategorySchema = new Schema({
   category: {
     type: String,
     required: true,
+    unique: true,
   },
   img: {
     type: String,

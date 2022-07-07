@@ -17,12 +17,27 @@ function ModalPin() {
         isOpen={openModalPin}
         onRequestClose={() => dispatch(closeModal())}
         style={modalStyles}
-        contentLabel="Example Modal"
+        contentLabel="Modal Pin"
       >
         <div>
-          <h2 style={{ textAlign: "center", padding: "0.5rem" }}>Ponto 1</h2>
+          <h2
+            style={{
+              textAlign: "center",
+              padding: "0.5rem",
+            }}
+          >
+            Ponto 1
+          </h2>
+
+          <label className="label" for="password">
+            Nome
+          </label>
           <input className="inputpin" />
+          <label className="label" for="password">
+            Descrição
+          </label>
           <textarea className="inputdescription" />
+
           <div style={{ margin: "1rem 0" }}>
             <div style={{ padding: "0.5rem 1rem" }}>
               <button className="orangeButton">
@@ -38,7 +53,7 @@ function ModalPin() {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalPin;
+export default ModalPin
