@@ -1,21 +1,59 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { modalStyles } from "../style/modal_styles";
 import "../style/modais_styles.css";
 import { closeModal } from "./redux/modalState";
+import { addPinInfo, delPin } from "./redux/pinStorage";
 
 function ModalPin() {
 
   const dispatch = useDispatch();
+  const storageId = useSelector((state) => state.pinStorage.pinStorage)
   const openModalPin = useSelector((state) => state.modalState.modalPin)
+
+  const Id = useRef();
+  Id.current= storageId;
+
+  //Get last element's id in pins object
+  const PinId = Object.keys(storageId).pop()
+
+  const [textArea, setTextArea] = useState("")
+  const [nameArea, setNameArea] = useState("")
+
+  const textAreaChange = e => {
+    setTextArea(e.target.value)
+  }
+
+  const nameAreaChange = e => {
+    setNameArea(e.target.value)
+  }
+
+  
+  const handleData = () => {
+    dispatch(addPinInfo({
+      //send Id to know what 
+      id: PinId,
+      name: nameArea,
+      desc: textArea
+    }))
+
+    setTimeout(() => {
+      dispatch(closeModal())
+    }, 100)
+  }
+
+  const handlePinDelete = () => {
+    dispatch(delPin(PinId))
+    dispatch(closeModal())
+    
+  }
+
 
   return (
     <div>
-
       <Modal
         isOpen={openModalPin}
-        onRequestClose={() => dispatch(closeModal())}
         style={modalStyles}
         contentLabel="Modal Pin"
       >
@@ -26,27 +64,36 @@ function ModalPin() {
               padding: "0.5rem",
             }}
           >
-            Ponto 1
+            Novo Ponto
           </h2>
 
           <label className="label" for="password">
             Nome
           </label>
-          <input className="inputpin" />
+          <input 
+          className="inputpin" 
+          type='text'
+          onChange={nameAreaChange}
+          
+          />
           <label className="label" for="password">
             Descrição
           </label>
-          <textarea className="inputdescription" />
+          <textarea
+          type='text' 
+          className="inputdescription"
+          onChange={textAreaChange} 
+          />
 
           <div style={{ margin: "1rem 0" }}>
             <div style={{ padding: "0.5rem 1rem" }}>
-              <button className="orangeButton">
+              <button className="orangeButton" onClick={handleData}>
                 Adicionar
               </button>
             </div>
             <div style={{ padding: "0.5rem 1rem" }}>
-              <button className="blueButton">
-                Remover
+              <button className="blueButton" onClick={handlePinDelete}>
+                Cancelar
               </button>
             </div>
           </div>

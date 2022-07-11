@@ -14,6 +14,7 @@ mapboxgl.accessToken =
   "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
 
 const Map = () => {
+  const dispatch = useDispatch();
 
   const { mapState } = useSelector((state) => state.mapState)
   const { singleRouteState } = useSelector((state) => state.singleRouteState)
@@ -23,8 +24,7 @@ const Map = () => {
   const storage = useRef();
   storage.current = pinStorage;
 
-  const dispatch = useDispatch();
-
+ 
   const coords = [];
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -130,8 +130,7 @@ const Map = () => {
           // }))
 
           // console.log(geojsonCreate);
-          console.log(storage.current);
-        }, "500")
+        }, 150)
 
       })
 
