@@ -1,23 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    mapState: false,
-}
+  mapState: false,
+};
 
 export const mapStateSlice = createSlice({
-    name: 'mapState',
-    initialState,
-    reducers: {
-        enterCreation: (state) => {
-            state.mapState = true
-        },
+  name: "mapState",
+  initialState,
+  reducers: {
+    enterCreation: (state) => {
+      state.mapState = true;
+    },
 
-        exitCreation: (state) => {
-            state.mapState = false
-        }
-    }
-})
+    exitCreation: (state) => {
+      state.mapState = false;
+    },
+  },
+});
 
-export const { enterCreation, exitCreation } = mapStateSlice.actions
+export const { enterCreation, exitCreation } = mapStateSlice.actions;
 
-export default mapStateSlice.reducer
+export default mapStateSlice.reducer;

@@ -5,10 +5,9 @@ import { modalStyles } from "../style/modal_styles";
 import { closeModal } from "./redux/modalState";
 
 function ModalInfo() {
-
-  const openModalInfo = useSelector((state) => state.modalState.modalInfo)
+  const openModalInfo = useSelector((state) => state.modalState.modalInfo);
   const dispatch = useDispatch();
-  
+
   return (
     <div>
       <Modal
@@ -31,7 +30,10 @@ function ModalInfo() {
             </p>
 
             <div style={{ padding: "1rem 2rem" }}>
-              <button onClick={() => dispatch(closeModal())} className="orangeButton">
+              <button
+                onClick={() => dispatch(closeModal())}
+                className="orangeButton"
+              >
                 Entendi
               </button>
             </div>

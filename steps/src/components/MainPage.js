@@ -6,7 +6,6 @@ import ModalInfo from "./ModalInfo";
 import ModalPin from "./ModalPin";
 
 const SecondPage = () => {
-
   return (
     <div>
       <Nav />

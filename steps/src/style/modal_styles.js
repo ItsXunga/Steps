@@ -14,7 +14,7 @@ export const modalStyles = {
     margin: "auto",
     minHeight: "35vh",
   },
-}
+};
 
 export const modalRota = {
   content: {
@@ -30,4 +30,4 @@ export const modalRota = {
     overflow: "auto",
     border: "1px solid #5F61F3",
   },
-}
+};

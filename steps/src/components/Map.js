@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import mapboxgl from "mapbox-gl";
 import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
@@ -16,15 +16,31 @@ mapboxgl.accessToken =
 const Map = () => {
   const dispatch = useDispatch();
 
-  const { mapState } = useSelector((state) => state.mapState)
-  const { singleRouteState } = useSelector((state) => state.singleRouteState)
-  const { routeID } = useSelector((state) => state.routeID)
-  const { pinStorage } = useSelector((state) => state.pinStorage)
+  const { mapState } = useSelector((state) => state.mapState);
+  const { singleRouteState } = useSelector((state) => state.singleRouteState);
+  const { routeID } = useSelector((state) => state.routeID);
+  const { pinStorage } = useSelector((state) => state.pinStorage);
+  const { refreshConst } = useSelector((state) => state.refreshConst);
 
+  //Get last element's id in pins object
+  const storageId = useSelector((state) => state.pinStorage.pinStorage);
+
+  const Id = useRef();
+  Id.current = storageId;
+
+  const PinId = Object.keys(storageId).pop();
+  //
+
+  //Get pin storage elements
   const storage = useRef();
   storage.current = pinStorage;
+  //
 
- 
+  //Check when the app wants a refresh - used in the useEffect dependency
+  const refresh = useRef();
+  refresh.current = refreshConst;
+  //
+
   const coords = [];
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -39,6 +55,7 @@ const Map = () => {
     document.getElementById("menu_bar").style.display = "flex";
   }
 
+  // existing routes
   const geojson = Rotas.map((value) => ({
     type: "FeatureCollection",
     features: [
@@ -63,6 +80,7 @@ const Map = () => {
       },
     ],
   }));
+
 
   // Pesquisar Rotas
   const geocoder = new MapboxGeocoder({
@@ -97,46 +115,73 @@ const Map = () => {
     });
 
     if (mapState === true) {
-      // dentro do modo de criação
+      //creation mode
 
-      var marker = new mapboxgl.Marker({ 'color': '#F69E7C' });
+      //check if there are points added to the store
+      const StorageStatus = Object.keys(pinStorage).length;
 
-      map.on('click', (e) => {
+      //map the pins if theres atleast one entry
+      if (StorageStatus >= 1) {
+        // Json for points being created
+
+        // Converting object from redux store to array to then map.
+        const pinsArray = Object.entries(pinStorage).map((obj) => ({ ...obj }));
+
+        const geojsonPins = pinsArray.map((value) => ({
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              geometry: {
+                type: "Point",
+                coordinates: [value[1].lng, value[1].lat],
+              },
+              properties: {
+                id: value[1].id,
+                name: value[1].name,
+                description: value[1].desc,
+              },
+            },
+          ],
+        }));
+
+        const handleClick = (id) => {
+          console.log(id);
+        }
+
+        //add saved markers to the route being created
+        geojsonPins.map((element) => {
+          const el = document.createElement("div");
+          el.className = "marker";
+          el.addEventListener("click", function(e){
+            e.stopPropagation();
+            handleClick(element.features[0].properties.id)
+          });
+
+          new mapboxgl.Marker(el)
+            .setLngLat(element.features[0].geometry.coordinates)
+            .addTo(map);
+        });
+      }
+
+      var marker = new mapboxgl.Marker({ color: "#F69E7C" });
+      map.on("click", (e) => {
         var coordinates = e.lngLat;
         if (coordinates) {
           marker.setLngLat(coordinates).addTo(map);
           const coordenadas = marker.getLngLat(coordinates);
-          dispatch(addPin({
-            lng: coordenadas.lng,
-            lat: coordenadas.lat,
-            id: coordenadas.lat
-          }))
+          dispatch(
+            addPin({
+              id: coordenadas.lat,
+              lng: coordenadas.lng,
+              lat: coordenadas.lat,
+            })
+          );
         }
-
         setTimeout(() => {
-          dispatch(openModalPin())
-
-          // const geojsonCreate = storage.current.map((value) => ({
-          //   type: "FeatureCollection",
-          //   features: [
-          //     {
-          //       type: "Feature",
-          //       geometry: {
-          //         type: "Point",
-          //         coordinates: [value.pins[0].long, value.pins[0].lat],
-          //       },
-          //     },
-          //   ]
-          // }))
-
-          // console.log(geojsonCreate);
-        }, 150)
-
-      })
-
-
-
-
+          dispatch(openModalPin());
+        }, 125);
+      });
     } else {
       // Make a Map Matching request
       async function getMatch(coordinates, radius, profile) {
@@ -186,30 +231,17 @@ const Map = () => {
       map.addControl(geocoder);
 
       if (routeID === null) {
-        geojson.map((element) => (
-          <div className="marker">
-            {new mapboxgl.Marker({ 'color': '#F69E7C' })
-              .setLngLat(element.features[0].geometry.coordinates)
-              .setPopup(
-                new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
-                  .setHTML(
-                    `<div class="modalRota">
-                      <h2 style="padding: .5rem">${element.features[0].properties.title}</h2>
-                      <div>
-                      <p style="padding: .5rem">${element.features[0].properties.description}</p>
-                      <p> <span style="font-family: ManropeBold">Categoria:</span> ${element.features[0].properties.category}</p>
-                      <p><span style="font-family: ManropeBold">Criador:</span> ${element.features[0].properties.creator}</p>
-                      </div>
-                    </div>
-                  `
-                  )
-                  .on("open", () => {
-                    getRotas(element.features[0].properties.id);
-                  })
-              )
-              .addTo(map)}
-          </div>
-        ));
+        geojson.map((element) => {
+          const el = document.createElement("div");
+          el.className = "marker";
+          el.addEventListener("click", function(e){
+            e.stopPropagation();
+          });
+
+          new mapboxgl.Marker(el)
+            .setLngLat(element.features[0].geometry.coordinates)
+            .addTo(map);
+        });
       } else if (routeID != null) {
         map.removeControl(geocoder);
 
@@ -242,30 +274,17 @@ const Map = () => {
           ],
         }));
 
-        geojson2.map((element) => (
-          <div className="marker">
-            {new mapboxgl.Marker({ 'color': '#F69E7C' })
-              .setLngLat(element.features[0].geometry.coordinates)
-              .setPopup(
-                new mapboxgl.Popup({ offset: 25, closeButton: false }) // add popups
-                  .setHTML(
-                    `<div class="modalRota">
-                      <h2 style="padding: .5rem">${element.features[0].properties.title}</h2>
-                      <div>
-                      <p style="padding: .5rem">${element.features[0].properties.description}</p>
-                      <p> <span style="font-family: ManropeBold">Categoria:</span> ${element.features[0].properties.category}</p>
-                      <p><span style="font-family: ManropeBold">Criador:</span> ${element.features[0].properties.creator}</p>
-                      </div>
-                    </div>
-                  `
-                  )
-                  .on("open", () => {
-                    getRotas(element.features[0].properties.id);
-                  })
-              )
-              .addTo(map)}
-          </div>
-        ));
+        geojson2.map((element) => {
+          const el = document.createElement("div");
+          el.className = "marker";
+          el.addEventListener("click", function(e){
+            e.stopPropagation();
+          });
+
+          new mapboxgl.Marker(el)
+            .setLngLat(element.features[0].geometry.coordinates)
+            .addTo(map);
+        });
       }
 
       function getInstructions(data) {
@@ -339,17 +358,13 @@ const Map = () => {
       setZoom(map.getZoom().toFixed(2));
     });
 
-
-
     // Clean up on unmount
     return () => map.remove();
-  }, [mapState, singleRouteState]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [mapState, singleRouteState, refreshConst]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
-      <div>
-
-      </div>
+      <div></div>
 
       <div
         className="map-container"
