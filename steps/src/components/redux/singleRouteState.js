@@ -1,23 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    singleRouteState: false,
-}
+  singleRouteState: false,
+};
 
 export const singleRouteSlice = createSlice({
-    name: 'singleRoute',
-    initialState,
-    reducers: {
-        enterSingleRoute: (state) => {
-            state.singleRouteState = true
-        },
+  name: "singleRoute",
+  initialState,
+  reducers: {
+    enterSingleRoute: (state) => {
+      state.singleRouteState = true;
+    },
 
-        exitSingleRoute: (state) => {
-            state.singleRouteState = false
-        }
-    }
-})
+    exitSingleRoute: (state) => {
+      state.singleRouteState = false;
+    },
+  },
+});
 
-export const { enterSingleRoute, exitSingleRoute } = singleRouteSlice.actions
+export const { enterSingleRoute, exitSingleRoute } = singleRouteSlice.actions;
 
-export default singleRouteSlice.reducer
+export default singleRouteSlice.reducer;

@@ -19,14 +19,14 @@ app.use(cookieParser());
 
 // cookies
 app.get("/set-cookies", (req, res) => {
-  res.cookie("newUser", true, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true});
+  res.cookie("newUser", true, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true });
 
   res.send("Cookies working!");
 });
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
-  console.log('Cookies', req.cookies);
+  console.log("Cookies", req.cookies);
 });
 
 async function main() {

@@ -5,9 +5,10 @@ import { modalStyles } from "../style/modal_styles";
 import { closeModal } from "./redux/modalState";
 
 function ModalAddRota() {
-  
   const dispatch = useDispatch();
-  const openModalAddRota = useSelector((state) => state.modalState.modalAddRota)
+  const openModalAddRota = useSelector(
+    (state) => state.modalState.modalAddRota
+  );
 
   return (
     <div>
