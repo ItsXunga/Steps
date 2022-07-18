@@ -1,6 +1,7 @@
 const express = require("express");
 const { CircuitController } = require("../controllers");
 
+
 const router = express.Router();
 
 router.get("/", CircuitController.getAll);

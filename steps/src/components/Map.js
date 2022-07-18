@@ -143,10 +143,14 @@ const Map = () => {
         }));
 
 
-
         // function running on pin click
-        const handleClick = (id) => {
-          dispatch(openManageModalPin())
+        const handleClick = (id, coordinates) => {
+          map.easeTo({
+            center: coordinates,
+            zoom: 17,
+            duration: 1000,
+          });
+
           setClickedData({
             id: id,
             name: pinStorage[id].name,
@@ -154,6 +158,10 @@ const Map = () => {
             lat:  pinStorage[id].lat,
             lng: pinStorage[id].lng
           })
+
+          setTimeout(() => {
+            dispatch(openManageModalPin());
+          }, 1250);
         }
 
         //add saved markers to the route being created
@@ -162,9 +170,8 @@ const Map = () => {
           el.className = "marker";
           el.addEventListener("click", function(e){
             e.stopPropagation();
-            handleClick(element.features[0].properties.id)
+            handleClick(element.features[0].properties.id, element.features[0].geometry.coordinates)
           });
-
           new mapboxgl.Marker(el)
             .setLngLat(element.features[0].geometry.coordinates)
             .addTo(map);
@@ -177,6 +184,11 @@ const Map = () => {
         var coordinates = e.lngLat;
         if (coordinates) {
           marker.setLngLat(coordinates).addTo(map);
+          map.easeTo({
+            center: marker.getLngLat(coordinates),
+            zoom: 17,
+            duration: 1000,
+          });
           setCoordernadas({
             id: marker.getLngLat(coordinates).lat,
             lat: marker.getLngLat(coordinates).lat,
@@ -186,7 +198,7 @@ const Map = () => {
         }
         setTimeout(() => {
           dispatch(openModalPin());
-        }, 125);
+        }, 1250);
       });
     } else {
       // Make a Map Matching request
