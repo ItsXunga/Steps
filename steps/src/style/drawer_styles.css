@@ -1,4 +1,27 @@
 .drawerstyle {
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+    transform: translate3d(0px, 75%, 0px) !important;
+    visibility: visible !important;
+  
+    
+    
 }
+
+.uparrow {
+ text-align: center;
+ margin: 2rem;
+ 
+
+}
+
+.point {
+    margin: 4rem;
+   }
+
+
+   .divpoints {
+    overflow: scroll;
+   }
+
+
