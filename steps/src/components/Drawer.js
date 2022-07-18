@@ -3,8 +3,10 @@ import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import "../style/drawer_styles.css";
 import { useSelector, useDispatch } from "react-redux";
+import { delPin } from "./redux/pinStorage";
 
 const Drawertest = () => {
+  const dispatch = useDispatch();
   const { pinStorage } = useSelector((state) => state.pinStorage);
 
   //Get pin storage elements
@@ -20,8 +22,9 @@ const Drawertest = () => {
     setIsOpen((prevState) => !prevState)
   }
 
-  const handleClick = () => {
-    console.log('hello');
+  const handleDelete = (id) => {
+    dispatch(delPin(id))
+    //falta adicionar modal de confirmação
   }
 
   return (
@@ -95,7 +98,7 @@ const Drawertest = () => {
                 justifyContent: "space-between",
               }}
             >
-              <button className="buttonx" onClick={handleClick}>
+              <button className="buttonx" onClick={() => handleDelete(value[1].id)}>
                 <svg
                   width="20"
                   height="21"

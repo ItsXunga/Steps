@@ -23,7 +23,6 @@ const Map = () => {
   const { singleRouteState } = useSelector((state) => state.singleRouteState);
   const { routeID } = useSelector((state) => state.routeID);
   const { pinStorage } = useSelector((state) => state.pinStorage);
-  const { refreshConst } = useSelector((state) => state.refreshConst);
 
   const [clickedData, setClickedData] = useState([]);
   const [coordenadas, setCoordernadas] = useState([]);
@@ -35,10 +34,6 @@ const Map = () => {
   
   //check if there are points added to the store
   const StorageStatus = Object.keys(pinStorage).length;
-
-  //Check when the app wants a refresh - used in the useEffect dependency
-  const refresh = useRef();
-  refresh.current = refreshConst;
 
 
   const coords = [];
@@ -123,7 +118,6 @@ const Map = () => {
 
         // Converting object from redux store to array to then map.
         const pinsArray = Object.entries(pinStorage).map((obj) => ({ ...obj }));
-        console.log(pinsArray);
 
         const geojsonPins = pinsArray.map((value) => ({
           type: "FeatureCollection",
@@ -383,12 +377,12 @@ const Map = () => {
 
     // Clean up on unmount
     return () => map.remove();
-  }, [mapState, singleRouteState, refreshConst]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [mapState, singleRouteState, pinStorage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
       {/* adionar o drawer assim que um ponto e criado */}
-      {StorageStatus >= 1 ? (
+      {mapState === true && StorageStatus >= 1 ? (
         <Drawertest />
       ) : (
         ''
