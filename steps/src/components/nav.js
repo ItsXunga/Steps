@@ -10,10 +10,10 @@ import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 import { motion } from "framer-motion";
 import { exitSingleRoute } from "./redux/singleRouteState";
 import { routeID } from "./redux/routeID";
-import { closeModal, openModalInfo } from "./redux/modalState";
-import { clearStorage } from "./redux/pinStorage";
+import { closeModal, openModalCancelar, openModalInfo } from "./redux/modalState";
 
-const Nav = (props) => {
+
+const Nav = () => {
   const [menuImage, setMenuImg] = useState(menuClosed);
 
   const ManageModalState  = useSelector((state) => state.modalState.manageModalPin)
@@ -23,6 +23,10 @@ const Nav = (props) => {
   const ModalPinState = useSelector((state) => state.modalState.modalPin)
   const ModalPin = useRef()
   ModalPin.current = ModalPinState
+
+  const ModalCancelarState = useSelector((state) => state.modalState.modalCancelar)
+  const ModalCancelar = useRef()
+  ModalCancelar.current = ModalCancelarState
 
   const { mapState } = useSelector((state) => state.mapState);
   const { singleRouteState } = useSelector((state) => state.singleRouteState);
@@ -38,20 +42,16 @@ const Nav = (props) => {
 
   return (
     <>
-      {mapState === true ? (
-        ManageModalState === true || ModalPinState === true ? (
+      {mapState ? (
+        ManageModalState || ModalPinState || ModalCancelarState  ? (
           ''
         ) : (
         <div
           className="backarrow"
           onClick={() => {
-            dispatch(exitCreation());
-            dispatch(routeID(null));
-            dispatch(closeModal());
-            dispatch(clearStorage());
+            dispatch(openModalCancelar())
           }}
         >
-          <Link to={"/main"}>
             <svg
               width="15"
               height="27"
@@ -66,7 +66,6 @@ const Nav = (props) => {
                 fill="#393C6A"
               />
             </svg>
-          </Link>
         </div> )
       ) : (
         ""

@@ -3,16 +3,21 @@ import Modal from "react-modal"
 import { useDispatch, useSelector } from "react-redux"
 import { modalStyles } from "../style/modal_styles"
 import { closeModal } from "./redux/modalState"
+import { delPin } from "./redux/pinStorage"
 
-function ModalCancelar() {
-  // const openModalInfo = useSelector((state) => state.modalState.modalInfo);
-  // const dispatch = useDispatch();
+const ModalEliminar = (props) => {
+  const openModalEliminar = useSelector((state) => state.modalState.modalEliminar);
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(delPin(props.id))
+    dispatch(closeModal())
+  }
 
   return (
     <div>
-      <div
-        // isOpen={openModalInfo}
-        // onRequestClose={() => dispatch(closeModal())}
+      <Modal
+        isOpen={openModalEliminar}
         style={modalStyles}
         contentLabel="Example Modal"
       >
@@ -32,7 +37,7 @@ function ModalCancelar() {
               <div style={{ padding: "0.5rem 1rem" }}>
                 <button
                   className="orangeButton"
-                  // onClick={handleData}
+                  onClick={handleDelete}
                 >
                   Eliminar
                 </button>
@@ -40,7 +45,9 @@ function ModalCancelar() {
               <div style={{ padding: "0.5rem 1rem" }}>
                 <button
                   className="blueButton"
-                  // onClick={handleReturn}
+                  onClick={() => {
+                    dispatch(closeModal())
+                  }}
                 >
                   Cancelar
                 </button>
@@ -48,9 +55,9 @@ function ModalCancelar() {
             </div>
           </div>
         </div>
-      </div>
+      </Modal>
     </div>
   )
 }
 
-export default ModalCancelar
+export default ModalEliminar
