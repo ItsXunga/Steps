@@ -3,7 +3,8 @@ import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import "../style/drawer_styles.css";
 import { useSelector, useDispatch } from "react-redux";
-import { delPin } from "./redux/pinStorage";
+import { openModalEliminar } from "./redux/modalState";
+import ModalEliminar from "./modaleliminar";
 
 const Drawertest = () => {
   const dispatch = useDispatch();
@@ -17,17 +18,15 @@ const Drawertest = () => {
   const pinsArray = Object.entries(pinStorage).map((obj) => ({ ...obj }));
 
   const [isOpen, setIsOpen] = useState(false)
+  const [idToBeDeleted, setIdToBeDeleted] = useState()
 
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState)
   }
 
-  const handleDelete = (id) => {
-    dispatch(delPin(id))
-    //falta adicionar modal de confirmação
-  }
 
   return (
+    <>
       <Drawer
         open={isOpen}
         onClose={toggleDrawer}
@@ -98,7 +97,11 @@ const Drawertest = () => {
                 justifyContent: "space-between",
               }}
             >
-              <button className="buttonx" onClick={() => handleDelete(value[1].id)}>
+              <button className="buttonx" onClick={() => {
+                toggleDrawer();
+                dispatch(openModalEliminar());
+                setIdToBeDeleted(value[1].id)
+                }}>
                 <svg
                   width="20"
                   height="21"
@@ -117,6 +120,10 @@ const Drawertest = () => {
         </ul>
         )})}
       </Drawer>
+
+      <ModalEliminar id={idToBeDeleted}/>
+
+      </>
   )
 }
 
