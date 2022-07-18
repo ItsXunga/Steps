@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
-import { modalStyles } from "../style/modal_styles";
+import React, { useState } from "react"
+import Modal from "react-modal"
+import { modalStyles } from "../style/modal_styles"
 
 function ModalAddRota(params) {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false)
 
   function openModal() {
-    setIsOpen(true);
+    setIsOpen(true)
   }
 
   function closeModal() {
-    setIsOpen(false);
+    setIsOpen(false)
   }
 
   return (
@@ -39,7 +39,7 @@ function ModalAddRota(params) {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalAddRota;
+export default ModalAddRota
