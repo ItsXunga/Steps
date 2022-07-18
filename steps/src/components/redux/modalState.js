@@ -5,6 +5,7 @@ const initialState = {
   modalInfo: false,
   modalPin: false,
   modalRota: false,
+  manageModalPin: false,
 };
 
 export const modalStateSlice = createSlice({
@@ -27,11 +28,18 @@ export const modalStateSlice = createSlice({
       state.modalRota = true;
     },
 
+    openManageModalPin: (state) => {
+      state.manageModalPin = true;
+    },
+
+
+
     closeModal: (state) => {
       state.modalAddRota = false;
       state.modalInfo = false;
       state.modalPin = false;
       state.modalRota = false;
+      state.manageModalPin = false;
     },
   },
 });
@@ -41,6 +49,7 @@ export const {
   openModalInfo,
   openModalPin,
   openModalRota,
+  openManageModalPin,
   closeModal,
 } = modalStateSlice.actions;
 

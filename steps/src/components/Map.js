@@ -5,8 +5,10 @@ import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
-import { addPin } from "./redux/pinStorage";
-import { openModalPin } from "./redux/modalState";
+import ModalPin from "./ModalPin";
+import { openModalPin, openManageModalPin } from "./redux/modalState";
+import { sendId } from "./redux/ReduxModalInfo";
+import ManageModalPin from "./ManageModalPin";
 
 Modal.setAppElement("#root");
 
@@ -22,14 +24,9 @@ const Map = () => {
   const { pinStorage } = useSelector((state) => state.pinStorage);
   const { refreshConst } = useSelector((state) => state.refreshConst);
 
-  //Get last element's id in pins object
-  const storageId = useSelector((state) => state.pinStorage.pinStorage);
+  const [clickedData, setClickedData] = useState([]);
+  const [coordenadas, setCoordernadas] = useState([]);
 
-  const Id = useRef();
-  Id.current = storageId;
-
-  const PinId = Object.keys(storageId).pop();
-  //
 
   //Get pin storage elements
   const storage = useRef();
@@ -145,8 +142,18 @@ const Map = () => {
           ],
         }));
 
+
+
+        // function running on pin click
         const handleClick = (id) => {
-          console.log(id);
+          dispatch(openManageModalPin())
+          setClickedData({
+            id: id,
+            name: pinStorage[id].name,
+            desc: pinStorage[id].desc,
+            lat:  pinStorage[id].lat,
+            lng: pinStorage[id].lng
+          })
         }
 
         //add saved markers to the route being created
@@ -164,19 +171,18 @@ const Map = () => {
         });
       }
 
+      // create markers on map click
       var marker = new mapboxgl.Marker({ color: "#F69E7C" });
       map.on("click", (e) => {
         var coordinates = e.lngLat;
         if (coordinates) {
           marker.setLngLat(coordinates).addTo(map);
-          const coordenadas = marker.getLngLat(coordinates);
-          dispatch(
-            addPin({
-              id: coordenadas.lat,
-              lng: coordenadas.lng,
-              lat: coordenadas.lat,
-            })
-          );
+          setCoordernadas({
+            id: marker.getLngLat(coordinates).lat,
+            lat: marker.getLngLat(coordinates).lat,
+            lng: marker.getLngLat(coordinates).lng
+          });
+
         }
         setTimeout(() => {
           dispatch(openModalPin());
@@ -191,6 +197,7 @@ const Map = () => {
         const query = await fetch(
           `https://api.mapbox.com/matching/v5/mapbox/${profile}/${coordinates}?geometries=geojson&radiuses=${radiuses}&steps=true&language=pt&access_token=${mapboxgl.accessToken}`,
           { method: "GET" }
+          // remove radiuses 
         );
         const response = await query.json();
         // Handle errors
@@ -223,6 +230,8 @@ const Map = () => {
 
         const radius = coords.map(() => 50);
         getMatch(newCoords, radius, profile);
+
+        // Remover radius para aumentar o range 
 
         coords.splice(0, coords.length);
       }
@@ -364,13 +373,13 @@ const Map = () => {
 
   return (
     <div>
-      <div></div>
-
       <div
         className="map-container"
         ref={mapContainerRef}
         style={{ height: "100vh", width: "100vw" }}
       />
+      <ModalPin data={coordenadas} />
+      <ManageModalPin clicked={clickedData}/>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import singleRouteReducer from "./singleRouteState";
 import pinSliceReducer from "./pinStorage";
 import modalStateReducer from "./modalState";
 import refreshConstReducer from "./RefreshState";
+import ModalInfoReducer from "./ReduxModalInfo";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     pinStorage: pinSliceReducer,
     modalState: modalStateReducer,
     refreshConst: refreshConstReducer,
+    modalId: ModalInfoReducer,
   },
 });

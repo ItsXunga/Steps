@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalStyles } from "../style/modal_styles";
 import "../style/modais_styles.css";
 import { closeModal } from "./redux/modalState";
-import { addPin, delPin } from "./redux/pinStorage";
+import {addPin, delPin } from "./redux/pinStorage";
 import { incrementRefresh } from "./redux/RefreshState";
 
-const ModalPin = (props)  => {
+const ManageModalPin = (props)  => {
   const dispatch = useDispatch();
-  const openModalPin = useSelector((state) => state.modalState.modalPin);
+  const openManageModalPin = useSelector((state) => state.modalState.manageModalPin);
 
   // input data
   const [textArea, setTextArea] = useState("");
@@ -26,16 +26,31 @@ const ModalPin = (props)  => {
   };
 
   const handleData = () => {
-      dispatch(
-        addPin({
-          //add information
-          id: props.data.id,
-          lat: props.data.lat,
-          lng: props.data.lng,
-          name: nameArea,
-          desc: textArea,
-        })
-      );
+   if (nameArea === '' && textArea !== '') {
+        dispatch(
+            addPin({
+                id: props.clicked.id,
+                lat: props.clicked.lat,
+                lng: props.clicked.lng,
+                name: props.clicked.name,
+                desc: textArea
+            })
+        )
+        setTextArea('')
+   }
+
+   if (nameArea !== '' && textArea === '') {
+        dispatch(
+            addPin({
+                id: props.clicked.id,
+                lat: props.clicked.lat,
+                lng: props.clicked.lng,
+                name: nameArea,
+                desc: props.clicked.desc
+            })
+        )
+        setNameArea('')
+   }
 
     // ask the app to refresh when a point is added
     dispatch(incrementRefresh());
@@ -45,6 +60,11 @@ const ModalPin = (props)  => {
     }, 100);
   };
 
+  // const handlePinDelete = () => {
+  //   dispatch(delPin(PinId));
+  //   dispatch(closeModal());
+  // };
+
   const handleReturn = () => {
     dispatch(closeModal())
   }
@@ -52,7 +72,7 @@ const ModalPin = (props)  => {
 
   return (
     <div>
-      <Modal isOpen={openModalPin} style={modalStyles} contentLabel="Modal Pin">
+      <Modal isOpen={openManageModalPin} style={modalStyles} contentLabel="Modal Pin">
         <div>
           <h2
             style={{
@@ -60,19 +80,21 @@ const ModalPin = (props)  => {
               padding: "0.5rem",
             }}
           >
-            Novo Ponto
+            {props.clicked.name}
           </h2>
           <label className="label" for="password">
             Nome
           </label>
-                <input 
-                  className="inputpin" 
-                  type="text" 
-                  onChange={nameAreaChange} />   
+                <input
+                    placeholder={props.clicked.name} 
+                    className="inputpin" 
+                    type="text" 
+                    onChange={nameAreaChange} />   
           <label className="label" for="password">
             Descrição
           </label>
                 <textarea
+                placeholder={props.clicked.desc}
                 type="text"
                 className="inputdescription"
                 onChange={textAreaChange}
@@ -81,13 +103,13 @@ const ModalPin = (props)  => {
             <div style={{ padding: "0.5rem 1rem" }}>
 
               <button className="orangeButton" onClick={handleData}>
-                Adicionar
+                Atualizar
               </button>
 
             </div>
               <div style={{ padding: "0.5rem 1rem" }}>
                 <button className="blueButton" onClick={handleReturn}> 
-                  Cancelar
+                  Voltar
                 </button>               
               </div>
 
@@ -98,4 +120,4 @@ const ModalPin = (props)  => {
   );
 }
 
-export default ModalPin;
+export default ManageModalPin;
