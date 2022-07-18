@@ -59,7 +59,7 @@ const Drawertest = () => {
                     fontFamily: "manropeBold",
                   }}
                 >
-                  Taberna do Zé
+                  {value[1].name}
                 </h1>
                 <button className="buttonx">
                   <svg
