@@ -9,6 +9,7 @@ import ModalPin from "./ModalPin";
 import { openModalPin, openManageModalPin } from "./redux/modalState";
 import { sendId } from "./redux/ReduxModalInfo";
 import ManageModalPin from "./ManageModalPin";
+import Drawertest from "./Drawer";
 
 Modal.setAppElement("#root");
 
@@ -31,12 +32,14 @@ const Map = () => {
   //Get pin storage elements
   const storage = useRef();
   storage.current = pinStorage;
-  //
+  
+  //check if there are points added to the store
+  const StorageStatus = Object.keys(pinStorage).length;
 
   //Check when the app wants a refresh - used in the useEffect dependency
   const refresh = useRef();
   refresh.current = refreshConst;
-  //
+
 
   const coords = [];
 
@@ -114,15 +117,13 @@ const Map = () => {
     if (mapState === true) {
       //creation mode
 
-      //check if there are points added to the store
-      const StorageStatus = Object.keys(pinStorage).length;
-
       //map the pins if theres atleast one entry
       if (StorageStatus >= 1) {
         // Json for points being created
 
         // Converting object from redux store to array to then map.
         const pinsArray = Object.entries(pinStorage).map((obj) => ({ ...obj }));
+        console.log(pinsArray);
 
         const geojsonPins = pinsArray.map((value) => ({
           type: "FeatureCollection",
@@ -200,6 +201,7 @@ const Map = () => {
           dispatch(openModalPin());
         }, 1250);
       });
+
     } else {
       // Make a Map Matching request
       async function getMatch(coordinates, radius, profile) {
@@ -385,6 +387,12 @@ const Map = () => {
 
   return (
     <div>
+      {/* adionar o drawer assim que um ponto e criado */}
+      {StorageStatus >= 1 ? (
+        <Drawertest />
+      ) : (
+        ''
+      )}
       <div
         className="map-container"
         ref={mapContainerRef}
