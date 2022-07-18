@@ -5,7 +5,6 @@ import { modalStyles } from "../style/modal_styles";
 import "../style/modais_styles.css";
 import { closeModal } from "./redux/modalState";
 import {addPin, delPin } from "./redux/pinStorage";
-import { incrementRefresh } from "./redux/RefreshState";
 
 const ManageModalPin = (props)  => {
   const dispatch = useDispatch();
@@ -51,9 +50,6 @@ const ManageModalPin = (props)  => {
         )
         setNameArea('')
    }
-
-    // ask the app to refresh when a point is added
-    dispatch(incrementRefresh());
 
     setTimeout(() => {
       dispatch(closeModal());
