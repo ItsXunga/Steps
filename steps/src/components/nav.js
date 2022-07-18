@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { enterCreation, exitCreation } from "./redux/creationState";
 import { Link } from "react-router-dom";
@@ -15,6 +15,14 @@ import { closeModal, openModalInfo } from "./redux/modalState";
 const Nav = (props) => {
   const [menuImage, setMenuImg] = useState(menuClosed);
 
+  const ManageModalState  = useSelector((state) => state.modalState.manageModalPin)
+  const ManageModal = useRef()
+  ManageModal.current = ManageModalState
+
+  const ModalPinState = useSelector((state) => state.modalState.modalPin)
+  const ModalPin = useRef()
+  ModalPin.current = ModalPinState
+
   const { mapState } = useSelector((state) => state.mapState);
   const { singleRouteState } = useSelector((state) => state.singleRouteState);
   const dispatch = useDispatch();
@@ -30,6 +38,9 @@ const Nav = (props) => {
   return (
     <>
       {mapState === true ? (
+        ManageModalState === true || ModalPinState === true ? (
+          ''
+        ) : (
         <div
           className="backarrow"
           onClick={() => {
@@ -54,7 +65,7 @@ const Nav = (props) => {
               />
             </svg>
           </Link>
-        </div>
+        </div> )
       ) : (
         ""
       )}
