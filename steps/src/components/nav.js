@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { exitSingleRoute } from "./redux/singleRouteState";
 import { routeID } from "./redux/routeID";
 import { closeModal, openModalInfo } from "./redux/modalState";
+import { clearStorage } from "./redux/pinStorage";
 
 const Nav = (props) => {
   const [menuImage, setMenuImg] = useState(menuClosed);
@@ -47,6 +48,7 @@ const Nav = (props) => {
             dispatch(exitCreation());
             dispatch(routeID(null));
             dispatch(closeModal());
+            dispatch(clearStorage());
           }}
         >
           <Link to={"/main"}>

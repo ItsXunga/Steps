@@ -17,9 +17,14 @@ export const pinSlice = createSlice({
       delete state.pinStorage[action.payload];
       // este action.payload tem que ser o dispatch do id do pin em questao :)
     },
+
+    clearStorage: (state) => {
+      state.pinStorage = {}
+    }
+
   },
 });
 
-export const { addPin, delPin} = pinSlice.actions;
+export const { addPin, delPin, clearStorage} = pinSlice.actions;
 
 export default pinSlice.reducer;

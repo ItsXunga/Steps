@@ -47,9 +47,9 @@ const Drawertest = () => {
         </div>
 
         {/* pontos*/}
-        {pinsArray.map((value) => {
+        {pinsArray.map((value, index) => {
           return (
-          <ul className="ul">
+          <ul className="ul" key={index + 1}>
           <div className="pincard">
             <div style={{ display: "grid" }}>
               <div className="title">
