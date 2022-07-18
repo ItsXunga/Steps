@@ -15,6 +15,7 @@ import ModalInfo from "./components/ModalInfo";
 import ModalPin from "./components/ModalPin";
 import ModalAddRota from "./components/ModalAddRota";
 import ModalRota from "./components/modalRota";
+import ManageModalPin from "./components/ManageModalPin";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
       <Route path="/modalPin" element={<ModalPin />} />
       <Route path="/modalAddRota" element={<ModalAddRota />} />
       <Route path="/modalRota" element={<ModalRota />} />
+      <Route path="/manageModalPin" element={<ManageModalPin />} />
     </Routes>
   );
 }

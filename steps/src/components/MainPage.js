@@ -1,9 +1,9 @@
 import React from "react";
 import Nav from "./nav";
 import Map from "./Map";
-import ModalAddRota from "./ModalAddRota";
 import ModalInfo from "./ModalInfo";
-import ModalPin from "./ModalPin";
+
+import ModalAddRota from "./ModalAddRota";
 
 const SecondPage = () => {
   return (
@@ -12,7 +12,6 @@ const SecondPage = () => {
       <Map />
 
       {/* modais */}
-      <ModalPin />
       <ModalAddRota />
       <ModalInfo />
     </div>
