@@ -20,6 +20,12 @@
     margin: 4rem;
    }
 
+   .title { 
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 5px;
+    justify-self: flex-start;
+   }
 
    .pincard {
     display: grid;

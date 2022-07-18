@@ -21,7 +21,9 @@ async function getAll(req, res) {
 }
 
 async function create(req, res) {
-  const { pinName, pinDesc, lat, long, start, end } = req.body;
+  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
+
+  const { pinName, pinDesc, lat, long } = req.body;
 
   const exists = await PointModel.findOne({ lat, long });
 
@@ -35,8 +37,6 @@ async function create(req, res) {
       pinDesc,
       lat,
       long,
-      start,
-      end,
     });
 
     res.json(point);
@@ -44,6 +44,8 @@ async function create(req, res) {
 }
 
 async function update(req, res) {
+  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
+
   const { id } = req.params;
   const { pinName } = req.body;
 
@@ -63,6 +65,8 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
+  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
+  
   const { id } = req.params;
 
   const pointData = await PointModel.findByIdAndRemove(id);
