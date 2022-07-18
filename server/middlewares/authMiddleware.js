@@ -1,20 +1,32 @@
-const express = require('express');
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const { UserModel } = require("../models");
 
-module.exports = function authenticateToken(req, res, next) {
+module.exports = async function auth(req, res, next) {
   const { authorization } = req.headers;
   if (req.user) next();
 
   const token =
     authorization &&
-    authorization.split(' ')[0] === 'Bearer' &&
-    authorization.split(' ')[1];
+    authorization.split(" ")[0] === "Bearer" &&
+    authorization.split(" ")[1];
 
-  if (token == null) next();
+  if (token) {
+    try {
+      await jwt.verify(token, process.env.SECRET);
+    } catch (e) {
+      res.sendStatus(403).json("Not a valid token");
+    }
 
-  jwt.verify(token, process.env.SECRET, (err) => {
-    if (err) return res.sendStatus(403);
+    const decodedInfo = jwt.decode(token);
+   // if (exp > Math.floor(Date.now() / 1000)) {
+      const user = await UserModel.findById(decodedInfo._id);
+      if (user) {
+        req.user = user;
+        next();
+      }
+   // }
+  } else {
     next();
-  });
+  }
 };

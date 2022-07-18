@@ -1,30 +1,30 @@
-const { UserModel, CircuitModel } = require('../models');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { UserModel, CircuitModel } = require("../models");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const { SECRET } = process.env;
 
 //handle errors
 const handleErrors = (err) => {
   console.log(err.message, err.code);
-  let errors = { email: '', password: '' };
+  let errors = { email: "", password: "" };
 
   //incorrect email
-  if (err.message === 'incorrect email') {
-    errors.email = 'that email is not registered';
+  if (err.message === "incorrect email") {
+    errors.email = "that email is not registered";
   }
 
   //incorrect password
-  if (err.message === 'incorrect password') {
-    errors.email = 'that password is incorrect';
+  if (err.message === "incorrect password") {
+    errors.email = "that password is incorrect";
   }
 
   if (err.code === 11000) {
     //exists
-    errors.email = 'that email is already registered';
+    errors.email = "that email is already registered";
   }
 
   //validation errors
-  if (err.message.includes('User validation failed')) {
+  if (err.message.includes("User validation failed")) {
     Object.values(err.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;
     });
@@ -33,12 +33,17 @@ const handleErrors = (err) => {
   return errors;
 };
 
-const maxAge = 24 * 60 * 60;
-const createToken = (id) => {
-  return jwt.sign({ id }, JWT_SECRET, {
-    expiresIn: maxAge,
-  });
-};
+function generateAuthToken(user) {
+  return jwt.sign(
+    {
+      email: user.email,
+      _id: user._id,
+      iat: new Date().getTime(),
+      exp: new Date().setDate(new Date().getDate() + 1),
+    },
+    SECRET
+  );
+}
 
 async function getById(req, res) {
   const { id } = req.params;
@@ -49,7 +54,7 @@ async function getById(req, res) {
     res.json(userData);
   } else {
     res.status(404).json({
-      message: 'User not found',
+      message: "User not found",
     });
   }
 }
@@ -84,6 +89,8 @@ async function create(req, res) {
       email,
       password,
     });
+
+    res.status(200).json({ user: user, token: generateAuthToken(user) });
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
@@ -91,6 +98,7 @@ async function create(req, res) {
 }
 
 async function updateName(req, res) {
+  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
   //Preciso alterar o Update do UserName para receber o Id do user logged in
 
   const { id } = req.params;
@@ -100,22 +108,24 @@ async function updateName(req, res) {
 
   if (!userData) {
     res.status(404).json({
-      message: 'User not found',
+      message: "User not found",
     });
   } else if (name === userData.name) {
     res.status(400).json({
-      message: 'User name already is ' + name,
+      message: "User name already is " + name,
     });
   } else {
     if (name) userData.name = name;
 
     await userData.save();
 
-    res.status(200).json('User name changed to ' + userData.name);
+    res.status(200).json("User name changed to " + userData.name);
   }
 }
 
 async function favorite(req, res) {
+  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
+
   const { id } = req.params;
 
   const userData = await UserModel.findById(id);
@@ -127,12 +137,13 @@ async function favorite(req, res) {
     res.json(circuitData);
   } else {
     res.status(404).json({
-      message: 'This user has not favorited this route',
+      message: "This user has not favorited this route",
     });
   }
 }
 
 async function updateAvatar(req, res) {
+  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
   //Preciso alterar o Update do Avatar para receber o Id do user logged in
 
   const { id } = req.params;
@@ -142,26 +153,28 @@ async function updateAvatar(req, res) {
 
   if (!userData) {
     res.status(404).json({
-      message: 'User not found',
+      message: "User not found",
     });
   } else if (avatar === userData.avatar) {
     res.status(400).json({
-      message: 'Profile Image already is ' + avatar,
+      message: "Profile Image already is " + avatar,
     });
   } else {
     if (avatar) userData.avatar = avatar;
 
     await userData.save();
 
-    res.status(200).json('Profile Image changed to ' + userData.avatar);
+    res.status(200).json("Profile Image changed to " + userData.avatar);
   }
 }
 
 async function ChangePassword(req, res) {
-  //Por fazer!
+  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
+  //TODO
 }
 
 async function destroy(req, res) {
+  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
   const { id } = req.params;
 
   const userData = await UserModel.findByIdAndRemove(id);
@@ -175,13 +188,12 @@ async function login(req, res) {
   const user = await UserModel.findOne({ email }).lean();
 
   if (!user) {
-    res.status(400).json({ error: 'that email is not registered' });
+    res.status(400).json({ error: "that email is not registered" });
   } else {
     if (await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ email: user.email, _id: user._id }, SECRET);
-      res.status(200).json({ token: token });
+      res.status(200).json({ user: user, token: generateAuthToken(user) });
     } else {
-      res.status(400).json({ error: 'that password is not registered' });
+      res.status(400).json({ error: "that password is not registered" });
     }
   }
 }
