@@ -7,7 +7,6 @@ import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
 import ModalPin from "./ModalPin";
 import { openModalPin, openManageModalPin } from "./redux/modalState";
-import { sendId } from "./redux/ReduxModalInfo";
 import ManageModalPin from "./ManageModalPin";
 import Drawertest from "./Drawer";
 
