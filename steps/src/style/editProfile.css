@@ -11,7 +11,7 @@
   display: flex;
   font-family: ManropeBold;
   font-size: 13px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   color: #8991a7;
 }
 
@@ -23,6 +23,7 @@
   padding: 0.5rem 0rem;
   width: 100%;
   font-size: 16px;
+  margin-bottom: 0.9rem;
 }
 
 ::placeholder {

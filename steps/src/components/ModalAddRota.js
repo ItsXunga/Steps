@@ -1,26 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-modal";
+import { useDispatch, useSelector } from "react-redux";
 import { modalStyles } from "../style/modal_styles";
+import { closeModal } from "./redux/modalState";
 
-function ModalAddRota(params) {
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
+function ModalAddRota() {
+  const dispatch = useDispatch();
+  const openModalAddRota = useSelector(
+    (state) => state.modalState.modalAddRota
+  );
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
-
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={openModalAddRota}
         style={modalStyles}
+        onRequestClose={() => dispatch(closeModal())}
         contentLabel="Example Modal"
       >
         <div style={{ display: "flex" }}>
@@ -39,7 +34,7 @@ function ModalAddRota(params) {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalAddRota;
+export default ModalAddRota
