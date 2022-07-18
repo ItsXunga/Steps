@@ -43,7 +43,7 @@ function App() {
       <Route path="/modalcancelar" element={<ModalCancelar />} />
       <Route path="/modaleliminar" element={<ModalEliminar />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -15,6 +15,19 @@
   width: 100%;
   box-shadow: 2px 2px 7px 0px rgba(0, 0, 0, 0.2);
 }
+.inputselection {
+  border: none;
+  border-radius: 20px;
+  margin: 1rem 0;
+  padding: 0.8rem 0 0.8rem 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 2px 2px 7px 0px rgba(0, 0, 0, 0.2);
+}
+
+.css-1s2u09g-control {
+  border-style: none !important;
+}
 
 .textmodal {
   display: grid;
