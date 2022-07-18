@@ -34,7 +34,7 @@ function ModalAddRota() {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalAddRota;
+export default ModalAddRota

@@ -16,6 +16,7 @@ import ModalPin from "./components/ModalPin";
 import ModalAddRota from "./components/ModalAddRota";
 import ModalRota from "./components/modalRota";
 import ManageModalPin from "./components/ManageModalPin";
+import Drawertest from "./components/Drawer"
 
 function App() {
   return (
@@ -36,8 +37,9 @@ function App() {
       <Route path="/modalAddRota" element={<ModalAddRota />} />
       <Route path="/modalRota" element={<ModalRota />} />
       <Route path="/manageModalPin" element={<ManageModalPin />} />
+      <Route path="/drawer" element={<Drawertest />} />
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App
