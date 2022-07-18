@@ -16,7 +16,8 @@ import ModalPin from "./components/ModalPin";
 import ModalAddRota from "./components/ModalAddRota";
 import ModalRota from "./components/modalRota";
 import ManageModalPin from "./components/ManageModalPin";
-import Drawertest from "./components/Drawer"
+import Drawertest from "./components/Drawer";
+import ModalConfirmarRota from "./components/ModalConfirmarRota";
 
 function App() {
   return (
@@ -38,8 +39,9 @@ function App() {
       <Route path="/modalRota" element={<ModalRota />} />
       <Route path="/manageModalPin" element={<ManageModalPin />} />
       <Route path="/drawer" element={<Drawertest />} />
+      <Route path="/ModalConfirmarRota" element={<ModalConfirmarRota />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

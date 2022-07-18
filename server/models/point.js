@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const PointSchema = new Schema({
   pinName: {
     type: String,
-    required: true,
+    required: [true, "Please enter a name for your Pin"],
     unique: true,
   },
   pinDesc: {
