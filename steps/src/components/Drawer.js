@@ -34,17 +34,34 @@ const Drawertest = () => {
         <ul className="ul">
           <div className="pincard">
             <div style={{ display: "grid" }}>
-              <h1
-                style={{
-                  lineHeight: "1.5rem",
-                  alignSelf: "center",
-                  padding: "5px 0",
-                  fontSize: "20px",
-                  fontFamily: "manropeBold",
-                }}
-              >
-                Taberna do Zé
-              </h1>
+              <div className="title">
+                <h1
+                  style={{
+                    lineHeight: "1.5rem",
+                    alignSelf: "center",
+                    padding: "5px 0",
+                    fontSize: "20px",
+                    fontFamily: "manropeBold",
+                  }}
+                >
+                  Taberna do Zé
+                </h1>
+                <button className="buttonx">
+                  <svg
+                    width="19"
+                    height="18"
+                    viewBox="0 0 19 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1.04671 18C0.754256 17.9995 0.475458 17.8827 0.278342 17.6779C0.0775912 17.4749 -0.0221627 17.2003 0.00414713 16.9231L0.259576 14.2615L12.0593 3.08372L15.7469 6.57716L3.95026 17.754L1.14159 17.996C1.10927 17.999 1.07695 18 1.04671 18ZM16.4829 5.87867L12.7964 2.38523L15.0077 0.289757C15.2033 0.10424 15.4686 0 15.7453 0C16.022 0 16.2874 0.10424 16.4829 0.289757L18.6942 2.38523C18.89 2.57054 19 2.822 19 3.08421C19 3.34643 18.89 3.59789 18.6942 3.7832L16.484 5.87768L16.4829 5.87867Z"
+                      fill="#393C6A"
+                    />
+                  </svg>
+                </button>
+              </div>
+
               <p
                 style={{
                   alignSelf: "center",
