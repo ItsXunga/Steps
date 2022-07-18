@@ -5,25 +5,23 @@ import { modalStyles } from "../style/modal_styles";
 import "../style/modais_styles.css";
 import { closeModal } from "./redux/modalState";
 import { addPin, delPin } from "./redux/pinStorage";
-import { incrementRefresh } from "./redux/RefreshState";
 
-const ModalPin = (props)  => {
-  const dispatch = useDispatch();
-  const openModalPin = useSelector((state) => state.modalState.modalPin);
+const ModalPin = (props) => {
+  const dispatch = useDispatch()
+  const openModalPin = useSelector((state) => state.modalState.modalPin)
 
   // input data
-  const [textArea, setTextArea] = useState("");
-  const [nameArea, setNameArea] = useState("");
-
+  const [textArea, setTextArea] = useState("")
+  const [nameArea, setNameArea] = useState("")
 
   // update state based on user input
   const textAreaChange = (e) => {
-    setTextArea(e.target.value);
-  };
+    setTextArea(e.target.value)
+  }
 
   const nameAreaChange = (e) => {
-    setNameArea(e.target.value);
-  };
+    setNameArea(e.target.value)
+  }
 
   const handleData = () => {
       dispatch(
@@ -36,19 +34,15 @@ const ModalPin = (props)  => {
           desc: textArea,
         })
       );
-
-    // ask the app to refresh when a point is added
-    dispatch(incrementRefresh());
-
+      
     setTimeout(() => {
-      dispatch(closeModal());
-    }, 100);
-  };
+      dispatch(closeModal())
+    }, 100)
+  }
 
   const handleReturn = () => {
     dispatch(closeModal())
   }
-
 
   return (
     <div>
@@ -65,37 +59,31 @@ const ModalPin = (props)  => {
           <label className="label" for="password">
             Nome
           </label>
-                <input 
-                  className="inputpin" 
-                  type="text" 
-                  onChange={nameAreaChange} />   
+          <input className="inputpin" type="text" onChange={nameAreaChange} />
           <label className="label" for="password">
             Descrição
           </label>
-                <textarea
-                type="text"
-                className="inputdescription"
-                onChange={textAreaChange}
-              />
+          <textarea
+            type="text"
+            className="inputdescription"
+            onChange={textAreaChange}
+          />
           <div style={{ margin: "1rem 0" }}>
             <div style={{ padding: "0.5rem 1rem" }}>
-
               <button className="orangeButton" onClick={handleData}>
                 Adicionar
               </button>
-
             </div>
-              <div style={{ padding: "0.5rem 1rem" }}>
-                <button className="blueButton" onClick={handleReturn}> 
-                  Cancelar
-                </button>               
-              </div>
-
+            <div style={{ padding: "0.5rem 1rem" }}>
+              <button className="blueButton" onClick={handleReturn}>
+                Cancelar
+              </button>
+            </div>
           </div>
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalPin;
+export default ModalPin

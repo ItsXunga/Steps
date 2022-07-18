@@ -1,61 +1,56 @@
 .drawerstyle {
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    transform: translate3d(0px, 90%, 0px) !important;
-    visibility: visible !important;
-    overflow: scroll !important;
-    height: 60vh !important;
-    
-    
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  transform: translate3d(0px, 90%, 0px) !important;
+  visibility: visible !important;
+  overflow: scroll !important;
+  height: 60vh !important;
 }
 
 .uparrow {
- text-align: center;
- margin: 1rem;
- 
-
+  text-align: center;
+  margin: 1rem;
 }
 
 .point {
-    margin: 4rem;
-   }
+  margin: 4rem;
+}
 
-   .title { 
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-column-gap: 5px;
-    justify-self: flex-start;
-   }
+.title {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-column-gap: 5px;
+  justify-self: flex-start;
+}
 
-   .pincard {
-    display: grid;
-    border: 1px solid #F69E7C;
+.pincard {
+  display: grid;
+  border: 1px solid #f69e7c;
   grid-template-columns: 6fr 1fr;
   grid-column-gap: 20px;
   height: auto;
   width: 90vw;
   padding: 1.5rem;
   border-radius: 25px;
-   }
+}
 
-   .ul {
-    width: auto;
-    margin: 0 auto;
-    padding: 1rem 0 ;
-    max-width: max-content;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    grid-template-columns: 6fr 1fr;
-    grid-row-gap: 25px;
-  }
+.ul {
+  width: auto;
+  margin: 0 auto;
+  padding: 1rem 0;
+  max-width: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  grid-template-columns: 6fr 1fr;
+  grid-row-gap: 25px;
+}
 
-  .buttonx {
-    width: 2.2rem;
-    height: 2.2rem;
-    border:none;
-    background: transparent;
-    align-self: start;
-    cursor: pointer;
-  }
-
+.buttonx {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: none;
+  background: transparent;
+  align-self: start;
+  cursor: pointer;
+}

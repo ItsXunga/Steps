@@ -7,8 +7,8 @@ import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
 import ModalPin from "./ModalPin";
 import { openModalPin, openManageModalPin } from "./redux/modalState";
-import { sendId } from "./redux/ReduxModalInfo";
 import ManageModalPin from "./ManageModalPin";
+import Drawertest from "./Drawer";
 
 Modal.setAppElement("#root");
 
@@ -22,7 +22,6 @@ const Map = () => {
   const { singleRouteState } = useSelector((state) => state.singleRouteState);
   const { routeID } = useSelector((state) => state.routeID);
   const { pinStorage } = useSelector((state) => state.pinStorage);
-  const { refreshConst } = useSelector((state) => state.refreshConst);
 
   const [clickedData, setClickedData] = useState([]);
   const [coordenadas, setCoordernadas] = useState([]);
@@ -31,12 +30,10 @@ const Map = () => {
   //Get pin storage elements
   const storage = useRef();
   storage.current = pinStorage;
-  //
+  
+  //check if there are points added to the store
+  const StorageStatus = Object.keys(pinStorage).length;
 
-  //Check when the app wants a refresh - used in the useEffect dependency
-  const refresh = useRef();
-  refresh.current = refreshConst;
-  //
 
   const coords = [];
 
@@ -113,9 +110,6 @@ const Map = () => {
 
     if (mapState === true) {
       //creation mode
-
-      //check if there are points added to the store
-      const StorageStatus = Object.keys(pinStorage).length;
 
       //map the pins if theres atleast one entry
       if (StorageStatus >= 1) {
@@ -200,6 +194,7 @@ const Map = () => {
           dispatch(openModalPin());
         }, 1250);
       });
+
     } else {
       // Make a Map Matching request
       async function getMatch(coordinates, radius, profile) {
@@ -252,11 +247,22 @@ const Map = () => {
       map.addControl(geocoder);
 
       if (routeID === null) {
+
+        const handleMain = (coordinates) => {
+          map.easeTo({
+            center: coordinates,
+            zoom: 17,
+            duration: 1000,
+          });
+
+          //set timeout and open modal
+        }
         geojson.map((element) => {
           const el = document.createElement("div");
           el.className = "marker";
           el.addEventListener("click", function(e){
             e.stopPropagation();
+            handleMain(element.features[0].geometry.coordinates)
           });
 
           new mapboxgl.Marker(el)
@@ -269,6 +275,14 @@ const Map = () => {
         const routeFromProfile = Rotas.filter(function (value) {
           return value.id === routeID;
         });
+
+        map.easeTo({
+          center: [routeFromProfile[0].pins[0].long, routeFromProfile[0].pins[0].lat],
+          zoom: 17,
+          duration: 1000,
+        })
+
+        // set timeout and open modal
 
         const geojson2 = routeFromProfile.map((value) => ({
           type: "FeatureCollection",
@@ -381,10 +395,16 @@ const Map = () => {
 
     // Clean up on unmount
     return () => map.remove();
-  }, [mapState, singleRouteState, refreshConst]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [mapState, singleRouteState, pinStorage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
+      {/* adionar o drawer assim que um ponto e criado */}
+      {mapState === true && StorageStatus >= 1 ? (
+        <Drawertest />
+      ) : (
+        ''
+      )}
       <div
         className="map-container"
         ref={mapContainerRef}
