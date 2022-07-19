@@ -32,6 +32,10 @@ const Nav = () => {
   const ModalConfirmar = useRef()
   ModalConfirmar.current = ModalConfirmarRota
 
+  const ModalRota= useSelector((state) => state.modalState.modalRota)
+  const ModalRotaState= useRef()
+  ModalRotaState.current = ModalRota
+
   const { mapState } = useSelector((state) => state.mapState);
   const { singleRouteState } = useSelector((state) => state.singleRouteState);
   const dispatch = useDispatch();
@@ -108,7 +112,7 @@ const Nav = () => {
         ""
       )}
 
-      {mapState === true ? (
+      {mapState || ModalRota ? (
         ""
       ) : (
         <div

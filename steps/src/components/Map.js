@@ -62,7 +62,11 @@ const Map = () => {
     (state) => state.modalState.modalConfirmarRota
   );
   const ModalConfirmar = useRef();
-  ModalConfirmar.current = ModalFinalizarRota;
+  ModalConfirmar.current = ModalFinalizarRota
+
+  const EstadoModalRota= useSelector((state) => state.modalState.modalRota)
+  const ModalRotaState= useRef()
+  ModalRotaState.current = EstadoModalRota
   //
 
   const coords = [];
@@ -277,7 +281,10 @@ const Map = () => {
           });
 
           //set timeout and open modal
-        };
+          setTimeout(() => {
+            dispatch(openModalRota());
+          }, 1250);
+        }
         geojson.map((element) => {
           const el = document.createElement("div");
           el.className = "marker";
@@ -465,6 +472,8 @@ const Map = () => {
       <ModalPin data={coordenadas} />
       <ManageModalPin clicked={clickedData} />
       <ModalConfirmarRota />
+      <ModalRota />
+
     </div>
   );
 };
