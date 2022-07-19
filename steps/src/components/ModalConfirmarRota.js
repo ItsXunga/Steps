@@ -4,49 +4,48 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalStyles } from "../style/modal_styles";
 import "../style/modais_styles.css";
 import { closeModal } from "./redux/modalState";
-import { addPin, delPin } from "./redux/pinStorage";
+import Select from "react-select";
 
-const ModalPin = (props) => {
-  const dispatch = useDispatch()
-  const openModalPin = useSelector((state) => state.modalState.modalPin)
+const ModalConfirmarRota = (props) => {
+  const dispatch = useDispatch();
+  const openModalConfirmarRota = useSelector((state) => state.modalState.modalConfirmarRota);
 
   // input data
-  const [textArea, setTextArea] = useState("")
-  const [nameArea, setNameArea] = useState("")
+  const [textArea, setTextArea] = useState("");
+  const [nameArea, setNameArea] = useState("");
 
   // update state based on user input
   const textAreaChange = (e) => {
-    setTextArea(e.target.value)
-  }
+    setTextArea(e.target.value);
+  };
 
   const nameAreaChange = (e) => {
-    setNameArea(e.target.value)
-  }
+    setNameArea(e.target.value);
+  };
 
   const handleData = () => {
-      dispatch(
-        addPin({
-          //add information
-          id: props.data.id,
-          lat: props.data.lat,
-          lng: props.data.lng,
-          name: nameArea,
-          desc: textArea,
-        })
-      );
-      
     setTimeout(() => {
-      dispatch(closeModal())
-    }, 100)
-  }
+      dispatch(closeModal());
+    }, 100);
+  };
 
   const handleReturn = () => {
-    dispatch(closeModal())
-  }
+    dispatch(closeModal());
+  };
+
+  const options = [
+    { value: "categoria 1", label: "categoria 1" },
+    { value: "categoria 2", label: "categoria 2" },
+    { value: "categoria 3", label: "categoria 3" },
+  ];
 
   return (
     <div>
-      <Modal isOpen={openModalPin} style={modalStyles} contentLabel="Modal Pin">
+      <Modal
+        isOpen={openModalConfirmarRota}
+        style={modalStyles}
+        contentLabel="Modal Confirmar Rota"
+      >
         <div>
           <h2
             style={{
@@ -54,7 +53,7 @@ const ModalPin = (props) => {
               padding: "0.5rem",
             }}
           >
-            Novo Ponto
+            Completar criação de rota
           </h2>
           <label className="label" for="password">
             Nome
@@ -68,6 +67,10 @@ const ModalPin = (props) => {
             className="inputdescription"
             onChange={textAreaChange}
           />
+          <label className="label" for="password">
+            Categoria
+          </label>
+          <Select placeholder={<div>Seleciona uma categoria</div>} className="inputselection" options={options} />
           <div style={{ margin: "1rem 0" }}>
             <div style={{ padding: "0.5rem 1rem" }}>
               <button className="orangeButton" onClick={handleData}>
@@ -76,14 +79,14 @@ const ModalPin = (props) => {
             </div>
             <div style={{ padding: "0.5rem 1rem" }}>
               <button className="blueButton" onClick={handleReturn}>
-                Cancelar
+                Voltar
               </button>
             </div>
           </div>
         </div>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default ModalPin
+export default ModalConfirmarRota;

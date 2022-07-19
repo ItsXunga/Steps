@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { enterSingleRoute } from "./redux/singleRouteState"
+import { enterSingleRoute } from "./redux/singleRouteState";
+import { routeID } from "./redux/routeID";
 
 import Slider from "react-slick";
 import "../style/Profile.css";
@@ -11,12 +12,12 @@ import { ProfileBG } from "../assets/img/profile/profile-bg";
 import Rotas from "../components/data/routes.json";
 import { PinColor } from "../assets/img/profile/pin";
 import AuthService from "../services/auth.service";
-
 const axios = require('axios');
 
 const Profile = () => {
 
     const currentUser = AuthService.getCurrentUser().user;
+    const dispatch = useDispatch();
 
     const [user, setUser] = useState([]);
     const [circuits, setCircuits] = useState([]);
@@ -219,6 +220,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
+
 
             <div style={{height: "60vh", zIndex: 1}}>
                 <div className="buttonPlacement">

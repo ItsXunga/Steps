@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { enterCreation, exitCreation } from "./redux/creationState";
 import { Link } from "react-router-dom";
 import menu_categorias from "../assets/img/menu_categorias.svg";
@@ -9,13 +9,35 @@ import menuClosed from "../assets/img/menu/hamburguerClosed.svg";
 import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 import { motion } from "framer-motion";
 import { exitSingleRoute } from "./redux/singleRouteState";
+import { routeID } from "./redux/routeID";
+import { closeModal, openModalCancelar, openModalInfo } from "./redux/modalState";
 
 
-const Nav = (props) => {
+const Nav = () => {
   const [menuImage, setMenuImg] = useState(menuClosed);
 
-  const { mapState } = useSelector((state) => state.mapState)
-  const { singleRouteState } = useSelector((state) => state.singleRouteState)
+  const ManageModalState  = useSelector((state) => state.modalState.manageModalPin)
+  const ManageModal = useRef()
+  ManageModal.current = ManageModalState
+
+  const ModalPinState = useSelector((state) => state.modalState.modalPin)
+  const ModalPin = useRef()
+  ModalPin.current = ModalPinState
+
+  const ModalCancelarState = useSelector((state) => state.modalState.modalCancelar)
+  const ModalCancelar = useRef()
+  ModalCancelar.current = ModalCancelarState
+
+  const ModalConfirmarRota = useSelector((state) => state.modalState.modalConfirmarRota)
+  const ModalConfirmar = useRef()
+  ModalConfirmar.current = ModalConfirmarRota
+
+  const ModalRota= useSelector((state) => state.modalState.modalRota)
+  const ModalRotaState= useRef()
+  ModalRotaState.current = ModalRota
+
+  const { mapState } = useSelector((state) => state.mapState);
+  const { singleRouteState } = useSelector((state) => state.singleRouteState);
   const dispatch = useDispatch();
 
   function openMenu() {
@@ -26,18 +48,18 @@ const Nav = (props) => {
     }
   }
 
-
-
   return (
     <>
-      {mapState === true ? (
+      {mapState ? (
+        ManageModalState || ModalPinState || ModalCancelarState || ModalConfirmarRota  ? (
+          ''
+        ) : (
         <div
           className="backarrow"
           onClick={() => {
-            dispatch(exitCreation())
+            dispatch(openModalCancelar())
           }}
         >
-          <Link to={"/main"}>
             <svg
               width="15"
               height="27"
@@ -52,18 +74,24 @@ const Nav = (props) => {
                 fill="#393C6A"
               />
             </svg>
-          </Link>
-        </div>
+        </div> )
       ) : (
         ""
       )}
-
 
       {/* quando vimos para a main page apos clicar numa rota especifica */}
 
       {singleRouteState === true ? (
         <div className="backarrow">
-          <Link to={"/main"} onClick={() => dispatch(exitSingleRoute())}>
+          <Link
+            to={"/main"}
+            onClick={() => {
+              dispatch(exitSingleRoute());
+              dispatch(exitCreation());
+              dispatch(routeID(null));
+              dispatch(closeModal());
+            }}
+          >
             <svg
               width="15"
               height="27"
@@ -84,170 +112,176 @@ const Nav = (props) => {
         ""
       )}
 
-      {mapState === true ? (
-        ''
+      {mapState || ModalRota ? (
+        ""
       ) : (
         <div
-        id="menu_bar"
-        style={{
-          position: "fixed",
-          zIndex: "1",
-          bottom: "0",
-          width: "100vw",
-          padding: "1rem",
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "baseline",
-        }}
-      >
-        <Link to="/categorias">
+          id="menu_bar"
+          style={{
+            position: "fixed",
+            zIndex: "1",
+            bottom: "0",
+            width: "100vw",
+            padding: "1rem",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "baseline",
+          }}
+        >
+          <Link to="/categorias">
+            {menuImage !== menuClosed ? (
+              <motion.img
+                animate={{
+                  x: -200,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                style={{
+                  margin: "0rem .2rem",
+                  zIndex: 2,
+                  position: "fixed",
+                  bottom: "0.8rem",
+                }}
+                alt="categorias"
+                src={menu_categorias}
+              />
+            ) : (
+              <motion.img
+                animate={{
+                  x: 0,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                style={{
+                  margin: "0rem .2rem",
+                  zIndex: 2,
+                  position: "fixed",
+                  bottom: "0.8rem",
+                }}
+                alt="categorias"
+                src={menu_categorias}
+              />
+            )}
+          </Link>
+
+          <Link to="/main">
+            {menuImage !== menuClosed ? (
+              <motion.img
+                animate={{
+                  x: -135,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                style={{
+                  margin: "0rem .2rem",
+                  zIndex: 3,
+                  position: "fixed",
+                  bottom: "0.8rem",
+                }}
+                alt="nova rota"
+                src={menu_add_route}
+                onClick={() => {
+                  dispatch(enterCreation());
+                  setTimeout(() => {
+                    dispatch(openModalInfo());
+                  }, 2000);
+                }}
+                className="testeCursor"
+              />
+            ) : (
+              <motion.img
+                animate={{
+                  x: 0,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                style={{
+                  margin: "0rem .2rem",
+                  zIndex: 3,
+                  position: "fixed",
+                  bottom: "0.8rem",
+                }}
+                alt="nova rota"
+                src={menu_add_route}
+                onClick={() => {
+                  dispatch(enterCreation());
+                  dispatch(openModalInfo());
+                }}
+              />
+            )}
+          </Link>
+
+          <Link to="/profile">
+            {menuImage !== menuClosed ? (
+              <motion.img
+                animate={{
+                  x: -70,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                style={{
+                  margin: "0rem .2rem",
+                  zIndex: 4,
+                  position: "fixed",
+                  bottom: "0.8rem",
+                }}
+                alt="perfil"
+                src={menu_perfil}
+              />
+            ) : (
+              <motion.img
+                animate={{
+                  x: 0,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                style={{
+                  margin: "0rem .2rem",
+                  zIndex: 4,
+                  position: "fixed",
+                  bottom: "0.8rem",
+                }}
+                alt="perfil"
+                src={menu_perfil}
+              />
+            )}
+          </Link>
+
           {menuImage !== menuClosed ? (
-            <motion.img
-              animate={{
-                x: -200,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
+            <img
               style={{
                 margin: "0rem .2rem",
-                zIndex: 2,
-                position: "fixed",
-                bottom: "0.8rem",
+                zIndex: 5,
+                boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.25)",
+                borderRadius: "50%",
+                cursor: "pointer",
               }}
-              alt="categorias"
-              src={menu_categorias}
+              onClick={openMenu}
+              alt="menu"
+              src={menuImage}
             />
           ) : (
-            <motion.img
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
+            <img
               style={{
                 margin: "0rem .2rem",
-                zIndex: 2,
-                position: "fixed",
-                bottom: "0.8rem",
+                zIndex: 5,
+                boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.25)",
+                borderRadius: "50%",
+                cursor: "pointer",
               }}
-              alt="categorias"
-              src={menu_categorias}
+              onClick={openMenu}
+              alt="menu"
+              src={menuImage}
             />
           )}
-        </Link>
-
-        <Link to="/main">
-          {menuImage !== menuClosed ? (
-            <motion.img
-              animate={{
-                x: -135,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{
-                margin: "0rem .2rem",
-                zIndex: 3,
-                position: "fixed",
-                bottom: "0.8rem",
-              }}
-              alt="nova rota"
-              src={menu_add_route}
-              onClick={() => dispatch(enterCreation())}
-              className="testeCursor"
-            />
-          ) : (
-            <motion.img
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{
-                margin: "0rem .2rem",
-                zIndex: 3,
-                position: "fixed",
-                bottom: "0.8rem",
-              }}
-              alt="nova rota"
-              src={menu_add_route}
-              onClick={() => dispatch(enterCreation())}
-            />
-          )}
-        </Link>
-
-        <Link to="/profile">
-          {menuImage !== menuClosed ? (
-            <motion.img
-              animate={{
-                x: -70,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{
-                margin: "0rem .2rem",
-                zIndex: 4,
-                position: "fixed",
-                bottom: "0.8rem",
-              }}
-              alt="perfil"
-              src={menu_perfil}
-            />
-          ) : (
-            <motion.img
-              animate={{
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              style={{
-                margin: "0rem .2rem",
-                zIndex: 4,
-                position: "fixed",
-                bottom: "0.8rem",
-              }}
-              alt="perfil"
-              src={menu_perfil}
-            />
-          )}
-        </Link>
-
-        {menuImage !== menuClosed ? (
-          <img
-            style={{
-              margin: "0rem .2rem",
-              zIndex: 5,
-              boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.25)",
-              borderRadius: "50%",
-              cursor: "pointer",
-            }}
-            onClick={openMenu}
-            alt="menu"
-            src={menuImage}
-          />
-        ) : (
-          <img
-            style={{
-              margin: "0rem .2rem",
-              zIndex: 5,
-              boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.25)",
-              borderRadius: "50%",
-              cursor: "pointer",
-            }}
-            onClick={openMenu}
-            alt="menu"
-            src={menuImage}
-          />
-        )}
-      </div>
+        </div>
       )}
-
-     
     </>
   );
 };

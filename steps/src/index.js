@@ -5,7 +5,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { store } from "./components/redux/store";
-import { Provider } from 'react-redux'
+import { Provider } from "react-redux";
 
 ReactDOM.render(
   <React.StrictMode>

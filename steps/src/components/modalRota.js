@@ -1,73 +1,24 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
-import { modalRota } from "../style/modal_styles";
-import { PinColor } from "../assets/img/profile/pin";
-import "../style/categoria_details.css";
+import React, { useState } from "react"
+import Modal from "react-modal"
+import { modalRota } from "../style/modal_styles"
+import "../style/categoria_details.css"
+import "../style/modais_styles.css"
+import { useDispatch, useSelector } from "react-redux"
+import { closeModal } from "./redux/modalState";
 
 function ModalRota(params) {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch()
+  const openModalRota = useSelector((state) => state.modalState.modalRota)
 
-  function openModal() {
-    setIsOpen(true);
+  const handleClose = () => {
+    dispatch(closeModal())
   }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  const CheckPin = (start, end, name) => {
-    if (start === true && end === false) {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#5F61F3" />
-          <p>{name}</p>
-        </div>
-      );
-    } else if (start === false && end === false) {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#8283F5" />
-          <p>{name}</p>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#A5A6F6" />
-          <p>{name}</p>
-        </div>
-      );
-    }
-  };
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
 
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={openModalRota}
         style={modalRota}
         contentLabel="Modal Rota"
       >
@@ -75,71 +26,57 @@ function ModalRota(params) {
           style={{
             display: "grid",
             gridTemplateColumns: "6fr 1fr",
-            gridColumnGap: "20px",
+            gridColumnGap: "10px",
+            overflow: "scroll",
           }}
         >
           <div className="textmodal">
             <h1
               style={{
-                lineHeight: "2rem",
+                lineHeight: "1rem",
                 alignSelf: "center",
                 textAlign: "left",
                 fontSize: "20px",
                 fontFamily: "manropeBold",
               }}
             >
-              Coisinhas
+              Nome da rota
             </h1>
             <p
               style={{
                 alignSelf: "center",
                 textAlign: "left",
-                fontSize: "12px",
+                fontSize: "14px",
               }}
             >
-              Lorem lorem lorem lorem lorem lorem lorem lorem
+              Descriçao da rota Lorem lorem lorem lorem lorem lorem lorem lorem
             </p>
             <div>
-              <div
-                style={{
-                  marginTop: "1rem",
-                  marginLeft: 0,
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <PinColor color="#8283F5" />
-                <p>pontinho</p>
-              </div>
-              <div
-                style={{
-                  marginTop: "1rem",
-                  marginLeft: 0,
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <PinColor color="#8283F5" />
-                <p>pontinho</p>
-              </div>
-              <div
-                style={{
-                  marginTop: "1rem",
-                  marginLeft: 0,
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <PinColor color="#8283F5" />
-                <p>pontinho</p>
+              <div className="pontomodal">
+                <button className="buttonnumberpin">22</button>
+                <div>
+                  <p
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    PONontinho
+                  </p>
+
+                  <p
+                    style={{
+                      lineHeight: "20px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    descriçao do pontinho içao do pontiniçao do pontin
+                  </p>
+                </div>
               </div>
             </div>
           </div>
           <div style={{ display: "grid" }}>
-            <div className="">
+            <div onClick={handleClose}>
               <svg
                 width="25"
                 height="26"
@@ -172,7 +109,7 @@ function ModalRota(params) {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalRota;
+export default ModalRota

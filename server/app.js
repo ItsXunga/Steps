@@ -3,11 +3,7 @@ require("dotenv").config();
 const db = require("./utils/database");
 const mongoose = require("mongoose");
 const Routes = require("./routes");
-const cookieParser = require("cookie-parser");
-const cors = require('cors');
-const bodyParser = require('body-parser');
-
-const port = process.env.PORT | 3000;
+const auth = require("./middlewares/authMiddleware");
 
 const app = express();
 //
@@ -25,27 +21,28 @@ app.use(cors(corsOptions));
 
 // Começar a processar o corpo dos requests
 app.use(express.json());
-
+app.use(auth);
 app.use("/circuits", Routes.CircuitRoutes);
 app.use("/points", Routes.PointRoutes);
 app.use("/users", Routes.UserRoutes);
-app.use(cookieParser());
-
-// cookies
-app.get("/set-cookies", (req, res) => {
-  res.cookie("newUser", true, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true});
-
-  res.send("Cookies working!");
-});
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
-  console.log('Cookies', req.cookies);
+});
+
+// Add Access Control Allow Origin headers
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
 });
 
 async function main() {
   await mongoose.connect(db.uri);
-  app.listen(port, () => console.log("server running on port: ", port));
+  app.listen(process.env.PORT || 3000);
 }
 
 main().catch((err) => console.log(err));

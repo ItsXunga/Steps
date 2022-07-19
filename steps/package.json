@@ -11,7 +11,7 @@
     "@mapbox/mapbox-gl-geocoder": "^4.7.4",
     "@mui/material": "^5.4.2",
     "@mui/styles": "^5.4.2",
-    "@reduxjs/toolkit": "^1.8.1",
+    "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -23,9 +23,11 @@
     "react-dom": "^17.0.2",
     "react-mapbox-gl": "^5.1.1",
     "react-modal": "^3.14.4",
+    "react-modern-drawer": "^1.1.1",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
+    "react-select": "^5.4.0",
     "react-slick": "^0.28.1",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4",
@@ -57,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.18.6",
     "prettier": "2.5.1"
   }
 }

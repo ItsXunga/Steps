@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const PointSchema = new Schema({
   pinName: {
     type: String,
-    required: true,
+    required: [true, "Please enter a name for your Pin"],
     unique: true,
   },
   pinDesc: {
@@ -18,8 +18,6 @@ const PointSchema = new Schema({
     type: Number,
     required: true,
   },
-  start: Boolean,
-  end: Boolean,
 });
 
 module.exports = mongoose.model("Point", PointSchema);

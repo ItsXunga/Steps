@@ -20,24 +20,24 @@ h3 {
 }
 
 .blueButton {
-  width: 100%;
+  width: 90%;
   border: none;
   border-radius: 50px;
   background: #393c6a;
   color: white;
   font-size: 15px;
-  height: 2.5rem;
+  height: 3rem;
   font-family: ManropeBold;
   cursor: pointer;
 }
 
 .orangeButton {
-  width: 100%;
+  width: 90%;
   border: none;
   border-radius: 50px;
   background: linear-gradient(90deg, #fce0ba 15%, #f4b59d 90%);
   color: white;
-  height: 2.5rem;
+  height: 3rem;
   font-size: 15px;
   font-family: ManropeBold;
   cursor: pointer;

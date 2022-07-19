@@ -10,10 +10,12 @@ const CircuitSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
   category: {
     type: Schema.Types.ObjectId,
     ref: "Category",
+    required: [true, "Please enter a category for your Route"],
   },
   desc: {
     type: String,
