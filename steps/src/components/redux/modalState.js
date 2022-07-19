@@ -47,7 +47,6 @@ export const modalStateSlice = createSlice({
       state.modalConfirmarRota = true;
     },
 
-
     closeModal: (state) => {
       state.modalAddRota = false;
       state.modalInfo = false;
