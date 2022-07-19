@@ -10,11 +10,13 @@ import {
   openModalPin,
   openManageModalPin,
   openModalConfirmarRota,
+  openModalRota,
 } from "./redux/modalState";
 import ManageModalPin from "./ManageModalPin";
 import Drawertest from "./Drawer";
 import ModalConfirmarRota from "./ModalConfirmarRota";
-const axios = require('axios');
+import ModalRota from "./modalRota";
+const axios = require("axios");
 
 Modal.setAppElement("#root");
 
@@ -62,20 +64,21 @@ const Map = () => {
     (state) => state.modalState.modalConfirmarRota
   );
   const ModalConfirmar = useRef();
-  ModalConfirmar.current = ModalFinalizarRota
+  ModalConfirmar.current = ModalFinalizarRota;
 
-  const EstadoModalRota= useSelector((state) => state.modalState.modalRota)
-  const ModalRotaState= useRef()
-  ModalRotaState.current = EstadoModalRota
+  const EstadoModalRota = useSelector((state) => state.modalState.modalRota);
+  const ModalRotaState = useRef();
+  ModalRotaState.current = EstadoModalRota;
   //
 
   const coords = [];
   // Existing routes
-  axios.get('https://steps-ua.herokuapp.com/circuits/')
-  .then(function (response) {
-    console.log(response)
-    //setRotasBackEnd(response.data)
-  });  
+  axios
+    .get("https://steps-ua.herokuapp.com/circuits/")
+    .then(function (response) {
+      console.log(response);
+      //setRotasBackEnd(response.data)
+    });
 
   const geojson = rotasBackEnd.map((value) => ({
     type: "FeatureCollection",
@@ -284,7 +287,7 @@ const Map = () => {
           setTimeout(() => {
             dispatch(openModalRota());
           }, 1250);
-        }
+        };
         geojson.map((element) => {
           const el = document.createElement("div");
           el.className = "marker";
@@ -473,7 +476,6 @@ const Map = () => {
       <ManageModalPin clicked={clickedData} />
       <ModalConfirmarRota />
       <ModalRota />
-
     </div>
   );
 };
