@@ -19,6 +19,7 @@ import ManageModalPin from "./components/ManageModalPin"
 import Drawertest from "./components/Drawer"
 import ModalCancelar from "./components/modalcancelar"
 import ModalEliminar from "./components/modaleliminar"
+import ModalConfirmarRota from "./components/ModalConfirmarRota"
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
       <Route path="/drawer" element={<Drawertest />} />
       <Route path="/modalcancelar" element={<ModalCancelar />} />
       <Route path="/modaleliminar" element={<ModalEliminar />} />
+      <Route path="/modalConfirmarRota" element={<ModalConfirmarRota />} />
     </Routes>
   );
 }
