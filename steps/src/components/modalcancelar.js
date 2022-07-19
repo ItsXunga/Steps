@@ -28,7 +28,7 @@ function ModalCancelar() {
                 fontFamily: "ManropeRegular",
               }}
             >
-              Desejas voltar? Irás perder todas as alterações.
+              Desejas sair? Irás perder todas as alterações.
             </p>
 
             <div style={{ margin: "1rem 0" }}>
@@ -43,7 +43,7 @@ function ModalCancelar() {
                     dispatch(closeModal());
                   }}
                 >
-                  Voltar
+                  Sair
                 </button>
               </Link>
               </div>

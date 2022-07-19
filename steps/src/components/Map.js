@@ -6,9 +6,10 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
 import ModalPin from "./ModalPin";
-import { openModalPin, openManageModalPin } from "./redux/modalState";
+import { openModalPin, openManageModalPin, openModalConfirmarRota } from "./redux/modalState";
 import ManageModalPin from "./ManageModalPin";
 import Drawertest from "./Drawer";
+import ModalConfirmarRota from "./ModalConfirmarRota";
 
 Modal.setAppElement("#root");
 
@@ -34,6 +35,23 @@ const Map = () => {
   //check if there are points added to the store
   const StorageStatus = Object.keys(pinStorage).length;
 
+  //check modal state to then conditional render other assets
+  const ManageModalState  = useSelector((state) => state.modalState.manageModalPin)
+  const ManageModal = useRef()
+  ManageModal.current = ManageModalState
+
+  const ModalPinState = useSelector((state) => state.modalState.modalPin)
+  const PinState = useRef()
+  PinState.current = ModalPinState
+
+  const ModalCancelarState = useSelector((state) => state.modalState.modalCancelar)
+  const ModalCancelar = useRef()
+  ModalCancelar.current = ModalCancelarState
+
+  const ModalFinalizarRota = useSelector((state) => state.modalState.modalConfirmarRota);
+  const ModalConfirmar = useRef();
+  ModalConfirmar.current = ModalFinalizarRota
+  //
 
   const coords = [];
 
@@ -405,13 +423,31 @@ const Map = () => {
       ) : (
         ''
       )}
+      {/* permitir ao utilizador acabar a rota quando tem 2 ou mais pontos */}
+      {StorageStatus >= 2 ? (
+        ModalFinalizarRota || ManageModalState || ModalPinState || ModalCancelarState ? (
+          ''
+        ) : (
+          <button className="botaoCompletarMain" onClick={() => {dispatch(openModalConfirmarRota())}}>
+          <svg width="29" height="22" viewBox="0 0 29 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.4875 21.6852L0 12.1977L2.71017 9.4875L9.49038 16.26L9.4875 16.2629L25.7504 0L28.4606 2.71017L12.1977 18.975L9.48942 21.6833L9.4875 21.6852Z" fill="white"/>
+          </svg>
+        </button>
+        )
+
+      ) : (
+        ''
+      )}
       <div
         className="map-container"
         ref={mapContainerRef}
         style={{ height: "100vh", width: "100vw" }}
       />
+
       <ModalPin data={coordenadas} />
       <ManageModalPin clicked={clickedData}/>
+      <ModalConfirmarRota />
+
     </div>
   );
 };

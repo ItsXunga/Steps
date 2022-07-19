@@ -4,14 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalStyles } from "../style/modal_styles";
 import "../style/modais_styles.css";
 import { closeModal } from "./redux/modalState";
-import { addPin, delPin } from "./redux/pinStorage";
-import { incrementRefresh } from "./redux/RefreshState";
 import Select from "react-select";
 
 const ModalConfirmarRota = (props) => {
   const dispatch = useDispatch();
-  //const openModalConfirmarRota = useSelector((state) => state.modalState.modalPin);
-  const openModalConfirmarRota = true;
+  const openModalConfirmarRota = useSelector((state) => state.modalState.modalConfirmarRota);
+
   // input data
   const [textArea, setTextArea] = useState("");
   const [nameArea, setNameArea] = useState("");
@@ -26,20 +24,6 @@ const ModalConfirmarRota = (props) => {
   };
 
   const handleData = () => {
-    dispatch(
-      addPin({
-        //add information
-        id: props.data.id,
-        lat: props.data.lat,
-        lng: props.data.lng,
-        name: nameArea,
-        desc: textArea,
-      })
-    );
-
-    // ask the app to refresh when a point is added
-    dispatch(incrementRefresh());
-
     setTimeout(() => {
       dispatch(closeModal());
     }, 100);

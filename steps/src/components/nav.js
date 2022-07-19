@@ -28,6 +28,10 @@ const Nav = () => {
   const ModalCancelar = useRef()
   ModalCancelar.current = ModalCancelarState
 
+  const ModalConfirmarRota = useSelector((state) => state.modalState.modalConfirmarRota)
+  const ModalConfirmar = useRef()
+  ModalConfirmar.current = ModalConfirmarRota
+
   const { mapState } = useSelector((state) => state.mapState);
   const { singleRouteState } = useSelector((state) => state.singleRouteState);
   const dispatch = useDispatch();
@@ -43,7 +47,7 @@ const Nav = () => {
   return (
     <>
       {mapState ? (
-        ManageModalState || ModalPinState || ModalCancelarState  ? (
+        ManageModalState || ModalPinState || ModalCancelarState || ModalConfirmarRota  ? (
           ''
         ) : (
         <div
