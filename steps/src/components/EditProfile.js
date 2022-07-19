@@ -1,8 +1,47 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import "../style/editProfile.css"
+import React, {useEffect} from "react";
+import { Link } from "react-router-dom";
+import "../style/editProfile.css";
+import axios from "axios";
+import AuthService from "../services/auth.service";
 
 const EditProfile = () => {
+
+    const currentUser = AuthService.getCurrentUser();
+    let id = currentUser.user;
+
+    const [user, setUser] = React.useState('');
+    const [name, setName] = React.useState('');
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:3000/users/${id}`)
+            .then((response) => {
+                setUser(response.data);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
+    function updateName() {
+        axios
+            .put(`http://localhost:3000/users/updateName/${id}`, {
+                name: name
+            })
+            .then((response) => {
+                setUser(response.data);
+            })
+            .catch((err) => console.log(err));
+    }
+
+    function updateAvatar() {
+        axios
+            .put(`http://localhost:3000/users/updateAvatar/${id}`, {
+                avatar: "Hello.jpg"
+            })
+            .then((response) => {
+                setUser(response.data);
+            })
+            .catch((err) => console.log(err));
+    }
   return (
     <div className="editDiv">
       <div>
@@ -28,13 +67,14 @@ const EditProfile = () => {
       </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
+        {/*TODO user.avatar  */}
         <img
           style={{ height: "18vh", width: "auto" }}
           src={require("../assets/img/editProfile/avatar.png")}
           alt="avatar"
         />
       </div>
-
+        <form onSubmit={updateName}>
       <div
         style={{
           display: "flex",
@@ -51,7 +91,7 @@ const EditProfile = () => {
             className="EditInput"
             type="text"
             id="username"
-            placeholder="johnlee123"
+            placeholder={user.name} value={name} onChange={(e) => setName(e.target.value)}
           />
         </div>
 
@@ -75,7 +115,7 @@ const EditProfile = () => {
             className="EditInput"
             type="text"
             id="email"
-            placeholder="johnlee@gmail.com"
+            placeholder={user.email}
           />
         </div>
 
@@ -95,9 +135,10 @@ const EditProfile = () => {
           <label className="EditLabel" for="password">
             Confirme Password
           </label>
+            {/*TODO user.password  */}
           <input
             className="EditInput"
-            type="text"
+            type="password"
             id="password"
             placeholder="*************"
           />
@@ -105,10 +146,11 @@ const EditProfile = () => {
       </div>
 
       <div style={{ padding: "0rem 3rem" }}>
-        <Link to={"/profile"}>
-          <button className="orangeButton">Guardar</button>
-        </Link>
+
+          <button className="orangeButton" type="submit">Guardar</button>
+
       </div>
+</form>
     </div>
   )
 }
