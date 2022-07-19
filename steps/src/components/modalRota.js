@@ -35,7 +35,7 @@ function ModalRota(params) {
           <div className="textmodal">
             <h1
               style={{
-                lineHeight: "2rem",
+                lineHeight: "1rem",
                 alignSelf: "center",
                 textAlign: "left",
                 fontSize: "20px",
@@ -48,7 +48,7 @@ function ModalRota(params) {
               style={{
                 alignSelf: "center",
                 textAlign: "left",
-                fontSize: "12px",
+                fontSize: "14px",
               }}
             >
               Descriçao da rota Lorem lorem lorem lorem lorem lorem lorem lorem
@@ -68,6 +68,7 @@ function ModalRota(params) {
                   <p
                     style={{
                       lineHeight: "20px",
+                      fontSize: "14px",
                     }}
                   >
                     descriçao do pontinho içao do pontiniçao do pontin

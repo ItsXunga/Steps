@@ -20,6 +20,7 @@ import Drawertest from "./components/Drawer"
 import ModalCancelar from "./components/modalcancelar"
 import ModalEliminar from "./components/modaleliminar"
 import ModalConfirmarRota from "./components/ModalConfirmarRota"
+import ModalPontoInfo from "./components/modalpontoinfo"
 
 function App() {
   return (
@@ -43,9 +44,10 @@ function App() {
       <Route path="/drawer" element={<Drawertest />} />
       <Route path="/modalcancelar" element={<ModalCancelar />} />
       <Route path="/modaleliminar" element={<ModalEliminar />} />
+      <Route path="/modalpontoinfo" element={<ModalPontoInfo />} />
       <Route path="/modalConfirmarRota" element={<ModalConfirmarRota />} />
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App
