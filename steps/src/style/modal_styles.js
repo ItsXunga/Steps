@@ -43,7 +43,7 @@ export const modalPonto = {
     boxShadow: "2px 2px 7px 0px rgba(0, 0, 0, 0.2)",
     border: "white 2px solid",
     borderRadius: "20px",
-    padding: "1rem",
+    padding: "1remnp",
     maxHeight: "30%",
     height: "fit-content",
     margin: "auto",

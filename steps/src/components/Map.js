@@ -7,11 +7,17 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
 import ModalPin from "./ModalPin";
-import { openModalPin, openManageModalPin, openModalConfirmarRota, openModalRota } from "./redux/modalState";
+import {
+  openModalPin,
+  openManageModalPin,
+  openModalConfirmarRota,
+  openModalRota,
+} from "./redux/modalState";
 import ManageModalPin from "./ManageModalPin";
 import Drawertest from "./Drawer";
 import ModalConfirmarRota from "./ModalConfirmarRota";
 import ModalRota from "./modalRota";
+const axios = require("axios");
 
 Modal.setAppElement("#root");
 
@@ -42,48 +48,48 @@ const Map = () => {
   //Get pin storage elements
   const storage = useRef();
   storage.current = pinStorage;
-  
+
   //check if there are points added to the store
   const StorageStatus = Object.keys(pinStorage).length;
 
   //check modal state to then conditional render other assets
-  const ManageModalState  = useSelector((state) => state.modalState.manageModalPin)
-  const ManageModal = useRef()
-  ManageModal.current = ManageModalState
+  const ManageModalState = useSelector(
+    (state) => state.modalState.manageModalPin
+  );
+  const ManageModal = useRef();
+  ManageModal.current = ManageModalState;
 
-  const ModalPinState = useSelector((state) => state.modalState.modalPin)
-  const PinState = useRef()
-  PinState.current = ModalPinState
+  const ModalPinState = useSelector((state) => state.modalState.modalPin);
+  const PinState = useRef();
+  PinState.current = ModalPinState;
 
-  const ModalCancelarState = useSelector((state) => state.modalState.modalCancelar)
-  const ModalCancelar = useRef()
-  ModalCancelar.current = ModalCancelarState
+  const ModalCancelarState = useSelector(
+    (state) => state.modalState.modalCancelar
+  );
+  const ModalCancelar = useRef();
+  ModalCancelar.current = ModalCancelarState;
 
-  const ModalFinalizarRota = useSelector((state) => state.modalState.modalConfirmarRota);
+  const ModalFinalizarRota = useSelector(
+    (state) => state.modalState.modalConfirmarRota
+  );
   const ModalConfirmar = useRef();
-  ModalConfirmar.current = ModalFinalizarRota
+  ModalConfirmar.current = ModalFinalizarRota;
 
-  const EstadoModalRota= useSelector((state) => state.modalState.modalRota)
-  const ModalRotaState= useRef()
-  ModalRotaState.current = EstadoModalRota
+  const EstadoModalRota = useSelector((state) => state.modalState.modalRota);
+  const ModalRotaState = useRef();
+  ModalRotaState.current = EstadoModalRota;
   //
 
   const coords = [];
+  // Existing routes
+  axios
+    .get("https://steps-ua.herokuapp.com/circuits/")
+    .then(function (response) {
+      console.log(response);
+      //setRotasBackEnd(response.data)
+    });
 
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  function openModal() {
-    setIsOpen(true);
-    document.getElementById("menu_bar").style.display = "none";
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-    document.getElementById("menu_bar").style.display = "flex";
-  }
-
-  // existing routes
-  const geojson = Rotas.map((value) => ({
+  const geojson = rotasBackEnd.map((value) => ({
     type: "FeatureCollection",
     features: [
       {
@@ -93,11 +99,11 @@ const Map = () => {
           coordinates: [value.pins[0].long, value.pins[0].lat],
         },
         properties: {
-          id: value.id,
+          id: value._id,
           title: value.name,
           description: value.desc,
-          creator: value.creator,
-          category: value.category,
+          creator: value.creator.name,
+          category: value.category.category,
           pins: [
             value.pins.map((val) => ({
               pinName: val.pinName,
@@ -107,7 +113,6 @@ const Map = () => {
       },
     ],
   }));
-
 
   // Pesquisar Rotas
   const geocoder = new MapboxGeocoder({
@@ -169,7 +174,6 @@ const Map = () => {
           ],
         }));
 
-
         // function running on pin click
         const handleClick = (id, coordinates) => {
             map.easeTo({
@@ -182,22 +186,25 @@ const Map = () => {
             id: id,
             name: pinStorage[id].name,
             desc: pinStorage[id].desc,
-            lat:  pinStorage[id].lat,
-            lng: pinStorage[id].lng
-          })
+            lat: pinStorage[id].lat,
+            lng: pinStorage[id].lng,
+          });
 
           setTimeout(() => {
             dispatch(openManageModalPin());
           }, 1250);
-        }
+        };
 
         //add saved markers to the route being created
         geojsonPins.map((element) => {
           const el = document.createElement("div");
           el.className = "marker";
-          el.addEventListener("click", function(e){
+          el.addEventListener("click", function (e) {
             e.stopPropagation();
-            handleClick(element.features[0].properties.id, element.features[0].geometry.coordinates)
+            handleClick(
+              element.features[0].properties.id,
+              element.features[0].geometry.coordinates
+            );
           });
           new mapboxgl.Marker(el)
             .setLngLat(element.features[0].geometry.coordinates)
@@ -219,15 +226,13 @@ const Map = () => {
           setCoordernadas({
             id: marker.getLngLat(coordinates).lat,
             lat: marker.getLngLat(coordinates).lat,
-            lng: marker.getLngLat(coordinates).lng
+            lng: marker.getLngLat(coordinates).lng,
           });
-
         }
         setTimeout(() => {
           dispatch(openModalPin());
         }, 1250);
       });
-
     } else {
       // Make a Map Matching request
       async function getMatch(coordinates, radius, profile) {
@@ -237,7 +242,7 @@ const Map = () => {
         const query = await fetch(
           `https://api.mapbox.com/matching/v5/mapbox/${profile}/${coordinates}?geometries=geojson&radiuses=${radiuses}&steps=true&language=pt&access_token=${mapboxgl.accessToken}`,
           { method: "GET" }
-          // remove radiuses 
+          // remove radiuses
         );
         const response = await query.json();
         // Handle errors
@@ -271,7 +276,7 @@ const Map = () => {
         const radius = coords.map(() => 50);
         getMatch(newCoords, radius, profile);
 
-        // Remover radius para aumentar o range 
+        // Remover radius para aumentar o range
 
         coords.splice(0, coords.length);
       }
@@ -291,13 +296,13 @@ const Map = () => {
           setTimeout(() => {
             dispatch(openModalRota());
           }, 1250);
-        }
+        };
         geojson.map((element) => {
           const el = document.createElement("div");
           el.className = "marker";
-          el.addEventListener("click", function(e){
+          el.addEventListener("click", function (e) {
             e.stopPropagation();
-            handleMain(element.features[0].geometry.coordinates)
+            handleMain(element.features[0].geometry.coordinates);
           });
 
           new mapboxgl.Marker(el)
@@ -312,10 +317,13 @@ const Map = () => {
         });
 
         map.easeTo({
-          center: [routeFromProfile[0].pins[0].long, routeFromProfile[0].pins[0].lat],
+          center: [
+            routeFromProfile[0].pins[0].long,
+            routeFromProfile[0].pins[0].lat,
+          ],
           zoom: 17,
           duration: 1000,
-        })
+        });
 
         // set timeout and open modal
 
@@ -347,7 +355,7 @@ const Map = () => {
         geojson2.map((element) => {
           const el = document.createElement("div");
           el.className = "marker";
-          el.addEventListener("click", function(e){
+          el.addEventListener("click", function (e) {
             e.stopPropagation();
           });
 
@@ -435,25 +443,37 @@ const Map = () => {
   return (
     <div>
       {/* adionar o drawer assim que um ponto e criado */}
-      {mapState === true && StorageStatus >= 1 ? (
-        <Drawertest />
-      ) : (
-        ''
-      )}
+      {mapState === true && StorageStatus >= 1 ? <Drawertest /> : ""}
       {/* permitir ao utilizador acabar a rota quando tem 2 ou mais pontos */}
       {StorageStatus >= 2 ? (
-        ModalFinalizarRota || ManageModalState || ModalPinState || ModalCancelarState ? (
-          ''
+        ModalFinalizarRota ||
+        ManageModalState ||
+        ModalPinState ||
+        ModalCancelarState ? (
+          ""
         ) : (
-          <button className="botaoCompletarMain" onClick={() => {dispatch(openModalConfirmarRota())}}>
-          <svg width="29" height="22" viewBox="0 0 29 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9.4875 21.6852L0 12.1977L2.71017 9.4875L9.49038 16.26L9.4875 16.2629L25.7504 0L28.4606 2.71017L12.1977 18.975L9.48942 21.6833L9.4875 21.6852Z" fill="white"/>
-          </svg>
-        </button>
+          <button
+            className="botaoCompletarMain"
+            onClick={() => {
+              dispatch(openModalConfirmarRota());
+            }}
+          >
+            <svg
+              width="29"
+              height="22"
+              viewBox="0 0 29 22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9.4875 21.6852L0 12.1977L2.71017 9.4875L9.49038 16.26L9.4875 16.2629L25.7504 0L28.4606 2.71017L12.1977 18.975L9.48942 21.6833L9.4875 21.6852Z"
+                fill="white"
+              />
+            </svg>
+          </button>
         )
-
       ) : (
-        ''
+        ""
       )}
       <div
         className="map-container"
@@ -462,10 +482,9 @@ const Map = () => {
       />
 
       <ModalPin data={coordenadas} />
-      <ManageModalPin clicked={clickedData}/>
+      <ManageModalPin clicked={clickedData} />
       <ModalConfirmarRota />
       <ModalRota />
-
     </div>
   );
 };

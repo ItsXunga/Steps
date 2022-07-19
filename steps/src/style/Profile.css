@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 2.75rem;
+  padding: 1.6rem;
 }
 
 .selectedTab {
@@ -67,13 +67,12 @@
   display: flex !important;
   flex-direction: column;
   justify-content: space-around;
-  height: 45vh;
+  height: 50vh;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.5);
   border: 0.18px solid #d0d1d8;
   box-shadow: 2px 2px 7px 0px #00000033;
   border-radius: 30px;
-  margin-top: 2rem !important;
 }
 
 .cardButton {
@@ -101,6 +100,13 @@
 
 .slick-slide div {
   margin: 0.75rem 1.5rem 1rem 0.5rem;
+}
+
+.slick-slide {
+  padding: 10px;
+}
+.slick-dots {
+  bottom: 0 !important;
 }
 
 .backArrowProfile {
