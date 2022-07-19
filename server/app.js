@@ -22,19 +22,6 @@ const corsOptions={
 }
 app.use(cors(corsOptions));
 
-app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
-const corsOptions = {
-  origin: ["http://localhost:3001"],
-  credentials: true,
-  exposedHeaders: ["Authorization"],
-};
-app.use(cors(corsOptions));
-
 // Começar a processar o corpo dos requests
 app.use(express.json());
 app.use(auth);
