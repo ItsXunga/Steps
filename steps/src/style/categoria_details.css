@@ -54,6 +54,17 @@
   cursor: pointer;
 }
 
+.buttonnumberpin {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 0.17px solid #5f61f3;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  background-color: transparent;
+  align-self: start;
+  cursor: pointer;
+}
+
 .categoriacardopen {
   padding: 0rem 1.5rem 1.5rem 1.5rem;
 }
