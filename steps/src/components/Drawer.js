@@ -5,6 +5,7 @@ import "../style/drawer_styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { openModalEliminar } from "./redux/modalState";
 import ModalEliminar from "./modaleliminar";
+import { Link } from "react-router-dom";
 
 const Drawertest = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,16 @@ const Drawertest = () => {
 
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState)
+  }
+
+  const handleDelete = (id) => {
+    toggleDrawer();
+    dispatch(openModalEliminar());
+    setIdToBeDeleted(id)
+  }
+
+  const handleEdit = () => {
+    toggleDrawer();
   }
 
 
@@ -63,7 +74,8 @@ const Drawertest = () => {
                 >
                   {value[1].name}
                 </h1>
-                <button className="buttonx">
+                <Link to={'/main'} state={[value[1].lng, value[1].lat]}>
+                <button className="buttonx" onClick={() => handleEdit()}>
                   <svg
                     width="19"
                     height="18"
@@ -77,6 +89,7 @@ const Drawertest = () => {
                     />
                   </svg>
                 </button>
+                </Link>
               </div>
 
               <p
@@ -97,11 +110,7 @@ const Drawertest = () => {
                 justifyContent: "space-between",
               }}
             >
-              <button className="buttonx" onClick={() => {
-                toggleDrawer();
-                dispatch(openModalEliminar());
-                setIdToBeDeleted(value[1].id)
-                }}>
+              <button className="buttonx" onClick={() => handleDelete(value[1].id)}>
                 <svg
                   width="20"
                   height="21"
