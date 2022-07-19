@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
@@ -35,15 +35,16 @@ const Map = () => {
   const [clickedData, setClickedData] = useState([]);
   const [coordenadas, setCoordernadas] = useState([]);
 
+  const [rotasBackEnd, setRotasBackEnd] = useState([]);
+
   //Get id from edit pin request
   const EditCoords = useLocation();
-  const [sendEditCoords, setSendEditCoords] = useState()
+  const [sendEditCoords, setSendEditCoords] = useState();
 
   if (EditCoords.state !== null) {
-    setSendEditCoords(EditCoords.state)
+    setSendEditCoords(EditCoords.state);
     console.log(sendEditCoords);
   }
-
 
   //Get pin storage elements
   const storage = useRef();
@@ -176,11 +177,11 @@ const Map = () => {
 
         // function running on pin click
         const handleClick = (id, coordinates) => {
-            map.easeTo({
-              center: coordinates,
-              zoom: 17,
-              duration: 1000,
-            });
+          map.easeTo({
+            center: coordinates,
+            zoom: 17,
+            duration: 1000,
+          });
 
           setClickedData({
             id: id,
