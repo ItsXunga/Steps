@@ -14,7 +14,7 @@ export const modalStyles = {
     margin: "auto",
     minHeight: "35vh",
   },
-};
+}
 
 export const modalRota = {
   content: {
@@ -24,10 +24,11 @@ export const modalRota = {
     border: "white 2px solid",
     borderRadius: "20px",
     padding: "2rem",
-    maxHeight: "fit-content",
+    maxHeight: "90%",
+    height: "fit-content",
     margin: "auto",
     textAlign: "center",
     overflow: "auto",
     border: "1px solid #5F61F3",
   },
-};
+}

@@ -1,70 +1,23 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
-import { modalRota } from "../style/modal_styles";
-import { PinColor } from "../assets/img/profile/pin";
-import "../style/categoria_details.css";
+import React, { useState } from "react"
+import Modal from "react-modal"
+import { modalRota } from "../style/modal_styles"
+import "../style/categoria_details.css"
+import "../style/modais_styles.css"
 
 function ModalRota(params) {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false)
 
   function openModal() {
-    setIsOpen(true);
+    setIsOpen(true)
   }
 
   function closeModal() {
-    setIsOpen(false);
+    setIsOpen(false)
   }
-
-  const CheckPin = (start, end, name) => {
-    if (start === true && end === false) {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#5F61F3" />
-          <p>{name}</p>
-        </div>
-      );
-    } else if (start === false && end === false) {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#8283F5" />
-          <p>{name}</p>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#A5A6F6" />
-          <p>{name}</p>
-        </div>
-      );
-    }
-  };
 
   return (
     <div>
       <button onClick={openModal}>Open Modal</button>
-
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -75,7 +28,8 @@ function ModalRota(params) {
           style={{
             display: "grid",
             gridTemplateColumns: "6fr 1fr",
-            gridColumnGap: "20px",
+            gridColumnGap: "10px",
+            overflow: "scroll",
           }}
         >
           <div className="textmodal">
@@ -88,7 +42,7 @@ function ModalRota(params) {
                 fontFamily: "manropeBold",
               }}
             >
-              Coisinhas
+              Nome da rota
             </h1>
             <p
               style={{
@@ -97,44 +51,28 @@ function ModalRota(params) {
                 fontSize: "12px",
               }}
             >
-              Lorem lorem lorem lorem lorem lorem lorem lorem
+              Descriçao da rota Lorem lorem lorem lorem lorem lorem lorem lorem
             </p>
             <div>
-              <div
-                style={{
-                  marginTop: "1rem",
-                  marginLeft: 0,
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <PinColor color="#8283F5" />
-                <p>pontinho</p>
-              </div>
-              <div
-                style={{
-                  marginTop: "1rem",
-                  marginLeft: 0,
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <PinColor color="#8283F5" />
-                <p>pontinho</p>
-              </div>
-              <div
-                style={{
-                  marginTop: "1rem",
-                  marginLeft: 0,
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <PinColor color="#8283F5" />
-                <p>pontinho</p>
+              <div className="pontomodal">
+                <button className="buttonnumberpin">22</button>
+                <div>
+                  <p
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    PONontinho
+                  </p>
+
+                  <p
+                    style={{
+                      lineHeight: "20px",
+                    }}
+                  >
+                    descriçao do pontinho içao do pontiniçao do pontin
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -172,7 +110,7 @@ function ModalRota(params) {
         </div>
       </Modal>
     </div>
-  );
+  )
 }
 
-export default ModalRota;
+export default ModalRota
