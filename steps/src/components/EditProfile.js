@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "../style/editProfile.css";
+import React from "react"
+import { Link } from "react-router-dom"
+import "../style/editProfile.css"
 
 const EditProfile = () => {
   return (
@@ -24,7 +24,7 @@ const EditProfile = () => {
             </svg>
           </Link>
         </div>
-        <h1 style={{ textAlign: "center" }}>Editar perfil</h1>
+        <h1 style={{ textAlign: "center", fontSize: "24px" }}>Editar perfil</h1>
       </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -110,7 +110,7 @@ const EditProfile = () => {
         </Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EditProfile;
+export default EditProfile
