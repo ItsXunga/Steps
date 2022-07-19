@@ -89,8 +89,15 @@ async function create(req, res) {
       email,
       password,
     });
-
-    res.status(200).json({ user: user, token: generateAuthToken(user) });
+    res.cookie(String(user._id), generateAuthToken(user), {
+      path: "/",
+      expires: new Date(Date.now() + 1000 * 3000),
+      httpOnly: true,
+      sameSite: "lax",
+    });
+    const cookies = req.headers.cookie;
+    const token = cookies.split("=")[1];
+    res.status(200).json({ user: user, token: token });
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
@@ -191,7 +198,15 @@ async function login(req, res) {
     res.status(400).json({ error: "that email is not registered" });
   } else {
     if (await bcrypt.compare(password, user.password)) {
-      res.status(200).json({ user: user, token: generateAuthToken(user) });
+      res.cookie(String(user._id), generateAuthToken(user), {
+        path: "/",
+        expires: new Date(Date.now() + 1000 * 3000),
+        httpOnly: true,
+        sameSite: "lax",
+      });
+      const cookies = req.headers.cookie;
+      const token = cookies.split("=")[1];
+      res.status(200).json({ user: user, token: token });
     } else {
       res.status(400).json({ error: "that password is not registered" });
     }
