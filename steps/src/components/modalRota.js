@@ -3,24 +3,22 @@ import Modal from "react-modal"
 import { modalRota } from "../style/modal_styles"
 import "../style/categoria_details.css"
 import "../style/modais_styles.css"
+import { useDispatch, useSelector } from "react-redux"
+import { closeModal } from "./redux/modalState";
 
 function ModalRota(params) {
-  const [modalIsOpen, setIsOpen] = useState(false)
+  const dispatch = useDispatch()
+  const openModalRota = useSelector((state) => state.modalState.modalRota)
 
-  function openModal() {
-    setIsOpen(true)
-  }
-
-  function closeModal() {
-    setIsOpen(false)
+  const handleClose = () => {
+    dispatch(closeModal())
   }
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
+
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={openModalRota}
         style={modalRota}
         contentLabel="Modal Rota"
       >
@@ -78,7 +76,7 @@ function ModalRota(params) {
             </div>
           </div>
           <div style={{ display: "grid" }}>
-            <div className="">
+            <div onClick={handleClose}>
               <svg
                 width="25"
                 height="26"

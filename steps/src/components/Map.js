@@ -6,10 +6,11 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
 import ModalPin from "./ModalPin";
-import { openModalPin, openManageModalPin, openModalConfirmarRota } from "./redux/modalState";
+import { openModalPin, openManageModalPin, openModalConfirmarRota, openModalRota } from "./redux/modalState";
 import ManageModalPin from "./ManageModalPin";
 import Drawertest from "./Drawer";
 import ModalConfirmarRota from "./ModalConfirmarRota";
+import ModalRota from "./modalRota";
 
 Modal.setAppElement("#root");
 
@@ -51,6 +52,10 @@ const Map = () => {
   const ModalFinalizarRota = useSelector((state) => state.modalState.modalConfirmarRota);
   const ModalConfirmar = useRef();
   ModalConfirmar.current = ModalFinalizarRota
+
+  const EstadoModalRota= useSelector((state) => state.modalState.modalRota)
+  const ModalRotaState= useRef()
+  ModalRotaState.current = EstadoModalRota
   //
 
   const coords = [];
@@ -265,7 +270,6 @@ const Map = () => {
       map.addControl(geocoder);
 
       if (routeID === null) {
-
         const handleMain = (coordinates) => {
           map.easeTo({
             center: coordinates,
@@ -274,6 +278,9 @@ const Map = () => {
           });
 
           //set timeout and open modal
+          setTimeout(() => {
+            dispatch(openModalRota());
+          }, 1250);
         }
         geojson.map((element) => {
           const el = document.createElement("div");
@@ -447,6 +454,7 @@ const Map = () => {
       <ModalPin data={coordenadas} />
       <ManageModalPin clicked={clickedData}/>
       <ModalConfirmarRota />
+      <ModalRota />
 
     </div>
   );
