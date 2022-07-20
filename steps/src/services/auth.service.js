@@ -12,9 +12,9 @@ class AuthService {
         { withCredentials: true }
       )
       .then((response) => {
-        console.log(response, "HELLO");
-        //localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", response.data.user._id);
+        if (response.data.token) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
         return response.data;
       });
   }

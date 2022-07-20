@@ -15,11 +15,13 @@ import AuthService from "../services/auth.service";
 const axios = require("axios");
 
 const Profile = () => {
-  const currentUser = AuthService.getCurrentUser()
+  const retrievedObject = AuthService.getCurrentUser();
+  const currentUser = JSON.parse(retrievedObject).user._id;
   const dispatch = useDispatch();
 
   const [user, setUser] = useState([]);
   const [circuits, setCircuits] = useState([]);
+  const [favCircuits, setFavCircuits] = useState([]);
   const [selectedTabArray, setSelectedTabArray] = useState([]);
 
   useEffect(() => {
@@ -27,7 +29,6 @@ const Profile = () => {
       .get(`https://steps-ua.herokuapp.com/users/${currentUser}`)
       .then((response) => {
         setUser(response.data);
-        console.log(response.data, "yes")
       })
       .catch((err) => console.log(err));
 
@@ -37,7 +38,15 @@ const Profile = () => {
         setCircuits(response.data);
       })
       .catch((err) => console.log(err));
+
+    axios
+      .get(`https://steps-ua.herokuapp.com/users/favorite/${currentUser}`)
+      .then((response) => {
+        setFavCircuits(response.data);
+      })
+      .catch((err) => console.log(err));
   }, [currentUser]);
+
   useEffect(() => {
     const results = circuits.filter(function (value) {
       return value.creator && value.creator.name === user.name;
@@ -74,8 +83,7 @@ const Profile = () => {
 
   const changeFav = () => {
     setSelectedTabArray(
-      //TODO listar as rotas favoritas do user
-      circuits.filter(function (value) {
+      favCircuits.filter(function (value) {
         return value.creator && value.creator.name !== user.name;
       })
     );
@@ -91,8 +99,8 @@ const Profile = () => {
     setFavSelected(false);
   };
 
-  const CheckPin = (start, end, name) => {
-    if (start === true && end === false) {
+  const CheckPin = (length, position, name) => {
+    if (position === 0 && length >= 0) {
       return (
         <div
           style={{
@@ -106,7 +114,7 @@ const Profile = () => {
           <p>{name}</p>
         </div>
       );
-    } else if (start === false && end === false) {
+    } else if (position > 0 && position < length - 1) {
       return (
         <div
           style={{
@@ -156,6 +164,10 @@ const Profile = () => {
 
   const editCircuit = (id_circuit) => {
     //TODO encaminhar para editar rota
+    console.log(id_circuit);
+  };
+  const unfavCircuit = (id_circuit) => {
+    //TODO unfav circuit e função em server/controllers/user.js
     console.log(id_circuit);
   };
 
@@ -210,8 +222,6 @@ const Profile = () => {
                 </div>
               </Link>
             </div>
-            {/*TODO retirar?*/}
-            <p>{}</p>
           </div>
         </div>
       </div>
@@ -266,7 +276,6 @@ const Profile = () => {
             <div className="profileCard" key={props._id} id={props._id}>
               <section className="cardButton">
                 <h3>{props.category?.category}</h3>
-                <h2>{props.id}</h2>
                 <section>
                   <button
                     className="profileButton"
