@@ -21,6 +21,7 @@ app.use(auth);
 app.use("/circuits", Routes.CircuitRoutes);
 app.use("/points", Routes.PointRoutes);
 app.use("/users", Routes.UserRoutes);
+app.use("/categories", Routes.CategoryRoutes);
 app.use(cookieParser());
 
 app.get("/", (req, res) => {

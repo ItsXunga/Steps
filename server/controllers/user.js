@@ -136,7 +136,7 @@ async function favorite(req, res) {
 
   const userData = await UserModel.findById(id);
   const circuitData = await CircuitModel.find({
-    _id: { $in: userData.faorites_routes },
+    _id: { $in: userData.favorites_routes },
   });
 
   if (circuitData) {
