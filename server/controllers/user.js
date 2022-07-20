@@ -93,7 +93,6 @@ async function create(req, res) {
       path: "/",
       expires: new Date(Date.now() + 1000 * 3000),
       httpOnly: true,
-      sameSite: "lax",
     });
     const cookies = req.headers.cookie;
     const token = cookies.split("=")[1];
@@ -198,14 +197,12 @@ async function login(req, res) {
     res.status(400).json({ error: "that email is not registered" });
   } else {
     if (await bcrypt.compare(password, user.password)) {
-      res.cookie(String(user._id), generateAuthToken(user), {
+      let token = generateAuthToken(user);
+      res.cookie(String(user._id), token, {
         path: "/",
         expires: new Date(Date.now() + 1000 * 3000),
         httpOnly: true,
-        sameSite: "lax",
       });
-      const cookies = req.headers.cookie;
-      const token = cookies.split("=")[1];
       res.status(200).json({ user: user, token: token });
     } else {
       res.status(400).json({ error: "that password is not registered" });
