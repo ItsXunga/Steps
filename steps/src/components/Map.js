@@ -41,10 +41,6 @@ const Map = () => {
   const EditCoords = useLocation();
   const [sendEditCoords, setSendEditCoords] = useState();
 
-  if (EditCoords.state !== null) {
-    setSendEditCoords(EditCoords.state);
-    console.log(sendEditCoords);
-  }
 
   //Get pin storage elements
   const storage = useRef();
@@ -54,9 +50,7 @@ const Map = () => {
   const StorageStatus = Object.keys(pinStorage).length;
 
   //check modal state to then conditional render other assets
-  const ManageModalState = useSelector(
-    (state) => state.modalState.manageModalPin
-  );
+  const ManageModalState = useSelector((state) => state.modalState.manageModalPin);
   const ManageModal = useRef();
   ManageModal.current = ManageModalState;
 
@@ -64,15 +58,11 @@ const Map = () => {
   const PinState = useRef();
   PinState.current = ModalPinState;
 
-  const ModalCancelarState = useSelector(
-    (state) => state.modalState.modalCancelar
-  );
+  const ModalCancelarState = useSelector((state) => state.modalState.modalCancelar);
   const ModalCancelar = useRef();
   ModalCancelar.current = ModalCancelarState;
 
-  const ModalFinalizarRota = useSelector(
-    (state) => state.modalState.modalConfirmarRota
-  );
+  const ModalFinalizarRota = useSelector((state) => state.modalState.modalConfirmarRota);
   const ModalConfirmar = useRef();
   ModalConfirmar.current = ModalFinalizarRota;
 
@@ -83,12 +73,12 @@ const Map = () => {
 
   const coords = [];
   // Existing routes
-  axios
-    .get("https://steps-ua.herokuapp.com/circuits/")
-    .then(function (response) {
-      console.log(response);
-      //setRotasBackEnd(response.data)
-    });
+  // axios
+  //   .get("https://steps-ua.herokuapp.com/circuits/")
+  //   .then(function (response) {
+  //     console.log(response);
+  //     setRotasBackEnd(response.data)
+  //   });
 
   const geojson = rotasBackEnd.map((value) => ({
     type: "FeatureCollection",
@@ -278,7 +268,6 @@ const Map = () => {
         getMatch(newCoords, radius, profile);
 
         // Remover radius para aumentar o range
-
         coords.splice(0, coords.length);
       }
 
