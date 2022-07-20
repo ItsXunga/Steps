@@ -89,13 +89,13 @@ async function create(req, res) {
       email,
       password,
     });
-    res.cookie(String(user._id), generateAuthToken(user), {
-      path: "/",
-      expires: new Date(Date.now() + 1000 * 3000),
-      httpOnly: true,
-    });
-    const cookies = req.headers.cookie;
-    const token = cookies.split("=")[1];
+    let token = generateAuthToken(user);
+      res.cookie(String(user._id), token, {
+        path: "/",
+        expires: new Date(Date.now() + 1000 * 3000),
+        httpOnly: true,
+      });
+      res.status(200).json({ user: user, token: token });
     res.status(200).json({ user: user, token: token });
   } catch (err) {
     const errors = handleErrors(err);
@@ -130,20 +130,19 @@ async function updateName(req, res) {
 }
 
 async function favorite(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
+  //TODO melhorar isto
+  //if (!req.user?._id) return res.json({ message: "Unauthenticated" });
 
   const { id } = req.params;
 
   const userData = await UserModel.findById(id);
-  const circuitData = await CircuitModel.find({
-    _id: { $in: userData.favorites_routes },
-  });
+  const circuitData = await CircuitModel.findById(userData.favorite_routes);
 
   if (circuitData) {
     res.json(circuitData);
   } else {
     res.status(404).json({
-      message: "This user has not favorited this route",
+      message: "This user has not favorited any routes",
     });
   }
 }

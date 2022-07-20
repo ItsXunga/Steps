@@ -1,47 +1,47 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../style/editProfile.css";
 import axios from "axios";
 import AuthService from "../services/auth.service";
 
 const EditProfile = () => {
+  const retrievedObject = AuthService.getCurrentUser();
+  const currentUser = JSON.parse(retrievedObject).user._id;
 
-    const currentUser = AuthService.getCurrentUser();
-    let id = currentUser.user;
+  const [user, setUser] = React.useState("");
+  const [name, setName] = React.useState("");
 
-    const [user, setUser] = React.useState('');
-    const [name, setName] = React.useState('');
+  useEffect(() => {
+    axios
+      .get(`https://steps-ua.herokuapp.com/users/${currentUser}`)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-    useEffect(() => {
-        axios
-            .get(`http://localhost:3000/users/${id}`)
-            .then((response) => {
-                setUser(response.data);
-            })
-            .catch((err) => console.log(err));
-    }, []);
+  function updateName() {
+    axios
+      .put(`https://steps-ua.herokuapp.com/users/updateName/${currentUser}`, {
+        name: name,
+      })
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((err) => console.log(err));
+  }
 
-    function updateName() {
-        axios
-            .put(`http://localhost:3000/users/updateName/${id}`, {
-                name: name
-            })
-            .then((response) => {
-                setUser(response.data);
-            })
-            .catch((err) => console.log(err));
-    }
+  function updateAvatar() {
+    axios
+      .put(`https://steps-ua.herokuapp.com/users/updateAvatar/${currentUser}`, {
+        avatar: "Hello.jpg",
+      })
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((err) => console.log(err));
+  }
 
-    function updateAvatar() {
-        axios
-            .put(`http://localhost:3000/users/updateAvatar/${id}`, {
-                avatar: "Hello.jpg"
-            })
-            .then((response) => {
-                setUser(response.data);
-            })
-            .catch((err) => console.log(err));
-    }
   return (
     <div className="editDiv">
       <div>
@@ -74,85 +74,75 @@ const EditProfile = () => {
           alt="avatar"
         />
       </div>
-        <form onSubmit={updateName}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          flexDirection: "column",
-          height: "45vh",
-        }}
-      >
-        <div>
-          <label className="EditLabel" for="username">
-            Username
-          </label>
-          <input
-            className="EditInput"
-            type="text"
-            id="username"
-            placeholder={user.name} value={name} onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+      <form onSubmit={updateName}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            flexDirection: "column",
+            height: "45vh",
+          }}
+        >
+          <div>
+            <label className="EditLabel" for="username">
+              Username
+            </label>
+            <input
+              className="EditInput"
+              type="text"
+              id="username"
+              placeholder={user.name}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-        <div>
-          <label className="EditLabel" for="profissao">
-            Profissão
-          </label>
-          <input
-            className="EditInput"
-            type="text"
-            id="profissao"
-            placeholder="Engenheiro Software"
-          />
-        </div>
+          <div>
+            <label className="EditLabel" for="email">
+              E-mail
+            </label>
+            <input
+              className="EditInput"
+              type="text"
+              id="email"
+              placeholder={user.email}
+            />
+          </div>
 
-        <div>
-          <label className="EditLabel" for="email">
-            E-mail
-          </label>
-          <input
-            className="EditInput"
-            type="text"
-            id="email"
-            placeholder={user.email}
-          />
-        </div>
+          <div>
+            <label className="EditLabel" for="password">
+              Nova Password
+            </label>
+            <input
+              className="EditInput"
+              type="text"
+              id="password"
+              placeholder="*************"
+            />
+          </div>
 
-        <div>
-          <label className="EditLabel" for="password">
-            Nova Password
-          </label>
-          <input
-            className="EditInput"
-            type="text"
-            id="password"
-            placeholder="*************"
-          />
-        </div>
-
-        <div>
-          <label className="EditLabel" for="password">
-            Confirme Password
-          </label>
+          <div>
+            <label className="EditLabel" for="password">
+              Confirme Password
+            </label>
             {/*TODO user.password  */}
-          <input
-            className="EditInput"
-            type="password"
-            id="password"
-            placeholder="*************"
-          />
+            <input
+              className="EditInput"
+              type="password"
+              id="password"
+              placeholder="*************"
+            />
+          </div>
         </div>
-      </div>
 
-      <div style={{ padding: "0rem 3rem" }}>
-
-          <button className="orangeButton" type="submit">Guardar</button>
-
-      </div>
-</form>
+        <div style={{ padding: "0rem 3rem" }}>
+          <button className="orangeButton" type="submit">
+            Guardar
+          </button>
+        </div>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditProfile
+export default EditProfile;

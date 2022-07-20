@@ -6,15 +6,15 @@ const Routes = require("./routes");
 const auth = require("./middlewares/authMiddleware");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const app = express();
-//
 
-// Começar a processar o corpo dos requests
+const app = express();
+
 const corsOptions = {
   origin: ["http://localhost:3000"],
   credentials: true,
   exposedHeaders: ["Authorization"],
 };
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(auth);
