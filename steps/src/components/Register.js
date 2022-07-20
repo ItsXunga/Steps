@@ -21,7 +21,7 @@ const Register = () => {
             // make axios post request
             const response = await axios({
                 method: "post",
-                url: "http://localhost:3000/users/signup",
+                url: "https://steps-ua.herokuapp.com/users/signup",
                 data: user,
             });
             navigate('/login');

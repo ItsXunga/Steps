@@ -6,23 +6,16 @@ const Routes = require("./routes");
 const auth = require("./middlewares/authMiddleware");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const bodyParser = require("body-parser");
-
 const app = express();
 //
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
-const corsOptions={
-  origin: ["http://localhost:3001"],
-  credentials:true,
-  exposedHeaders:["Authorization"]
-}
-app.use(cors(corsOptions));
 
 // Começar a processar o corpo dos requests
+const corsOptions = {
+  origin: ["http://localhost:3000"],
+  credentials: true,
+  exposedHeaders: ["Authorization"],
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(auth);
 app.use("/circuits", Routes.CircuitRoutes);
@@ -36,7 +29,7 @@ app.get("/", (req, res) => {
 
 async function main() {
   await mongoose.connect(db.uri);
-  app.listen(process.env.PORT || 3000);
+  app.listen(process.env.PORT || 8000);
 }
 
 main().catch((err) => console.log(err));
