@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { enterCreation, exitCreation } from "./redux/creationState";
+import { enterCreation } from "./redux/creationState";
 import { Link } from "react-router-dom";
 import menu_categorias from "../assets/img/menu_categorias.svg";
 import menu_add_route from "../assets/img/menu_add_route.svg";
@@ -8,9 +8,7 @@ import menu_perfil from "../assets/img/menu_perfil.svg";
 import menuClosed from "../assets/img/menu/hamburguerClosed.svg";
 import menuOpened from "../assets/img/menu/hamburguerOpened.svg";
 import { motion } from "framer-motion";
-import { exitSingleRoute } from "./redux/singleRouteState";
-import { routeID } from "./redux/routeID";
-import { closeModal, openModalCancelar, openModalInfo } from "./redux/modalState";
+import { openModalCancelar, openModalInfo, openModalSairNavegar } from "./redux/modalState";
 
 
 const Nav = () => {
@@ -39,6 +37,14 @@ const Nav = () => {
   const ModalAddRota= useSelector((state) => state.modalState.modalAddRota)
   const ModalAddRotaState= useRef()
   ModalAddRotaState.current = ModalAddRota
+
+  const ModalSair= useSelector((state) => state.modalState.modalSairNavegar)
+  const ModalSairState= useRef()
+  ModalSairState.current = ModalSair
+
+  const ModalPontoInfo = useSelector((state) => state.modalState.modalPontoInfo)
+  const ModalPontoInfoState = useRef()
+  ModalPontoInfoState.current = ModalPontoInfo
 
   const { mapState } = useSelector((state) => state.mapState);
 
@@ -88,17 +94,11 @@ const Nav = () => {
 
       {/* quando vimos para a main page apos clicar numa rota especifica */}
 
-      {singleRouteState === true ? (
-        <div className="backarrow">
-          <Link
-            to={"/main"}
-            onClick={() => {
-              dispatch(exitSingleRoute());
-              dispatch(exitCreation());
-              dispatch(routeID(null));
-              dispatch(closeModal());
-            }}
-          >
+      {singleRouteState ? (
+        ModalSair || ModalPontoInfo ? (
+          ''
+        ) : (
+        <div className="backarrow" onClick={() => {dispatch(openModalSairNavegar())}}>
             <svg
               width="15"
               height="27"
@@ -113,13 +113,13 @@ const Nav = () => {
                 fill="#393C6A"
               />
             </svg>
-          </Link>
         </div>
+            )
       ) : (
         ""
       )}
 
-      {mapState || ModalRota ? (
+      {mapState || ModalRota || ModalSair || singleRouteState ? (
         ""
       ) : (
         <div
