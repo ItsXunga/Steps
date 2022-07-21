@@ -1,27 +1,41 @@
-import React, { useState } from "react"
+import React from "react"
 import Modal from "react-modal"
-import { modalPonto } from "../../style/modal_styles"
 import "../../style/categoria_details.css"
 import "../../style/modais_styles.css"
+import { useDispatch, useSelector } from "react-redux"
+import { closeModal } from "../redux/modalState"
 
-function ModalPontoInfo(params) {
-  const [modalIsOpen, setIsOpen] = useState(false)
+function ModalPontoInfo(props) {
+  const dispatch = useDispatch()
+  const openModalPontoInfo = useSelector((state) => state.modalState.modalPontoInfo)
 
-  function openModal() {
-    setIsOpen(true)
-  }
+  const filterColor = props.rotas.filter(function (val) {
+    return val._id === props.info.id
+  })
 
-  function closeModal() {
-    setIsOpen(false)
-  }
+
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={modalPonto}
+        isOpen={openModalPontoInfo}
+        onRequestClose={() => {dispatch(closeModal())}}
+        style={{
+          content: {
+            inset: "30px",
+            background: "white",
+            boxShadow: "2px 2px 7px 0px rgba(0, 0, 0, 0.2)",
+            borderRadius: "20px",
+            padding: "2rem",
+            maxHeight: "90%",
+            height: "fit-content",
+            margin: "auto",
+            textAlign: "center",
+            overflow: "auto",
+            border: "1px solid",
+            borderColor: filterColor[0].category.color
+        }
+      }}
         contentLabel="Modal Rota"
       >
         <div
@@ -32,14 +46,26 @@ function ModalPontoInfo(params) {
         >
           <div>
             <div className="pontomodal">
-              <button className="buttonnumberpin">1</button>
+              <button style={{
+                  width: '2.2rem',
+                  height: '2.2rem',
+                  margin: '5px',
+                  borderRadius: '50%',
+                  justifySelf: 'center',
+                  border: '0.20px solid',
+                  borderColor: filterColor[0].category.color,
+                  boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.25)',
+                  backgroundColor: 'transparent',
+                  alignSelf: 'start',
+                  cursor: 'pointer',
+              }}>info</button>
               <div>
                 <p
                   style={{
                     fontWeight: "bold",
                   }}
                 >
-                  PONontinho
+                  {props.info.pinName}
                 </p>
 
                 <p
@@ -47,7 +73,7 @@ function ModalPontoInfo(params) {
                     lineHeight: "20px",
                   }}
                 >
-                  descriçao do pontinho içao do pontiniçao do pontin
+                  {props.info.pinDesc}
                 </p>
               </div>
             </div>

@@ -9,6 +9,8 @@ const initialState = {
   modalCancelar: false,
   modalEliminar: false,
   modalConfirmarRota: false,
+  modalSairNavegar: false,
+  modalPontoInfo: false,
 };
 
 export const modalStateSlice = createSlice({
@@ -47,6 +49,16 @@ export const modalStateSlice = createSlice({
       state.modalConfirmarRota = true;
     },
 
+    openModalSairNavegar: (state) => {
+      state.modalSairNavegar = true;
+    },
+
+    openModalPontoInfo: (state) => {
+      state.modalPontoInfo = true;
+    },
+
+
+
     closeModal: (state) => {
       state.modalAddRota = false;
       state.modalInfo = false;
@@ -56,6 +68,8 @@ export const modalStateSlice = createSlice({
       state.modalCancelar = false;
       state.modalEliminar = false;
       state.modalConfirmarRota = false;
+      state.modalSairNavegar = false;
+      state.modalPontoInfo = false;
     },
   },
 });
@@ -69,6 +83,8 @@ export const {
   openModalCancelar,
   openModalEliminar,
   openModalConfirmarRota,
+  openModalSairNavegar,
+  openModalPontoInfo,
   closeModal,
 } = modalStateSlice.actions;
 

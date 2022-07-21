@@ -9,6 +9,7 @@ import {
   openManageModalPin,
   openModalConfirmarRota,
   openModalRota,
+  openModalPontoInfo,
 } from "./redux/modalState";
 import ModalPin from "./modais/ModalPin";
 import ManageModalPin from "./modais/ManageModalPin";
@@ -16,7 +17,7 @@ import Drawertest from "./Drawer";
 import ModalConfirmarRota from "./modais/ModalConfirmarRota";
 import ModalRota from "./modais/modalRota";
 import { customAlphabet } from 'nanoid';
-const axios = require("axios");
+import ModalPontoInfo from "./modais/modalpontoinfo";
 
 Modal.setAppElement("#root");
 
@@ -25,7 +26,6 @@ mapboxgl.accessToken =
 
 const Map = (props) => {
   const nanoid = customAlphabet('1234567890abcdef', 10)
-
   const dispatch = useDispatch();
 
   const { mapState } = useSelector((state) => state.mapState);
@@ -37,7 +37,7 @@ const Map = (props) => {
   const [clickedMain, setClickedMain] = useState();
   const [coordenadas, setCoordernadas] = useState([]);
 
-
+  const [clickedSingleRoute, setClickedSingleRoute] = useState()
 
   //Get pin storage elements
   const storage = useRef();
@@ -72,7 +72,20 @@ const Map = (props) => {
   ModalRotaTerminadaState.current = ModalRotaTerminada
   //
 
+  //user location
+  const userLocation = new mapboxgl.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true,
+    },
+    // When active the map will receive updates to the device's location as it changes.
+    trackUserLocation: true,
+    // Draw an arrow next to the location dot to indicate which direction the device is heading.
+    showUserHeading: true,
+  });
+
+
   const coords = [];
+ 
   // Existing routes
 
   // Pesquisar Rotas
@@ -81,7 +94,7 @@ const Map = (props) => {
     accessToken: mapboxgl.accessToken, // Set the access token
     mapboxgl: mapboxgl, // Set the mapbox-gl instance
     marker: false, // Do not use the default marker style
-    placeholder: "Pesquisa Rotas", // Placeholder text for the search bar
+    placeholder: "Pesquisa Locais", // Placeholder text for the search bar
     language: "pt",
     country: "PT-01",
     types: "poi, address",
@@ -92,12 +105,9 @@ const Map = (props) => {
   const [lng, setLng] = useState(-8.654);
   const [lat, setLat] = useState(40.63);
   const [zoom, setZoom] = useState(16);
-  const [pitch, setPitch] = useState(0);
-  const [bearing, setBearing] = useState(0);
-
+  // const [pitch, setPitch] = useState(0);
+  // const [bearing, setBearing] = useState(0);
   //
-  const [categorias, setCategorias] = useState();
-  const [loading, setLoading] = useState(false);
 
   // Initialize map when component mounts
   useEffect(() => {
@@ -105,23 +115,11 @@ const Map = (props) => {
       container: mapContainerRef.current,
       style: "mapbox://styles/stepsua/cl08ksukn001415muzw480uke",
       center: [lng, lat],
-      pitch: pitch, // pitch in degrees
-      bearing: bearing, // bearing in degrees
+      pitch: 0, // pitch in degrees
+      bearing: 0, // bearing in degrees
       zoom: zoom,
       attributionControl: false,
     });
-
-    //send category info to modal confirmar rota
-    const request = async() => {
-      setLoading(true);
-      await axios.get("https://steps-ua.herokuapp.com/categories/")
-        .then((response) => {
-          setCategorias(response.data);
-          setLoading(false);
-        })
-    }
-
-    request();
 
 
     if (props.rotas !== undefined) {
@@ -140,9 +138,12 @@ const Map = (props) => {
               description: value.desc,
               creator: value.creator.name,
               category: value.category.category,
+              color: value.category.color,
               pins: [
                 value.pins.map((val) => ({
                   pinName: val.pinName,
+                  lat: val.lat,
+                  long: val.long
                 })),
               ],
             },
@@ -152,6 +153,11 @@ const Map = (props) => {
 
     if (mapState === true) {
       //creation mode
+
+      // Add the geocoder to the map
+      // map.addControl(geocoder);
+      // const adjustGeocoder = document.getElementById("geocoder")
+      // adjustGeocoder.classList.add("instructions")
 
       //map the pins if theres atleast one entry
       if (StorageStatus >= 1) {
@@ -277,7 +283,34 @@ const Map = (props) => {
         };
         geojson.map((element) => {
           const el = document.createElement("div");
-          el.className = "marker";
+          switch (element.features[0].properties.color) {
+            case '#5D5FEF':
+              el.className = "markerCultura";
+              break;
+            case '#F178B6':
+              el.className = "markerShopping";
+              break;
+            case '#68BDFA':
+               el.className = "markerDesporto";
+              break;
+            case '#98D99A':
+              el.className = "markerNatureza";
+              break;
+            case '#FE6A66':
+              el.className = "markerGastronomia";
+                break;
+            case '#C129A9':
+              el.className = "markerBares";
+                break;
+            case '#ECDF6D':
+              el.className = "markerExperiencia";
+                break;
+            case '#F69E7C':
+              el.className = "markerUnico";
+                break;
+            default:
+              break;
+          }
           el.addEventListener("click", function (e) {
             e.stopPropagation();
             handleMain(element.features[0].geometry.coordinates, element.features[0].properties.id);
@@ -296,41 +329,39 @@ const Map = (props) => {
             return val._id === routeID;
           });
 
-          console.log(selectedRoute[0]);
+          const routeColor = selectedRoute[0].category.color
+
           const profile = "walking"; // Set the profile
           const setPin = () => {
             selectedRoute.map((props) =>
               props.pins.map((e) => 
-              coords.push([e.long, e.lat]),
-              console.log(coords)
+              coords.push([e.long,e.lat]),
               )
             );
           };
           setPin();
-
+          console.log(coords);
           const newCoords = coords.join(";"); 
-          getMatch(newCoords, profile);
-          coords.splice(0, coords.length);
+          getMatch(newCoords, profile, routeColor);
+
         }
 
-         // Make a Map Matching request
-      async function getMatch(coordinates, profile) {
+        //  Make a Map Matching request
+      async function getMatch(coordinates, profile, color) {
 
         // Create the query
         const query = await fetch(
-          `https://api.mapbox.com/matching/v5/mapbox/${profile}/${coordinates}?&access_token=${mapboxgl.accessToken}`,
+          `https://api.mapbox.com/directions/v5/mapbox/${profile}/${coordinates}?alternatives=true&continue_straight=true&geometries=geojson&language=pt&overview=simplified&steps=true&access_token=${mapboxgl.accessToken}`,
           { method: "GET" }
         );
         const response = await query.json();
         console.log(response);
-        const coords = response.matchings[0].geometry;
+        const coords = response.routes[0].geometry;
 
         // Draw the route on the map
-        addRoute(coords);
-        getInstructions(response.matchings[0]);
+        addRoute(coords, color);
+        getInstructions(response.routes[0]);
       }
-
-    
 
         getRotas(routeID)
 
@@ -350,6 +381,8 @@ const Map = (props) => {
           duration: 1000,
         });
 
+    
+
         const geojson2 = routeFromProfile.map((value) => ({
           type: "FeatureCollection",
           features: [
@@ -360,14 +393,18 @@ const Map = (props) => {
                 coordinates: [value.pins[0].long, value.pins[0].lat],
               },
               properties: {
-                id: value.id,
+                id: value._id,
                 title: value.name,
                 description: value.desc,
                 creator: value.creator,
-                category: value.category,
+                category: value.category.category,
+                color: value.category.color,
                 pins: [
                   value.pins.map((val) => ({
                     pinName: val.pinName,
+                    pinDesc: val.pinDesc,
+                    lat: val.lat,
+                    long: val.long
                   })),
                 ],
               },
@@ -375,37 +412,91 @@ const Map = (props) => {
           ],
         }));
 
-        geojson2.map((element) => {
-          const el = document.createElement("div");
-          el.className = "marker";
-          el.addEventListener("click", function (e) {
-            e.stopPropagation();
+
+        const handleClickSingleRoute = (value, id) => {
+          
+          map.easeTo({
+            center: [value.long, value.lat],
+            zoom: 17,
+            duration: 1000,
           });
 
-          new mapboxgl.Marker(el)
-            .setLngLat(element.features[0].geometry.coordinates)
+          setClickedSingleRoute({
+            pinName: value.pinName,
+            pinDesc: value.pinDesc,
+            lat: value.lat,
+            long: value.long,
+            id: id
+          })
+
+          //set timeout and open modal
+          setTimeout(() => {
+            dispatch(openModalPontoInfo());
+          }, 1250);
+
+        }
+
+        geojson2.map((element) => {
+          element.features[0].properties.pins[0].map((val) => {
+            const el = document.createElement("div");
+            switch (element.features[0].properties.color) {
+              case '#5D5FEF':
+                el.className = "markerCultura";
+                break;
+              case '#F178B6':
+                el.className = "markerShopping";
+                break;
+              case '#68BDFA':
+                 el.className = "markerDesporto";
+                break;
+              case '#98D99A':
+                el.className = "markerNatureza";
+                break;
+              case '#FE6A66':
+                el.className = "markerGastronomia";
+                  break;
+              case '#C129A9':
+                el.className = "markerBares";
+                  break;
+              case '#ECDF6D':
+                el.className = "markerExperiencia";
+                  break;
+              case '#F69E7C':
+                el.className = "markerUnico";
+                  break;
+              default:
+                break;
+            }
+            el.addEventListener("click", function (e) {
+              e.stopPropagation();
+                console.log(val);
+                  handleClickSingleRoute(
+                    val,
+                    element.features[0].properties.id)
+            });
+            new mapboxgl.Marker(el)
+            .setLngLat([val.long, val.lat])
             .addTo(map);
+          })
         });
       }
 
       function getInstructions(data) {
-        // Target the sidebar to add the instructions
-        const directions = document.getElementById("directions");
-        let tripDirections = "";
+        const steps = data.legs[0].steps;
+        const instructions = document.getElementById("instructions");
+        instructions.classList.add("instructions")
+        let tripInstructions = "";
         // Output the instructions for each step of each leg in the response object
-        for (const leg of data.legs) {
-          const steps = leg.steps;
-          for (const step of steps) {
-            tripDirections += `<li>${step.maneuver.instruction}</li>`;
+        for (const step of steps) {
+            tripInstructions += `<li>${step.maneuver.instruction}</li>`;
           }
-        }
-        directions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
+        instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
           data.duration / 60
-        )} min.</strong></p><ol>${tripDirections}</ol>`;
+        )} min.</strong></p><ol>${tripInstructions}</ol>`;
       }
 
       // Draw the Map Matching route as a new layer on the map
-      function addRoute(coords) {
+      function addRoute(coords, color) {
         // If a route is already loaded, remove it
         if (map.getSource("route")) {
           map.removeLayer("route");
@@ -427,23 +518,13 @@ const Map = (props) => {
               "line-cap": "round",
             },
             paint: {
-              "line-color": "#F69E7C",
+              "line-color": color,
               "line-width": 8,
               "line-opacity": 0.8,
             },
           });
         }
       }
-
-      const userLocation = new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
-        // When active the map will receive updates to the device's location as it changes.
-        trackUserLocation: true,
-        // Draw an arrow next to the location dot to indicate which direction the device is heading.
-        showUserHeading: true,
-      });
 
       map.addControl(userLocation);
       if (routeID === null) {
@@ -509,11 +590,17 @@ const Map = (props) => {
       />
 
       <ModalPin data={coordenadas} />
+      {clickedSingleRoute !== undefined && props.rotas !== undefined ? (
+      <ModalPontoInfo info={clickedSingleRoute} rotas={props.rotas}/>
+      ) : (
+        ''
+      )}
+
       <ManageModalPin clicked={clickedData} />
 
       {/* load modal when categorias get information */}
-      {categorias !== undefined ? (
-      <ModalConfirmarRota categorias={categorias} />
+      {props.categorias !== undefined ? (
+      <ModalConfirmarRota categorias={props.categorias} />
       ):  (
         ''
       )}
