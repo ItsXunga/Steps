@@ -90,12 +90,12 @@ async function create(req, res) {
       password,
     });
     let token = generateAuthToken(user);
-      res.cookie(String(user._id), token, {
-        path: "/",
-        expires: new Date(Date.now() + 1000 * 3000),
-        httpOnly: true,
-      });
-      res.status(200).json({ user: user, token: token });
+    res.cookie(String(user._id), token, {
+      path: "/",
+      expires: new Date(Date.now() + 1000 * 3000),
+      httpOnly: true,
+    });
+    res.status(200).json({ user: user, token: token });
     res.status(200).json({ user: user, token: token });
   } catch (err) {
     const errors = handleErrors(err);
@@ -104,39 +104,44 @@ async function create(req, res) {
 }
 
 async function updateName(req, res) {
-  //Preciso alterar o Update do UserName para receber o Id do user logged in
-
   const { id } = req.params;
   const { name } = req.body;
+  try {
+    const userName = await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { name: name },
+      { exists: true }
+    );
+    res.status(200).json({ status: true, data: userName });
+  } catch (error) {
+    res.status(400).json({ error: "Username was not changed" });
+  }
+}
 
-  const userData = await UserModel.findById(id);
-
-  if (!userData) {
-    res.status(404).json({
-      message: "User not found",
-    });
-  } else if (name === userData.name) {
-    res.status(400).json({
-      message: "User name already is " + name,
-    });
-  } else {
-    if (name) userData.name = name;
-
-    await userData.save();
-
-    res.status(200).json("User name changed to " + userData.name);
+async function updatePassword(req, res) {
+  const { id } = req.params;
+  try {
+    const salt = await bcrypt.genSalt();
+    const password = await bcrypt.hash(req.body.password, salt);
+    const userPassword = await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { password: password },
+      { exists: true }
+    );
+    res.status(200).json({ status: true, data: userPassword });
+  } catch (error) {
+    res.status(400).json({ error: "Password was not changed" });
   }
 }
 
 async function favorite(req, res) {
   //TODO melhorar isto
-  //if (!req.user?._id) return res.json({ message: "Unauthenticated" });
-
   const { id } = req.params;
 
   const userData = await UserModel.findById(id);
-  const circuitData = await CircuitModel.findById(userData.favorite_routes);
-
+  const circuitData = await CircuitModel.find({
+    _id: { $in: userData.favorite_routes },
+  }).populate("creator");
   if (circuitData) {
     res.json(circuitData);
   } else {
@@ -169,10 +174,6 @@ async function updateAvatar(req, res) {
 
     res.status(200).json("Profile Image changed to " + userData.avatar);
   }
-}
-
-async function ChangePassword(req, res) {
-  //TODO
 }
 
 async function destroy(req, res) {
@@ -212,6 +213,7 @@ const UserController = {
   updateName,
   favorite,
   updateAvatar,
+  updatePassword,
   destroy,
   login,
 };
