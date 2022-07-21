@@ -2,11 +2,10 @@ import React, { useRef, useState } from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { modalStyles } from "../../style/modal_styles";
-import "../style/modais_styles.css";
+import "../../style/modais_styles.css";
 import { closeModal, openModalAddRota } from "../redux/modalState";
 import Select from "react-select";
 import AuthService from "../../services/auth.service";
-import mongoose from 'mongoose';
 import axios from "axios";
 
 const ModalConfirmarRota = (props) => {

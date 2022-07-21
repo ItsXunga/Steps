@@ -4,7 +4,7 @@ import "react-modern-drawer/dist/index.css";
 import "../style/drawer_styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { openModalEliminar } from "./redux/modalState";
-import ModalEliminar from "./modaleliminar";
+import ModalEliminar from "./modais/modaleliminar";
 
 const Drawertest = () => {
   const dispatch = useDispatch();

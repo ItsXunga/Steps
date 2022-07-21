@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import Modal from "react-modal"
 import { modalPonto } from "../../style/modal_styles"
-import "../style/categoria_details.css"
-import "../style/modais_styles.css"
+import "../../style/categoria_details.css"
+import "../../style/modais_styles.css"
 
 function ModalPontoInfo(params) {
   const [modalIsOpen, setIsOpen] = useState(false)

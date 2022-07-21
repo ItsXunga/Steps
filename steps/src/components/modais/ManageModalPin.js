@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { modalStyles } from "../../style/modal_styles";
-import "../style/modais_styles.css";
+import "../../style/modais_styles.css";
 import { closeModal } from "../redux/modalState";
 import {addPin, delPin } from "../redux/pinStorage";
 

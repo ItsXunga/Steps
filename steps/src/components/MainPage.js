@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Nav from "./nav";
 import Map from "./Map";
-import ModalInfo from "./ModalInfo";
-import ModalAddRota from "./ModalAddRota";
-import ModalCancelar from "./modalcancelar";
+import ModalInfo from "./modais/ModalInfo";
+import ModalAddRota from "./modais/ModalAddRota";
+import ModalCancelar from "./modais/modalcancelar";
 import { useSelector } from "react-redux";
 const axios = require("axios");
 
