@@ -7,12 +7,8 @@ import { useSelector } from "react-redux";
 import CategoriaInfo from "./categoria_info";
 
 const Categorias = () => {
-  const refresh = useSelector((state) => state.refresh);
-  const refreshState = useRef()
-  refreshState.current = refresh
-
   const [loading, setLoading] = useState(false);
-  const [categorias, setCategorias] = useState()
+  const [categorias, setCategorias] = useState();
 
   useEffect(() => {
     const request = async() => {
@@ -21,10 +17,11 @@ const Categorias = () => {
         setCategorias(response.data)
         setLoading(false)
       })
-
     }
     request()
-  },[refresh])
+  },[])
+
+
 
 
   return (
@@ -65,7 +62,12 @@ const Categorias = () => {
       </div>
       <div className="container">
         <div className="grid">
-          <CategoriaInfo categorias={categorias}/>
+          {categorias !== undefined  ? (
+          <CategoriaInfo categorias={categorias} />
+          ):(
+            ''
+          )}
+
         </div>
       </div>
     </div>

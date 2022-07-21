@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import { allcolors } from "../../style/global_styles";
 import "../../style/categoria_details.css";
-import { PinColor } from "../../assets/img/profile/pin";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
-import Rotas from "../data/routes.json";
 import { Link, useLocation } from "react-router-dom";
 import { enterSingleRoute } from "../redux/singleRouteState";
 import { routeID } from "../redux/routeID";
 import { useDispatch } from "react-redux";
-import { addRefresh } from "../redux/refreshState";
 
 export default function CategoriaDetails() {
-  const dispatch = useDispatch()
   const name = useLocation();
   const { category } = name.state;
-  const routeArray = Rotas.filter(function (value) {
-    return value.category === category;
+  const { rotas } = name.state;
+
+  const routeArray = rotas.filter(function (value) {
+    return value.category.category === category;
   });
+
 
   return (
     <div className="background">
@@ -28,7 +27,7 @@ export default function CategoriaDetails() {
         }}
       >
         <Link to={"/categorias"}>
-          <div className="backarrow" onClick={() => {dispatch(addRefresh())}}>
+          <div className="backarrow">
             <svg
               width="15"
               height="27"
@@ -99,7 +98,7 @@ function Item(props) {
           <p style={{ alignSelf: "center", fontSize: "12px" }}>
             {" "}
             <span style={{ fontFamily: "ManropeBold" }}>Criador:</span>{" "}
-            {props.content.creator}
+            {props.content.creator.name}
           </p>
         </div>
         <div
@@ -124,12 +123,12 @@ function Item(props) {
               />
             </svg>
           </button>
-          <Link to={"/main"} state={{ id: props.content.id }}>
+          <Link to={"/main"} state={{ id: props.content._id }}>
             <button
               className="buttonroute"
               onClick={() => {
                 dispatch(enterSingleRoute());
-                dispatch(routeID(props.content.id));
+                dispatch(routeID(props.content._id));
               }}
             >
               <svg
@@ -157,8 +156,7 @@ function Item(props) {
 }
 
 function Content(props) {
-  const CheckPin = (start, end, name) => {
-    if (start === true && end === false) {
+  const CheckPin = (name, index) => {
       return (
         <div
           style={{
@@ -168,39 +166,23 @@ function Content(props) {
             alignItems: "center",
           }}
         >
-          <PinColor color="#5F61F3" />
-          <p>{name}</p>
-        </div>
+            <button style={{
+                width: '2.2rem',
+                height: '2.2rem',
+                margin: '5px',
+                borderRadius: '50%',
+                justifySelf: 'center',
+                border: '0.20px solid',
+                borderColor: props.content.category.color,
+                boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.25)',
+                backgroundColor: 'transparent',
+                alignSelf: 'start',
+                cursor: 'pointer',
+              }}
+            >{index}</button>
+            <p>{name}</p>
+          </div>
       );
-    } else if (start === false && end === false) {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#8283F5" />
-          <p>{name}</p>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          style={{
-            marginLeft: 0,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <PinColor color="#A5A6F6" />
-          <p>{name}</p>
-        </div>
-      );
-    }
   };
 
   return (
@@ -211,8 +193,8 @@ function Content(props) {
       exit={{ opacity: 0 }}
       className="categoriacardopen"
     >
-      {props.content.pins.map((pin) =>
-        CheckPin(pin.start, pin.end, pin.pinName)
+      {props.content.pins.map((pin, index) =>
+        CheckPin(pin.pinName, index+1)
       )}
     </motion.div>
   );
