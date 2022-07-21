@@ -2,11 +2,11 @@ import React from "react";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { modalStyles } from "../style/modal_styles";
-import { closeModal } from "./redux/modalState";
-import { clearStorage } from "./redux/pinStorage";
-import { routeID } from "./redux/routeID";
-import { exitCreation } from "./redux/creationState";
+import { modalStyles } from "../../style/modal_styles";
+import { closeModal } from "../redux/modalState";
+import { clearStorage } from "../redux/pinStorage";
+import { routeID } from "../redux/routeID";
+import { exitCreation } from "../redux/creationState";
 
 function ModalCancelar() {
   const openModalCancelar = useSelector((state) => state.modalState.modalCancelar);

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { enterCreation, exitCreation } from "./redux/creationState";
 import { Link } from "react-router-dom";
@@ -36,7 +36,12 @@ const Nav = () => {
   const ModalRotaState= useRef()
   ModalRotaState.current = ModalRota
 
+  const ModalAddRota= useSelector((state) => state.modalState.modalAddRota)
+  const ModalAddRotaState= useRef()
+  ModalAddRotaState.current = ModalAddRota
+
   const { mapState } = useSelector((state) => state.mapState);
+
   const { singleRouteState } = useSelector((state) => state.singleRouteState);
   const dispatch = useDispatch();
 
@@ -48,10 +53,12 @@ const Nav = () => {
     }
   }
 
+
+
   return (
     <>
       {mapState ? (
-        ManageModalState || ModalPinState || ModalCancelarState || ModalConfirmarRota  ? (
+        ManageModalState || ModalPinState || ModalCancelarState || ModalConfirmarRota || ModalAddRota ? (
           ''
         ) : (
         <div
@@ -282,6 +289,7 @@ const Nav = () => {
           )}
         </div>
       )}
+
     </>
   );
 };

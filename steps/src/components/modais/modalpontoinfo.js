@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Modal from "react-modal"
-import { modalPonto } from "../style/modal_styles"
+import { modalPonto } from "../../style/modal_styles"
 import "../style/categoria_details.css"
 import "../style/modais_styles.css"
 

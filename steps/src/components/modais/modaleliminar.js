@@ -1,9 +1,9 @@
 import React from "react"
 import Modal from "react-modal"
 import { useDispatch, useSelector } from "react-redux"
-import { modalStyles } from "../style/modal_styles"
-import { closeModal } from "./redux/modalState"
-import { delPin } from "./redux/pinStorage"
+import { modalStyles } from "../../style/modal_styles"
+import { closeModal } from "../redux/modalState"
+import { delPin } from "../redux/pinStorage"
 
 const ModalEliminar = (props) => {
   const openModalEliminar = useSelector((state) => state.modalState.modalEliminar);

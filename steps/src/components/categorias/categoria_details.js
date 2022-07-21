@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { allcolors } from "../style/global_styles";
+import { allcolors } from "../../style/global_styles";
 import "../style/categoria_details.css";
-import { PinColor } from "../assets/img/profile/pin";
+import { PinColor } from "../../assets/img/profile/pin";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
-import Rotas from "../components/data/routes.json";
+import Rotas from "../data/routes.json";
 import { Link, useLocation } from "react-router-dom";
-import { enterSingleRoute } from "./redux/singleRouteState";
-import { routeID } from "./redux/routeID";
+import { enterSingleRoute } from "../redux/singleRouteState";
+import { routeID } from "../redux/routeID";
 import { useDispatch } from "react-redux";
+import { addRefresh } from "../redux/refreshState";
 
 export default function CategoriaDetails() {
+  const dispatch = useDispatch()
   const name = useLocation();
   const { category } = name.state;
   const routeArray = Rotas.filter(function (value) {
@@ -26,7 +28,7 @@ export default function CategoriaDetails() {
         }}
       >
         <Link to={"/categorias"}>
-          <div className="backarrow">
+          <div className="backarrow" onClick={() => {dispatch(addRefresh())}}>
             <svg
               width="15"
               height="27"

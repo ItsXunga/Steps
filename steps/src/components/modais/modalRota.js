@@ -1,12 +1,13 @@
 import React, { useState } from "react"
 import Modal from "react-modal"
-import { modalRota } from "../style/modal_styles"
 import "../style/categoria_details.css"
 import "../style/modais_styles.css"
 import { useDispatch, useSelector } from "react-redux"
-import { closeModal } from "./redux/modalState";
+import { closeModal } from "../redux/modalState";
+import { routeID } from "../redux/routeID"
+import { enterSingleRoute } from "../redux/singleRouteState"
 
-function ModalRota(params) {
+function ModalRota(props) {
   const dispatch = useDispatch()
   const openModalRota = useSelector((state) => state.modalState.modalRota)
 
@@ -16,10 +17,24 @@ function ModalRota(params) {
 
   return (
     <div>
-
       <Modal
         isOpen={openModalRota}
-        style={modalRota}
+        style={{
+          content: {
+            inset: "30px",
+            background: "white",
+            boxShadow: "2px 2px 7px 0px rgba(0, 0, 0, 0.2)",
+            borderRadius: "20px",
+            padding: "2rem",
+            maxHeight: "90%",
+            height: "fit-content",
+            margin: "auto",
+            textAlign: "center",
+            overflow: "auto",
+            border: "1px solid",
+            borderColor: props.clicked.color
+          },
+        }}
         contentLabel="Modal Rota"
       >
         <div
@@ -31,16 +46,25 @@ function ModalRota(params) {
           }}
         >
           <div className="textmodal">
+          <p
+              style={{
+                alignSelf: "center",
+                textAlign: "left",
+                fontSize: "14px",
+              }}
+            >
+             <b>{props.clicked.creator}</b>
+            </p>
             <h1
               style={{
-                lineHeight: "1rem",
+                lineHeight: "1.5rem",
                 alignSelf: "center",
                 textAlign: "left",
                 fontSize: "20px",
                 fontFamily: "manropeBold",
               }}
             >
-              Nome da rota
+              {props.clicked.RouteName}
             </h1>
             <p
               style={{
@@ -49,31 +73,50 @@ function ModalRota(params) {
                 fontSize: "14px",
               }}
             >
-              Descriçao da rota Lorem lorem lorem lorem lorem lorem lorem lorem
+             {props.clicked.RouteDesc}
             </p>
-            <div>
+
+            {props.clicked.pins[0].map((value, index) => {
+              return (
+            <div key={index + 1}>
               <div className="pontomodal">
-                <button className="buttonnumberpin">22</button>
+                <button style={{
+                    width: '2.2rem',
+                    height: '2.2rem',
+                    margin: '5px',
+                    borderRadius: '50%',
+                    justifySelf: 'center',
+                    border: '0.20px solid',
+                    borderColor: props.clicked.color,
+                    boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.25)',
+                    backgroundColor: 'transparent',
+                    alignSelf: 'start',
+                    cursor: 'pointer',
+                }}>{index + 1}</button>
                 <div>
                   <p
                     style={{
                       fontWeight: "bold",
+                      lineHeight: "1.5rem"
                     }}
                   >
-                    PONontinho
+                    {value.pinName}
                   </p>
 
                   <p
                     style={{
-                      lineHeight: "20px",
+                      lineHeight: "1.5rem",
                       fontSize: "14px",
                     }}
                   >
-                    descriçao do pontinho içao do pontiniçao do pontin
+                    {value.pinDesc}
                   </p>
                 </div>
               </div>
             </div>
+              )
+            })}
+            
           </div>
           <div style={{ display: "grid" }}>
             <div onClick={handleClose}>
@@ -90,7 +133,12 @@ function ModalRota(params) {
                 />
               </svg>
             </div>
-            <button className="buttonroute">
+
+            <button className="buttonroute" onClick={() => {
+              dispatch(routeID(props.clicked.id))
+              dispatch(closeModal())
+              dispatch(enterSingleRoute());
+              }}>
               <svg
                 style={{ display: "block", margin: "auto" }}
                 width="16"
@@ -105,6 +153,7 @@ function ModalRota(params) {
                 />
               </svg>
             </button>
+
           </div>
         </div>
       </Modal>

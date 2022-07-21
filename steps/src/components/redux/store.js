@@ -4,6 +4,7 @@ import routeIDReducer from "./routeID";
 import singleRouteReducer from "./singleRouteState";
 import pinSliceReducer from "./pinStorage";
 import modalStateReducer from "./modalState";
+import refreshReducer from "./refreshState";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     routeID: routeIDReducer,
     pinStorage: pinSliceReducer,
     modalState: modalStateReducer,
+    refresh: refreshReducer
   },
 });
