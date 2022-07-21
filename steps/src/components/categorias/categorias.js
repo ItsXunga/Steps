@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { allcolors } from "../../style/global_styles";
-import "../style/categorias.css";
-import { Link, useLocation } from "react-router-dom";
+import "../../style/categorias.css";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import CategoriaInfo from "./categoria_info";
 
 const Categorias = () => {
   const refresh = useSelector((state) => state.refresh);
@@ -64,21 +65,7 @@ const Categorias = () => {
       </div>
       <div className="container">
         <div className="grid">
-          {categorias.map((props) => (
-            <Link
-              to={"/categoriaDetails"}
-              state={{ category: props.category }}
-              style={{ textDecoration: "none" }}
-            >
-              <div className="categoria">
-                <img
-                  src={require(`../assets/img/img_categorias/${props.img}`)}
-                  alt={props.category}
-                />
-                <p style={{ color: props.color }}>{props.category}</p>
-              </div>
-            </Link>
-          ))}
+          <CategoriaInfo categorias={categorias}/>
         </div>
       </div>
     </div>

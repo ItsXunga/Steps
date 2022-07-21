@@ -1,21 +1,20 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import mapboxgl from "mapbox-gl";
-import Rotas from "../components/data/routes.json";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Modal from "react-modal";
-import ModalPin from "./ModalPin";
 import {
   openModalPin,
   openManageModalPin,
   openModalConfirmarRota,
   openModalRota,
 } from "./redux/modalState";
-import ManageModalPin from "./ManageModalPin";
+import ModalPin from "./modais/ModalPin";
+import ManageModalPin from "./modais/ManageModalPin";
 import Drawertest from "./Drawer";
-import ModalConfirmarRota from "./ModalConfirmarRota";
-import ModalRota from "./modalRota";
+import ModalConfirmarRota from "./modais/ModalConfirmarRota";
+import ModalRota from "./modais/modalRota";
 import { customAlphabet } from 'nanoid';
 const axios = require("axios");
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Modal from "react-modal"
-import "../style/categoria_details.css"
-import "../style/modais_styles.css"
+import "../../style/categoria_details.css"
+import "../../style/modais_styles.css"
 import { useDispatch, useSelector } from "react-redux"
 import { closeModal } from "../redux/modalState";
 import { routeID } from "../redux/routeID"

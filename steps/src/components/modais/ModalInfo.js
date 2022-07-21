@@ -18,7 +18,7 @@ function ModalInfo() {
       >
         <div style={{ display: "flex" }}>
           <div>
-            <img src={require("../assets/img/pin.png")} alt="pin" />
+            <img src={require("../../assets/img/pin.png")} alt="pin" />
             <p
               style={{
                 padding: "1rem 2rem",

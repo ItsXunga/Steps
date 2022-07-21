@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { allcolors } from "../../style/global_styles";
-import "../style/categoria_details.css";
+import "../../style/categoria_details.css";
 import { PinColor } from "../../assets/img/profile/pin";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
 import Rotas from "../data/routes.json";
