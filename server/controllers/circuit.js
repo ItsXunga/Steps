@@ -48,18 +48,15 @@ async function getAll(req, res) {
 }
 
 async function create(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
-
-  const { name, userID, categoryID, desc } = req.body;
-
-  //Falta Creator e Categoria -> Falta inserir id do criador logged-in e id da categoria através do nome desta
+  const { name, userID, categoryID, desc, pins } = req.body;
 
   try {
     const circuit = await CircuitModel.create({
-      name,
+      name: name,
       creator: userID,
       category: categoryID,
-      desc,
+      desc: desc,
+      pins: pins
     });
     res.status(201).json(circuit);
   } catch (err) {
@@ -69,7 +66,6 @@ async function create(req, res) {
 }
 
 async function update(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
 
   const { id } = req.params;
   const { name, desc } = req.body;
@@ -91,7 +87,6 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
   
   const { id } = req.params;
 

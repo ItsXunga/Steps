@@ -23,8 +23,22 @@ const CircuitSchema = new Schema({
   },
   pins: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Point",
+      pinName: {
+        type: String,
+        required: [true, "Please enter a name for your Pin"],
+        unique: true,
+      },
+      pinDesc: {
+        type: String,
+      },
+      lat: {
+        type: String,
+        required: true,
+      },
+      long: {
+        type: String,
+        required: true,
+      },
     },
   ],
 });

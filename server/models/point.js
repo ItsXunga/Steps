@@ -11,11 +11,11 @@ const PointSchema = new Schema({
     type: String,
   },
   lat: {
-    type: Number,
+    type: String,
     required: true,
   },
   long: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
