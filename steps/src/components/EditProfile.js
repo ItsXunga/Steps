@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../style/editProfile.css";
 import axios from "axios";
 import AuthService from "../services/auth.service";
+import authHeader from "../services/auth-header";
 
 const EditProfile = () => {
   const retrievedObject = AuthService.getCurrentUser();
@@ -10,6 +11,13 @@ const EditProfile = () => {
 
   const [user, setUser] = React.useState("");
   const [name, setName] = React.useState("");
+  const [password, setPassword] = useState("");
+  const [cPassword, setCPassword] = useState("");
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [cPasswordClass, setCPasswordClass] = useState("EditInput");
+  const [isCPasswordDirty, setIsCPasswordDirty] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -20,27 +28,78 @@ const EditProfile = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleCPassword = (e) => {
+    setCPassword(e.target.value);
+    setIsCPasswordDirty(true);
+  };
+
+  const handleOnClick = useCallback(
+    () => navigate("/main", { replace: true }),
+    [navigate]
+  );
+
   function updateName() {
     axios
-      .put(`https://steps-ua.herokuapp.com/users/updateName/${currentUser}`, {
-        name: name,
-      })
+      .put(
+        `https://steps-ua.herokuapp.com/users/updateName/${currentUser}`,
+        {
+          name: name,
+        },
+        { headers: authHeader }
+      )
       .then((response) => {
-        setUser(response.data);
+        console.log(response.data);
       })
       .catch((err) => console.log(err));
   }
 
-  function updateAvatar() {
+  function updatePassword() {
     axios
-      .put(`https://steps-ua.herokuapp.com/users/updateAvatar/${currentUser}`, {
-        avatar: "Hello.jpg",
-      })
+      .put(
+        `https://steps-ua.herokuapp.com/users/updatePassword/${currentUser}`,
+        {
+          password: password,
+        },
+        { headers: authHeader }
+      )
       .then((response) => {
-        setUser(response.data);
+        console.log(response.data);
       })
       .catch((err) => console.log(err));
   }
+
+  useEffect(() => {
+    if (isCPasswordDirty) {
+      if (password === cPassword) {
+        setShowErrorMessage(false);
+        setCPasswordClass("form-control is-valid");
+      } else {
+        setShowErrorMessage(true);
+        setCPasswordClass("form-control is-invalid");
+      }
+    }
+  }, [cPassword]);
+
+  function updateData() {
+    if (name !== "") {
+      updateName();
+    }
+    if (password !== "") {
+      updatePassword();
+    }
+    handleOnClick();
+  }
+
+  // function updateAvatar() {
+  //   axios
+  //     .put(`https://steps-ua.herokuapp.com/users/updateAvatar/${currentUser}`, {
+  //       avatar: "Hello.jpg",
+  //     })
+  //     .then((response) => {
+  //       setUser(response.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   return (
     <div className="editDiv">
@@ -74,7 +133,7 @@ const EditProfile = () => {
           alt="avatar"
         />
       </div>
-      <form onSubmit={updateName}>
+      <form onSubmit={updateData}>
         <div
           style={{
             display: "flex",
@@ -98,46 +157,43 @@ const EditProfile = () => {
           </div>
 
           <div>
-            <label className="EditLabel" for="email">
-              E-mail
-            </label>
-            <input
-              className="EditInput"
-              type="text"
-              id="email"
-              placeholder={user.email}
-            />
-          </div>
-
-          <div>
             <label className="EditLabel" for="password">
               Nova Password
             </label>
             <input
               className="EditInput"
-              type="text"
+              type="password"
               id="password"
-              placeholder="*************"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
           <div>
-            <label className="EditLabel" for="password">
+            <label className="EditLabel" for="confirmPassword">
               Confirme Password
             </label>
-            {/*TODO user.password  */}
             <input
               className="EditInput"
               type="password"
-              id="password"
-              placeholder="*************"
+              id="confirmPassword"
+              value={cPassword}
+              onChange={handleCPassword}
             />
           </div>
+          {showErrorMessage && isCPasswordDirty ? (
+            <div> Passwords did not match </div>
+          ) : (
+            ""
+          )}
         </div>
-
         <div style={{ padding: "0rem 3rem" }}>
-          <button className="orangeButton" type="submit">
-            Guardar
+          <button
+            className="orangeButton"
+            style={{ marginLeft: "1rem" }}
+            type="submit"
+          >
+            Alterar
           </button>
         </div>
       </form>

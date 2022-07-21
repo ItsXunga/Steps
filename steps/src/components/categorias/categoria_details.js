@@ -12,10 +12,26 @@ export default function CategoriaDetails() {
   const { category } = name.state;
   const { rotas } = name.state;
 
+  let filterFavorites = [];
+
+  //Rotas favoritas do currentUser
+  const { rotasFavoritas } = name.state;
+
+  console.log(rotasFavoritas.favorite_routes);
+
+  //Filtro de categorias
   const routeArray = rotas.filter(function (value) {
     return value.category.category === category;
   });
 
+  console.log(routeArray, "categorias");
+
+  const filterDisplay = routeArray.filter(function (value) {
+    return routeArray._id === rotasFavoritas.favorite_routes;
+  });
+  
+
+  console.log(filterDisplay);
 
   return (
     <div className="background">
@@ -65,11 +81,18 @@ export default function CategoriaDetails() {
 }
 
 function Item(props) {
-  const [isOpen, setIsOpen] = useState(false);
+  const name = useLocation();
   const dispatch = useDispatch();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [isFavorite, setIsFavorite] = useState();
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
+  };
+  const toggleFav = () => {
+    setIsFavorite(!isFavorite);
   };
 
   return (
@@ -108,17 +131,21 @@ function Item(props) {
             justifyContent: "space-between",
           }}
         >
-          <button className="buttonfav">
+          <button className="buttonfav" onClick={toggleFav}>
             <svg
               style={{ display: "block", margin: "auto" }}
               width="16"
               height="16"
-              viewBox="0 0 14 13"
+              viewBox="0 0 22 22"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M6.99871 12.125C6.56871 11.7675 6.08271 11.3956 5.56871 11H5.56205C3.75205 9.61247 1.70071 8.04247 0.794713 6.16122C0.497058 5.5623 0.339316 4.91068 0.332039 4.24997C0.330051 3.3434 0.717894 2.47434 1.40792 1.8392C2.09794 1.20406 3.0319 0.856467 3.99871 0.87497C4.7858 0.876136 5.55594 1.0894 6.21738 1.48935C6.50803 1.6662 6.77099 1.88013 6.99871 2.12497C7.2277 1.88109 7.49074 1.66729 7.78071 1.48935C8.44187 1.08932 9.21182 0.876044 9.99871 0.87497C10.9655 0.856467 11.8995 1.20406 12.5895 1.8392C13.2795 2.47434 13.6674 3.3434 13.6654 4.24997C13.6586 4.91173 13.5008 5.56447 13.2027 6.16435C12.2967 8.0456 10.246 9.61497 8.43605 11L8.42938 11.005C7.91471 11.3981 7.42938 11.77 6.99938 12.13L6.99871 12.125ZM3.99871 2.12497C3.37772 2.11768 2.77876 2.3405 2.33205 2.74497C1.90164 3.14132 1.66108 3.68437 1.66532 4.24997C1.67293 4.73153 1.78926 5.20613 2.00671 5.64247C2.43439 6.45416 3.01145 7.18875 3.71138 7.81247C4.37205 8.43747 5.13205 9.04247 5.78938 9.55122C5.97138 9.69185 6.15671 9.83372 6.34205 9.9756L6.45871 10.065C6.63671 10.2012 6.82071 10.3425 6.99871 10.4812L7.00738 10.4737L7.01138 10.4706H7.01538L7.02138 10.4662H7.02471H7.02805L7.04005 10.4568L7.06738 10.4362L7.07205 10.4325L7.07938 10.4275H7.08338L7.08938 10.4225L7.53205 10.0818L7.64805 9.99247C7.83538 9.84935 8.02071 9.70747 8.20271 9.56685C8.86005 9.0581 9.62071 8.45372 10.2814 7.8256C10.9814 7.2022 11.5585 6.46779 11.986 5.65622C12.2074 5.2161 12.3254 4.73654 12.3321 4.24997C12.3348 3.68612 12.0944 3.14515 11.6654 2.74997C11.2195 2.34367 10.6205 2.11902 9.99871 2.12497C9.23999 2.11893 8.51467 2.41708 8.00538 2.94435L6.99871 4.03185L5.99205 2.94435C5.48276 2.41708 4.75743 2.11893 3.99871 2.12497Z"
+                d={
+                  !isFavorite
+                    ? "M12 21C11.355 20.428 10.626 19.833 9.85502 19.2H9.84502C7.13002 16.98 4.05302 14.468 2.69402 11.458C2.24754 10.4997 2.01093 9.45712 2.00001 8.4C1.99703 6.94948 2.57879 5.55898 3.61383 4.54276C4.64887 3.52654 6.04981 2.97039 7.50002 3C8.68065 3.00186 9.83586 3.34308 10.828 3.983C11.264 4.26596 11.6584 4.60825 12 5C12.3435 4.60979 12.7381 4.2677 13.173 3.983C14.1648 3.34295 15.3197 3.00171 16.5 3C17.9502 2.97039 19.3512 3.52654 20.3862 4.54276C21.4213 5.55898 22.003 6.94948 22 8.4C21.9898 9.45881 21.7532 10.5032 21.306 11.463C19.947 14.473 16.871 16.984 14.156 19.2L14.146 19.208C13.374 19.837 12.646 20.432 12.001 21.008L12 21ZM7.50002 5C6.56853 4.98834 5.6701 5.34484 5.00002 5.992C4.35441 6.62616 3.99358 7.49504 3.99994 8.4C4.01135 9.1705 4.18585 9.92985 4.51202 10.628C5.15353 11.9267 6.01913 13.102 7.06902 14.1C8.06002 15.1 9.20002 16.068 10.186 16.882C10.459 17.107 10.737 17.334 11.015 17.561L11.19 17.704C11.457 17.922 11.733 18.148 12 18.37L12.013 18.358L12.019 18.353H12.025L12.034 18.346H12.039H12.044L12.062 18.331L12.103 18.298L12.11 18.292L12.121 18.284H12.127L12.136 18.276L12.8 17.731L12.974 17.588C13.255 17.359 13.533 17.132 13.806 16.907C14.792 16.093 15.933 15.126 16.924 14.121C17.9741 13.1236 18.8397 11.9485 19.481 10.65C19.8131 9.9458 19.9901 9.1785 20.0001 8.4C20.0042 7.49783 19.6435 6.63229 19 6C18.3312 5.34992 17.4326 4.99048 16.5 5C15.3619 4.99032 14.274 5.46736 13.51 6.311L12 8.051L10.49 6.311C9.72609 5.46736 8.6381 4.99032 7.50002 5Z"
+                    : "M2 8.40001C1.99975 6.95035 2.58239 5.56146 3.61681 4.54584C4.65124 3.53022 6.05058 2.97317 7.5 3.00001C9.21732 2.99089 10.856 3.71919 12 5.00001C13.144 3.71919 14.7827 2.99089 16.5 3.00001C17.9494 2.97317 19.3488 3.53022 20.3832 4.54584C21.4176 5.56146 22.0002 6.95035 22 8.40001C22 13.756 15.621 17.8 12 21C8.387 17.773 2 13.76 2 8.40001Z"
+                }
                 fill="#393C6A"
               />
             </svg>
@@ -157,32 +184,35 @@ function Item(props) {
 
 function Content(props) {
   const CheckPin = (name, index) => {
-      return (
-        <div
+    return (
+      <div
+        style={{
+          marginTop: "0",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <button
           style={{
-            marginTop: "0",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
+            width: "2.2rem",
+            height: "2.2rem",
+            margin: "5px",
+            borderRadius: "50%",
+            justifySelf: "center",
+            border: "0.20px solid",
+            borderColor: props.content.category.color,
+            boxShadow: "1px 1px 4px rgba(0, 0, 0, 0.25)",
+            backgroundColor: "transparent",
+            alignSelf: "start",
+            cursor: "pointer",
           }}
         >
-            <button style={{
-                width: '2.2rem',
-                height: '2.2rem',
-                margin: '5px',
-                borderRadius: '50%',
-                justifySelf: 'center',
-                border: '0.20px solid',
-                borderColor: props.content.category.color,
-                boxShadow: '1px 1px 4px rgba(0, 0, 0, 0.25)',
-                backgroundColor: 'transparent',
-                alignSelf: 'start',
-                cursor: 'pointer',
-              }}
-            >{index}</button>
-            <p>{name}</p>
-          </div>
-      );
+          {index}
+        </button>
+        <p>{name}</p>
+      </div>
+    );
   };
 
   return (
@@ -193,9 +223,7 @@ function Content(props) {
       exit={{ opacity: 0 }}
       className="categoriacardopen"
     >
-      {props.content.pins.map((pin, index) =>
-        CheckPin(pin.pinName, index+1)
-      )}
+      {props.content.pins.map((pin, index) => CheckPin(pin.pinName, index + 1))}
     </motion.div>
   );
 }

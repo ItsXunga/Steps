@@ -5,6 +5,7 @@ import axios from "axios";
 const CategoriaInfo = (props) => {
     const [loading, setLoading] = useState(false);
     const [rotas, setRotas] = useState()
+    const rotasFavoritas = props.rotasFavoritas;
 
     useEffect(() => {
         const rotasRequest = async() => {
@@ -23,6 +24,7 @@ const CategoriaInfo = (props) => {
         <Link
           to={"/categoriaDetails"}
           state={{ 
+            rotasFavoritas: rotasFavoritas,
             category: props.category,
             rotas: rotas
          }}

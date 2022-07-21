@@ -5,24 +5,40 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import CategoriaInfo from "./categoria_info";
+import authService from "../../services/auth.service";
 
 const Categorias = () => {
+  const retrievedObject = authService.getCurrentUser();
+  const currentUser = JSON.parse(retrievedObject).user._id;
+
   const [loading, setLoading] = useState(false);
   const [categorias, setCategorias] = useState();
+  const [rotasFavoritas, setRotasFavoritas] = useState();
 
   useEffect(() => {
-    const request = async() => {
+    const request = async () => {
       setLoading(true);
-      await axios.get("https://steps-ua.herokuapp.com/categories/").then((response) =>{
-        setCategorias(response.data)
-        setLoading(false)
-      })
-    }
-    request()
-  },[])
+      await axios
+        .get("https://steps-ua.herokuapp.com/categories/")
+        .then((response) => {
+          setCategorias(response.data);
+          setLoading(false);
+        });
+    };
+    request();
+  }, []);
 
-
-
+  useEffect(() => {
+    const rotasFavoritasRequest = async () => {
+      await axios
+        .get(`https://steps-ua.herokuapp.com/users/${currentUser}`)
+        .then((response) => {
+          setRotasFavoritas(response.data);
+          setLoading(false);
+        });
+    };
+    rotasFavoritasRequest();
+  }, []);
 
   return (
     <div className="background">
@@ -62,12 +78,14 @@ const Categorias = () => {
       </div>
       <div className="container">
         <div className="grid">
-          {categorias !== undefined  ? (
-          <CategoriaInfo categorias={categorias} />
-          ):(
-            ''
+          {categorias !== undefined && rotasFavoritas !== undefined ? (
+            <CategoriaInfo
+              categorias={categorias}
+              rotasFavoritas={rotasFavoritas}
+            />
+          ) : (
+            ""
           )}
-
         </div>
       </div>
     </div>
