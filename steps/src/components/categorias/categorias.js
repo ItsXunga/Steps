@@ -1,10 +1,31 @@
-import React from "react";
-import { allcolors } from "../style/global_styles";
+import React, { useEffect, useRef, useState } from "react";
+import { allcolors } from "../../style/global_styles";
 import "../style/categorias.css";
-import CategoriasData from "../components/data/categorias.json";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Categorias = () => {
+  const refresh = useSelector((state) => state.refresh);
+  const refreshState = useRef()
+  refreshState.current = refresh
+
+  const [loading, setLoading] = useState(false);
+  const [categorias, setCategorias] = useState()
+
+  useEffect(() => {
+    const request = async() => {
+      setLoading(true);
+      await axios.get("https://steps-ua.herokuapp.com/categories/").then((response) =>{
+        setCategorias(response.data)
+        setLoading(false)
+      })
+
+    }
+    request()
+  },[refresh])
+
+
   return (
     <div className="background">
       <div
@@ -43,7 +64,7 @@ const Categorias = () => {
       </div>
       <div className="container">
         <div className="grid">
-          {CategoriasData.map((props) => (
+          {categorias.map((props) => (
             <Link
               to={"/categoriaDetails"}
               state={{ category: props.category }}
