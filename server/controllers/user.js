@@ -104,7 +104,6 @@ async function create(req, res) {
 }
 
 async function updateName(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
   //Preciso alterar o Update do UserName para receber o Id do user logged in
 
   const { id } = req.params;
@@ -148,7 +147,6 @@ async function favorite(req, res) {
 }
 
 async function updateAvatar(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
   //Preciso alterar o Update do Avatar para receber o Id do user logged in
 
   const { id } = req.params;
@@ -174,12 +172,10 @@ async function updateAvatar(req, res) {
 }
 
 async function ChangePassword(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
   //TODO
 }
 
 async function destroy(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
   const { id } = req.params;
 
   const userData = await UserModel.findByIdAndRemove(id);

@@ -21,7 +21,6 @@ async function getAll(req, res) {
 }
 
 async function create(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
 
   const { pinName, pinDesc, lat, long } = req.body;
 
@@ -44,7 +43,6 @@ async function create(req, res) {
 }
 
 async function update(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
 
   const { id } = req.params;
   const { pinName } = req.body;
@@ -65,7 +63,6 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-  if (!req.user?._id) return res.json({ message: "Unauthenticated" });
   
   const { id } = req.params;
 
