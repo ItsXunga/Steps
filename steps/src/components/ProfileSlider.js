@@ -6,6 +6,9 @@ import axios from "axios";
 import { PinColor } from "../assets/img/profile/pin";
 import { enterSingleRoute } from "./redux/singleRouteState";
 import { routeID } from "./redux/routeID";
+import { enterCreation } from "./redux/creationState";
+import { addPin } from "./redux/pinStorage";
+import { addRouteID } from "./redux/editRouteID";
 
 const ProfileSlider = (props) => {
   const [favSelected, setFavSelected] = useState(false);
@@ -110,15 +113,6 @@ const ProfileSlider = (props) => {
       })
     );
     setFavSelected(false);
-  };
-
-  const editCircuit = (id_circuit) => {
-    //TODO encaminhar para editar rota
-    console.log(id_circuit);
-  };
-  const unfavCircuit = (id_circuit) => {
-    //TODO unfav circuit e função em server/controllers/user.js
-    console.log(id_circuit);
   };
 
   return (

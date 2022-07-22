@@ -5,8 +5,12 @@ import axios from "axios";
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import UserSchema from "../schemas/UserLoginSchema";
 import AuthService from "../services/auth.service";
+import { useDispatch } from "react-redux";
+import { noLogin } from "./redux/contaState";
 
 const Login = () => {
+
+    const dispatch = useDispatch();
 
     const initialValues = {email: '', password: '', loading: false, message: ""};
     const navigate = useNavigate();
@@ -130,9 +134,11 @@ const Login = () => {
                     </div>
 
                     <div>
-                        <button className="orangeButton" type="submit">
+                        <Link to={'/main'}>
+                        <button className="orangeButton" type="submit" onClick={() => {dispatch(noLogin())}}>
                             Entrar sem conta
                         </button>
+                        </Link>
                     </div>
 
                     <div>

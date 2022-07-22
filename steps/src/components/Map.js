@@ -157,37 +157,29 @@ const Map = (props) => {
         ],
       }));
 
-      if (mapState === true) {
-        //creation mode
+    if (mapState === true) {
+      //creation mode
 
-        // Add the geocoder to the map
-        // map.addControl(geocoder);
-        // const adjustGeocoder = document.getElementById("geocoder")
-        // adjustGeocoder.classList.add("instructions")
+      //map the pins if theres atleast one entry
+      if (StorageStatus >= 1) {
+        // Json for points being created
 
-        //map the pins if theres atleast one entry
-        if (StorageStatus >= 1) {
-          // Json for points being created
+        // Converting object from redux store to array to then map.
+        const pinsArray = Object.entries(pinStorage).map((obj) => ({ ...obj }));
 
-          // Converting object from redux store to array to then map.
-          const pinsArray = Object.entries(pinStorage).map((obj) => ({
-            ...obj,
-          }));
-
-          const geojsonPins = pinsArray.map((value) => ({
-            type: "FeatureCollection",
-            features: [
-              {
-                type: "Feature",
-                geometry: {
-                  type: "Point",
-                  coordinates: [value[1].lng, value[1].lat],
-                },
-                properties: {
-                  id: value[1].id,
-                  name: value[1].name,
-                  description: value[1].desc,
-                },
+        const geojsonPins = pinsArray.map((value) => ({
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              geometry: {
+                type: "Point",
+                coordinates: [value[1].lng, value[1].lat],
+              },
+              properties: {
+                id: value[1].id,
+                name: value[1].name,
+                description: value[1].desc,
               },
             ],
           }));
@@ -299,8 +291,8 @@ const Map = (props) => {
               case "#F178B6":
                 el.className = "markerShopping";
                 break;
-              case "#68BDFA":
-                el.className = "markerDesporto";
+            case '#099F7B':
+              el.className = "markerExperiencia";
                 break;
               case "#98D99A":
                 el.className = "markerNatureza";
@@ -443,8 +435,8 @@ const Map = (props) => {
                 case "#F178B6":
                   el.className = "markerShopping";
                   break;
-                case "#68BDFA":
-                  el.className = "markerDesporto";
+              case '#099F7B':
+                el.className = "markerExperiencia";
                   break;
                 case "#98D99A":
                   el.className = "markerNatureza";
@@ -540,14 +532,11 @@ const Map = (props) => {
   return (
     <div>
       {/* adionar o drawer assim que um ponto e criado */}
-      {mapState === true &&
-      StorageStatus >= 1 &&
-      ModalFinalizarRota === false &&
-      ModalRotaTerminada === false ? (
+      {
+      mapState === true && StorageStatus >= 1 && ModalFinalizarRota=== false && ModalRotaTerminada === false ? 
         <Drawertest />
-      ) : (
-        ""
-      )}
+       : ""}
+
       {/* permitir ao utilizador acabar a rota quando tem 2 ou mais pontos */}
       {StorageStatus >= 2 ? (
         ModalFinalizarRota ||

@@ -6,10 +6,12 @@ import ModalAddRota from "./modais/ModalAddRota";
 import ModalCancelar from "./modais/modalcancelar";
 import ModalSairNavegar from "./modais/modalSairNavegar";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 const axios = require("axios");
 
 
 const SecondPage = () => {
+
 
   const [loading, setLoading] = useState(false);
   const [rotas, setRotas] = useState()
