@@ -24,7 +24,7 @@ const Register = () => {
                 url: "https://steps-ua.herokuapp.com/users/signup",
                 data: user,
             });
-            navigate('/login');
+            navigate('/intro');
         } catch (error) {
             console.log(error)
         }

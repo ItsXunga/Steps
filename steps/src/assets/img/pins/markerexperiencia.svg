@@ -1,6 +1,6 @@
 <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_2012_3403)">
-<rect x="7" y="7" width="30" height="30" rx="15" fill="#ECDF6D"/>
+<rect x="7" y="7" width="30" height="30" rx="15" fill="#099F7B"/>
 </g>
 <ellipse cx="22.0853" cy="21.9998" rx="4.33526" ry="4.31034" fill="white"/>
 <defs>
@@ -10,7 +10,7 @@
 <feOffset/>
 <feGaussianBlur stdDeviation="3.5"/>
 <feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.92549 0 0 0 0 0.87451 0 0 0 0 0.427451 0 0 0 1 0"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0352941 0 0 0 0 0.623529 0 0 0 0 0.482353 0 0 0 1 0"/>
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2012_3403"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2012_3403" result="shape"/>
 </filter>

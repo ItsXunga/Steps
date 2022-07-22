@@ -81,7 +81,7 @@ const Instruções3 = () => {
             }}
           >
             <Link
-              to={"/main"}
+              to={"/login"}
               style={{ textDecoration: "none", color: "#393C6A" }}
             >
               Next
