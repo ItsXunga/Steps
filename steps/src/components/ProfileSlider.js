@@ -173,6 +173,7 @@ const ProfileSlider = (props) => {
                       onClick={() => {
                         dispatch(enterSingleRoute());
                         dispatch(enterCreation());
+                        console.log(props._id, "AQUI")
                         dispatch(addRouteID(props._id));
                         props.pins.map((value) => {
                           dispatch(
@@ -249,7 +250,7 @@ const ProfileSlider = (props) => {
                   className="goButton"
                   onClick={() => {
                     dispatch(enterSingleRoute());
-                    dispatch(routeID(props.id));
+                    dispatch(routeID(props._id));
                   }}
                 >
                   <svg
