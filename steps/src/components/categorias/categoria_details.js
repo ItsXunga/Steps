@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { allcolors } from "../../style/global_styles";
 import "../../style/categoria_details.css";
 import { motion, AnimateSharedLayout, AnimatePresence } from "framer-motion";
@@ -17,21 +17,24 @@ export default function CategoriaDetails() {
   //Rotas favoritas do currentUser
   const { rotasFavoritas } = name.state;
 
-  console.log(rotasFavoritas.favorite_routes);
-
   //Filtro de categorias
   const routeArray = rotas.filter(function (value) {
     return value.category.category === category;
   });
 
-  console.log(routeArray, "categorias");
+  let routeIds = [];
 
-  const filterDisplay = routeArray.filter(function (value) {
-    return routeArray._id === rotasFavoritas.favorite_routes;
+  routeArray.forEach((element) => {
+    routeIds.push(element._id);
   });
-  
 
-  console.log(filterDisplay);
+  let favoriteArray = [];
+
+  rotasFavoritas.favorite_routes.forEach((element) => {
+    if (routeIds.includes(element) === true) {
+      favoriteArray.push(element);
+    }
+  });
 
   return (
     <div className="background">
@@ -72,7 +75,11 @@ export default function CategoriaDetails() {
       <AnimateSharedLayout>
         <motion.ul className="ul" layout initial={{ borderRadius: 25 }}>
           {routeArray.map((item) => (
-            <Item content={item} />
+            <Item
+              content={item}
+              favoriteArray={favoriteArray}
+              routeIds={routeIds}
+            />
           ))}
         </motion.ul>
       </AnimateSharedLayout>
@@ -83,10 +90,23 @@ export default function CategoriaDetails() {
 function Item(props) {
   const name = useLocation();
   const dispatch = useDispatch();
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const FavoriteRouteId = props.favoriteArray;
+  console.log(FavoriteRouteId)
+  const routeIDS = props.routeIds;
+  console.log(routeIDS)
+
+  useEffect(() => {
+    function verifyFavorite() {
+      if (routeIDS.includes(FavoriteRouteId[0])) {
+        setIsFavorite(true);
+      }
+    }
+    verifyFavorite();
+  }, [routeIDS]);
 
   const [isOpen, setIsOpen] = useState(false);
-
-  const [isFavorite, setIsFavorite] = useState();
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);

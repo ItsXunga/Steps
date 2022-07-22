@@ -135,19 +135,48 @@ async function updatePassword(req, res) {
 }
 
 async function favorite(req, res) {
-  //TODO melhorar isto
   const { id } = req.params;
 
   const userData = await UserModel.findById(id);
   const circuitData = await CircuitModel.find({
     _id: { $in: userData.favorite_routes },
-  }).populate("creator");
+  }).populate("category");
   if (circuitData) {
     res.json(circuitData);
   } else {
     res.status(404).json({
       message: "This user has not favorited any routes",
     });
+  }
+}
+
+async function addFavorites(req, res) {
+  const { id } = req.params;
+  const { idRota } = req.body;
+  try {
+    const teste = await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { $addToSet: { favorite_routes: idRota } },
+      { new: true }
+    );
+    res.status(200).json({ status: true, data: teste });
+  } catch (error) {
+    res.status(400).json({ error: "Route not added" });
+  }
+}
+
+async function removeFavorites(req, res) {
+  const { id } = req.params;
+  const { idRota } = req.body;
+  try {
+    const teste = await UserModel.findByIdAndUpdate(
+      { _id: id },
+      { $pull: { favorite_routes: idRota } },
+    );
+    const teste2 = await UserModel.findById(id)
+    res.status(200).json({ status: true, data: teste2 });
+  } catch (error) {
+    res.status(400).json({ error: "Route not added" });
   }
 }
 
@@ -214,6 +243,8 @@ const UserController = {
   favorite,
   updateAvatar,
   updatePassword,
+  addFavorites,
+  removeFavorites,
   destroy,
   login,
 };

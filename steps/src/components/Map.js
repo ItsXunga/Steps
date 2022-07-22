@@ -16,16 +16,16 @@ import ManageModalPin from "./modais/ManageModalPin";
 import Drawertest from "./Drawer";
 import ModalConfirmarRota from "./modais/ModalConfirmarRota";
 import ModalRota from "./modais/modalRota";
-import { customAlphabet } from 'nanoid';
+import { customAlphabet } from "nanoid";
 import ModalPontoInfo from "./modais/modalpontoinfo";
+import { mapboxToken } from "../assets/variables";
 
 Modal.setAppElement("#root");
 
-mapboxgl.accessToken =
-  "pk.eyJ1Ijoic3RlcHN1YSIsImEiOiJja3pzb2xveTYwOWNwMndsNjhxbTl1cTM5In0.oTjFtfdjrGxlwLDxaPgHNw";
+mapboxgl.accessToken = mapboxToken;
 
 const Map = (props) => {
-  const nanoid = customAlphabet('1234567890abcdef', 10)
+  const nanoid = customAlphabet("1234567890abcdef", 10);
   const dispatch = useDispatch();
 
   const { mapState } = useSelector((state) => state.mapState);
@@ -37,7 +37,7 @@ const Map = (props) => {
   const [clickedMain, setClickedMain] = useState();
   const [coordenadas, setCoordernadas] = useState([]);
 
-  const [clickedSingleRoute, setClickedSingleRoute] = useState()
+  const [clickedSingleRoute, setClickedSingleRoute] = useState();
 
   //Get pin storage elements
   const storage = useRef();
@@ -47,7 +47,9 @@ const Map = (props) => {
   const StorageStatus = Object.keys(pinStorage).length;
 
   //check modal state to then conditional render other assets
-  const ManageModalState = useSelector((state) => state.modalState.manageModalPin);
+  const ManageModalState = useSelector(
+    (state) => state.modalState.manageModalPin
+  );
   const ManageModal = useRef();
   ManageModal.current = ManageModalState;
 
@@ -55,11 +57,15 @@ const Map = (props) => {
   const PinState = useRef();
   PinState.current = ModalPinState;
 
-  const ModalCancelarState = useSelector((state) => state.modalState.modalCancelar);
+  const ModalCancelarState = useSelector(
+    (state) => state.modalState.modalCancelar
+  );
   const ModalCancelar = useRef();
   ModalCancelar.current = ModalCancelarState;
 
-  const ModalFinalizarRota = useSelector((state) => state.modalState.modalConfirmarRota);
+  const ModalFinalizarRota = useSelector(
+    (state) => state.modalState.modalConfirmarRota
+  );
   const ModalConfirmar = useRef();
   ModalConfirmar.current = ModalFinalizarRota;
 
@@ -67,9 +73,11 @@ const Map = (props) => {
   const ModalRotaState = useRef();
   ModalRotaState.current = EstadoModalRota;
 
-  const ModalRotaTerminada= useSelector((state) => state.modalState.modalAddRota)
-  const ModalRotaTerminadaState= useRef()
-  ModalRotaTerminadaState.current = ModalRotaTerminada
+  const ModalRotaTerminada = useSelector(
+    (state) => state.modalState.modalAddRota
+  );
+  const ModalRotaTerminadaState = useRef();
+  ModalRotaTerminadaState.current = ModalRotaTerminada;
   //
 
   //user location
@@ -83,9 +91,8 @@ const Map = (props) => {
     showUserHeading: true,
   });
 
-
   const coords = [];
- 
+
   // Existing routes
 
   // Pesquisar Rotas
@@ -121,7 +128,6 @@ const Map = (props) => {
       attributionControl: false,
     });
 
-
     if (props.rotas !== undefined) {
       const geojson = props.rotas.map((value) => ({
         type: "FeatureCollection",
@@ -143,7 +149,7 @@ const Map = (props) => {
                 value.pins.map((val) => ({
                   pinName: val.pinName,
                   lat: val.lat,
-                  long: val.long
+                  long: val.long,
                 })),
               ],
             },
@@ -175,372 +181,353 @@ const Map = (props) => {
                 name: value[1].name,
                 description: value[1].desc,
               },
-            },
-          ],
-        }));
+            ],
+          }));
 
-        // function running on pin click
-        const handleClick = (id, coordinates) => {
-          map.easeTo({
-            center: coordinates,
-            zoom: 17,
-            duration: 1000,
-          });
+          // function running on pin click
+          const handleClick = (id, coordinates) => {
+            map.easeTo({
+              center: coordinates,
+              zoom: 17,
+              duration: 1000,
+            });
 
-          setClickedData({
-            id: id,
-            name: pinStorage[id].name,
-            desc: pinStorage[id].desc,
-            lat: pinStorage[id].lat,
-            lng: pinStorage[id].lng,
-          });
+            setClickedData({
+              id: id,
+              name: pinStorage[id].name,
+              desc: pinStorage[id].desc,
+              lat: pinStorage[id].lat,
+              lng: pinStorage[id].lng,
+            });
 
-          setTimeout(() => {
-            dispatch(openManageModalPin());
-          }, 1250);
-        };
+            setTimeout(() => {
+              dispatch(openManageModalPin());
+            }, 1250);
+          };
 
-        //add saved markers to the route being created
-        geojsonPins.map((element) => {
-          const el = document.createElement("div");
-          el.className = "marker";
-          el.addEventListener("click", function (e) {
-            e.stopPropagation();
-            handleClick(
-              element.features[0].properties.id,
-              element.features[0].geometry.coordinates
-            );
-          });
-          new mapboxgl.Marker(el)
-            .setLngLat(element.features[0].geometry.coordinates)
-            .addTo(map);
-        });
-      }
-
-      // create markers on map click
-      var marker = new mapboxgl.Marker({ color: "#F69E7C" });
-      map.on("click", (e) => {
-        var coordinates = e.lngLat;
-        if (coordinates) {
-          marker.setLngLat(coordinates).addTo(map);
-          map.easeTo({
-            center: marker.getLngLat(coordinates),
-            zoom: 17,
-            duration: 1000,
-          });
-          setCoordernadas({
-            id: nanoid(),
-            lat: marker.getLngLat(coordinates).lat,
-            lng: marker.getLngLat(coordinates).lng,
+          //add saved markers to the route being created
+          geojsonPins.map((element) => {
+            const el = document.createElement("div");
+            el.className = "marker";
+            el.addEventListener("click", function (e) {
+              e.stopPropagation();
+              handleClick(
+                element.features[0].properties.id,
+                element.features[0].geometry.coordinates
+              );
+            });
+            new mapboxgl.Marker(el)
+              .setLngLat(element.features[0].geometry.coordinates)
+              .addTo(map);
           });
         }
-        setTimeout(() => {
-          dispatch(openModalPin());
-        }, 1250);
-      });
-    } else {
 
-      // Add the geocoder to the map
-      map.addControl(geocoder);
-
-      if (routeID === null) {
-        const handleMain = (coordinates, id) => {
-          map.easeTo({
-            center: coordinates,
-            zoom: 17,
-            duration: 1000,
-          });
-
-          // filter clicked pin with DB information
-          const rotaInfoMain = props.rotas.filter(function (val) {
-            return val._id === id
-          })
-
-          setClickedMain({
-            id: rotaInfoMain[0]._id,
-            category: rotaInfoMain[0].category.category,
-            color: rotaInfoMain[0].category.color,
-            creator: rotaInfoMain[0].creator.name,
-            RouteName: rotaInfoMain[0].name,
-            RouteDesc: rotaInfoMain[0].desc,
-            pins: [rotaInfoMain[0].pins.map((val) => ({
-                pinName: val.pinName,
-                pinDesc: val.pinDesc,
-                long: val.long,
-                lat: val.lat
-            }))]
-          })
-
-          //set timeout and open modal
+        // create markers on map click
+        var marker = new mapboxgl.Marker({ color: "#F69E7C" });
+        map.on("click", (e) => {
+          var coordinates = e.lngLat;
+          if (coordinates) {
+            marker.setLngLat(coordinates).addTo(map);
+            map.easeTo({
+              center: marker.getLngLat(coordinates),
+              zoom: 17,
+              duration: 1000,
+            });
+            setCoordernadas({
+              id: nanoid(),
+              lat: marker.getLngLat(coordinates).lat,
+              lng: marker.getLngLat(coordinates).lng,
+            });
+          }
           setTimeout(() => {
-            dispatch(openModalRota());
+            dispatch(openModalPin());
           }, 1250);
-        };
-        geojson.map((element) => {
-          const el = document.createElement("div");
-          switch (element.features[0].properties.color) {
-            case '#5D5FEF':
-              el.className = "markerCultura";
-              break;
-            case '#F178B6':
-              el.className = "markerShopping";
-              break;
-            case '#68BDFA':
-               el.className = "markerDesporto";
-              break;
-            case '#98D99A':
-              el.className = "markerNatureza";
-              break;
-            case '#FE6A66':
-              el.className = "markerGastronomia";
+        });
+      } else {
+        // Add the geocoder to the map
+        map.addControl(geocoder);
+
+        if (routeID === null) {
+          const handleMain = (coordinates, id) => {
+            map.easeTo({
+              center: coordinates,
+              zoom: 17,
+              duration: 1000,
+            });
+
+            // filter clicked pin with DB information
+            const rotaInfoMain = props.rotas.filter(function (val) {
+              return val._id === id;
+            });
+
+            setClickedMain({
+              id: rotaInfoMain[0]._id,
+              category: rotaInfoMain[0].category.category,
+              color: rotaInfoMain[0].category.color,
+              creator: rotaInfoMain[0].creator.name,
+              RouteName: rotaInfoMain[0].name,
+              RouteDesc: rotaInfoMain[0].desc,
+              pins: [
+                rotaInfoMain[0].pins.map((val) => ({
+                  pinName: val.pinName,
+                  pinDesc: val.pinDesc,
+                  long: val.long,
+                  lat: val.lat,
+                })),
+              ],
+            });
+
+            //set timeout and open modal
+            setTimeout(() => {
+              dispatch(openModalRota());
+            }, 1250);
+          };
+          geojson.map((element) => {
+            const el = document.createElement("div");
+            switch (element.features[0].properties.color) {
+              case "#5D5FEF":
+                el.className = "markerCultura";
                 break;
-            case '#C129A9':
-              el.className = "markerBares";
+              case "#F178B6":
+                el.className = "markerShopping";
                 break;
             case '#099F7B':
               el.className = "markerExperiencia";
                 break;
-            case '#F69E7C':
-              el.className = "markerUnico";
-                break;
-            default:
-              break;
-          }
-          el.addEventListener("click", function (e) {
-            e.stopPropagation();
-            handleMain(element.features[0].geometry.coordinates, element.features[0].properties.id);
-          });
-
-          new mapboxgl.Marker(el)
-            .setLngLat(element.features[0].geometry.coordinates)
-            .addTo(map);
-        });
-      } else 
-
-      if (routeID != null) {
-
-        function getRotas(routeID) {
-          const selectedRoute = props.rotas.filter(function (val) {
-            return val._id === routeID;
-          });
-
-          const routeColor = selectedRoute[0].category.color
-
-          const profile = "walking"; // Set the profile
-          const setPin = () => {
-            selectedRoute.map((props) =>
-              props.pins.map((e) => 
-              coords.push([e.long,e.lat]),
-              )
-            );
-          };
-          setPin();
-          console.log(coords);
-          const newCoords = coords.join(";"); 
-          getMatch(newCoords, profile, routeColor);
-
-        }
-
-        //  Make a Map Matching request
-      async function getMatch(coordinates, profile, color) {
-
-        // Create the query
-        const query = await fetch(
-          `https://api.mapbox.com/directions/v5/mapbox/${profile}/${coordinates}?alternatives=true&continue_straight=true&geometries=geojson&language=pt&overview=simplified&steps=true&access_token=${mapboxgl.accessToken}`,
-          { method: "GET" }
-        );
-        const response = await query.json();
-        console.log(response);
-        const coords = response.routes[0].geometry;
-
-        // Draw the route on the map
-        addRoute(coords, color);
-        getInstructions(response.routes[0]);
-      }
-
-        getRotas(routeID)
-
-        map.removeControl(geocoder);
-
-
-        const routeFromProfile = props.rotas.filter(function (value) {
-          return value._id === routeID;
-        });
-
-        map.easeTo({
-          center: [
-            routeFromProfile[0].pins[0].long,
-            routeFromProfile[0].pins[0].lat,
-          ],
-          zoom: 17,
-          duration: 1000,
-        });
-
-    
-
-        const geojson2 = routeFromProfile.map((value) => ({
-          type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              geometry: {
-                type: "Point",
-                coordinates: [value.pins[0].long, value.pins[0].lat],
-              },
-              properties: {
-                id: value._id,
-                title: value.name,
-                description: value.desc,
-                creator: value.creator,
-                category: value.category.category,
-                color: value.category.color,
-                pins: [
-                  value.pins.map((val) => ({
-                    pinName: val.pinName,
-                    pinDesc: val.pinDesc,
-                    lat: val.lat,
-                    long: val.long
-                  })),
-                ],
-              },
-            },
-          ],
-        }));
-
-
-        const handleClickSingleRoute = (value, id) => {
-          
-          map.easeTo({
-            center: [value.long, value.lat],
-            zoom: 17,
-            duration: 1000,
-          });
-
-          setClickedSingleRoute({
-            pinName: value.pinName,
-            pinDesc: value.pinDesc,
-            lat: value.lat,
-            long: value.long,
-            id: id
-          })
-
-          //set timeout and open modal
-          setTimeout(() => {
-            dispatch(openModalPontoInfo());
-          }, 1250);
-
-        }
-
-        geojson2.map((element) => {
-          element.features[0].properties.pins[0].map((val) => {
-            const el = document.createElement("div");
-            switch (element.features[0].properties.color) {
-              case '#5D5FEF':
-                el.className = "markerCultura";
-                break;
-              case '#F178B6':
-                el.className = "markerShopping";
-                break;
-              case '#68BDFA':
-                 el.className = "markerDesporto";
-                break;
-              case '#98D99A':
+              case "#98D99A":
                 el.className = "markerNatureza";
                 break;
-              case '#FE6A66':
+              case "#FE6A66":
                 el.className = "markerGastronomia";
-                  break;
-              case '#C129A9':
+                break;
+              case "#C129A9":
                 el.className = "markerBares";
-                  break;
-              case '#099F7B':
+                break;
+              case "#ECDF6D":
                 el.className = "markerExperiencia";
-                  break;
-              case '#F69E7C':
+                break;
+              case "#F69E7C":
                 el.className = "markerUnico";
-                  break;
+                break;
               default:
                 break;
             }
             el.addEventListener("click", function (e) {
               e.stopPropagation();
-                console.log(val);
-                  handleClickSingleRoute(
-                    val,
-                    element.features[0].properties.id)
+              handleMain(
+                element.features[0].geometry.coordinates,
+                element.features[0].properties.id
+              );
             });
-            new mapboxgl.Marker(el)
-            .setLngLat([val.long, val.lat])
-            .addTo(map);
-          })
-        });
-      }
 
-      function getInstructions(data) {
-        const steps = data.legs[0].steps;
-        const instructions = document.getElementById("instructions");
-        instructions.classList.add("instructions")
-        let tripInstructions = "";
-        // Output the instructions for each step of each leg in the response object
-        for (const step of steps) {
+            new mapboxgl.Marker(el)
+              .setLngLat(element.features[0].geometry.coordinates)
+              .addTo(map);
+          });
+        } else if (routeID != null) {
+          function getRotas(routeID) {
+            const selectedRoute = props.rotas.filter(function (val) {
+              return val._id === routeID;
+            });
+
+            const routeColor = selectedRoute[0].category.color;
+
+            const profile = "walking"; // Set the profile
+            const setPin = () => {
+              selectedRoute.map((props) =>
+                props.pins.map((e) => coords.push([e.long, e.lat]))
+              );
+            };
+            setPin();
+            const newCoords = coords.join(";");
+            getMatch(newCoords, profile, routeColor);
+          }
+
+          //  Make a Map Matching request
+          async function getMatch(coordinates, profile, color) {
+            // Create the query
+            const query = await fetch(
+              `https://api.mapbox.com/directions/v5/mapbox/${profile}/${coordinates}?alternatives=true&continue_straight=true&geometries=geojson&language=pt&overview=simplified&steps=true&access_token=${mapboxgl.accessToken}`,
+              { method: "GET" }
+            );
+            const response = await query.json();
+            const coords = response.routes[0].geometry;
+
+            // Draw the route on the map
+            addRoute(coords, color);
+            getInstructions(response.routes[0]);
+          }
+
+          getRotas(routeID);
+
+          map.removeControl(geocoder);
+
+          const routeFromProfile = props.rotas.filter(function (value) {
+            return value._id === routeID;
+          });
+
+          map.easeTo({
+            center: [
+              routeFromProfile[0].pins[0].long,
+              routeFromProfile[0].pins[0].lat,
+            ],
+            zoom: 17,
+            duration: 1000,
+          });
+
+          const geojson2 = routeFromProfile.map((value) => ({
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: [value.pins[0].long, value.pins[0].lat],
+                },
+                properties: {
+                  id: value._id,
+                  title: value.name,
+                  description: value.desc,
+                  creator: value.creator,
+                  category: value.category.category,
+                  color: value.category.color,
+                  pins: [
+                    value.pins.map((val) => ({
+                      pinName: val.pinName,
+                      pinDesc: val.pinDesc,
+                      lat: val.lat,
+                      long: val.long,
+                    })),
+                  ],
+                },
+              },
+            ],
+          }));
+
+          const handleClickSingleRoute = (value, id) => {
+            map.easeTo({
+              center: [value.long, value.lat],
+              zoom: 17,
+              duration: 1000,
+            });
+
+            setClickedSingleRoute({
+              pinName: value.pinName,
+              pinDesc: value.pinDesc,
+              lat: value.lat,
+              long: value.long,
+              id: id,
+            });
+
+            //set timeout and open modal
+            setTimeout(() => {
+              dispatch(openModalPontoInfo());
+            }, 1250);
+          };
+
+          geojson2.map((element) => {
+            element.features[0].properties.pins[0].map((val) => {
+              const el = document.createElement("div");
+              switch (element.features[0].properties.color) {
+                case "#5D5FEF":
+                  el.className = "markerCultura";
+                  break;
+                case "#F178B6":
+                  el.className = "markerShopping";
+                  break;
+              case '#099F7B':
+                el.className = "markerExperiencia";
+                  break;
+                case "#98D99A":
+                  el.className = "markerNatureza";
+                  break;
+                case "#FE6A66":
+                  el.className = "markerGastronomia";
+                  break;
+                case "#C129A9":
+                  el.className = "markerBares";
+                  break;
+                case "#ECDF6D":
+                  el.className = "markerExperiencia";
+                  break;
+                case "#F69E7C":
+                  el.className = "markerUnico";
+                  break;
+                default:
+                  break;
+              }
+              el.addEventListener("click", function (e) {
+                e.stopPropagation();
+                handleClickSingleRoute(val, element.features[0].properties.id);
+              });
+              new mapboxgl.Marker(el).setLngLat([val.long, val.lat]).addTo(map);
+            });
+          });
+        }
+
+        function getInstructions(data) {
+          const steps = data.legs[0].steps;
+          const instructions = document.getElementById("instructions");
+          instructions.classList.add("instructions");
+          let tripInstructions = "";
+          // Output the instructions for each step of each leg in the response object
+          for (const step of steps) {
             tripInstructions += `<li>${step.maneuver.instruction}</li>`;
           }
-        instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
-          data.duration / 60
-        )} min.</strong></p><ol>${tripInstructions}</ol>`;
-      }
+          instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
+            data.duration / 60
+          )} min.</strong></p><ol>${tripInstructions}</ol>`;
+        }
 
-      // Draw the Map Matching route as a new layer on the map
-      function addRoute(coords, color) {
-        // If a route is already loaded, remove it
-        if (map.getSource("route")) {
-          map.removeLayer("route");
-          map.removeSource("route");
-        } else {
-          map.addLayer({
-            id: "route",
-            type: "line",
-            source: {
-              type: "geojson",
-              data: {
-                type: "Feature",
-                properties: {},
-                geometry: coords,
+        // Draw the Map Matching route as a new layer on the map
+        function addRoute(coords, color) {
+          // If a route is already loaded, remove it
+          if (map.getSource("route")) {
+            map.removeLayer("route");
+            map.removeSource("route");
+          } else {
+            map.addLayer({
+              id: "route",
+              type: "line",
+              source: {
+                type: "geojson",
+                data: {
+                  type: "Feature",
+                  properties: {},
+                  geometry: coords,
+                },
               },
-            },
-            layout: {
-              "line-join": "round",
-              "line-cap": "round",
-            },
-            paint: {
-              "line-color": color,
-              "line-width": 8,
-              "line-opacity": 0.8,
-            },
+              layout: {
+                "line-join": "round",
+                "line-cap": "round",
+              },
+              paint: {
+                "line-color": color,
+                "line-width": 8,
+                "line-opacity": 0.8,
+              },
+            });
+          }
+        }
+
+        map.addControl(userLocation);
+        if (routeID === null) {
+          map.on("load", () => {
+            userLocation.trigger();
           });
         }
       }
 
-      map.addControl(userLocation);
-      if (routeID === null) {
-        map.on("load", () => {
-          userLocation.trigger();
-        });
-      }
-    }
+      map.on("move", () => {
+        setLng(map.getCenter().lng.toFixed(4));
+        setLat(map.getCenter().lat.toFixed(4));
+        setZoom(map.getZoom().toFixed(2));
+      });
 
-    map.on("move", () => {
-      setLng(map.getCenter().lng.toFixed(4));
-      setLat(map.getCenter().lat.toFixed(4));
-      setZoom(map.getZoom().toFixed(2));
-    });
-
-    // Clean up on unmount
-    return () => map.remove();
+      // Clean up on unmount
+      return () => map.remove();
     }
   }, [mapState, singleRouteState, pinStorage, props.rotas]); // eslint-disable-line react-hooks/exhaustive-deps
-
-
 
   return (
     <div>
@@ -590,27 +577,22 @@ const Map = (props) => {
 
       <ModalPin data={coordenadas} />
       {clickedSingleRoute !== undefined && props.rotas !== undefined ? (
-      <ModalPontoInfo info={clickedSingleRoute} rotas={props.rotas}/>
+        <ModalPontoInfo info={clickedSingleRoute} rotas={props.rotas} />
       ) : (
-        ''
+        ""
       )}
 
       <ManageModalPin clicked={clickedData} />
 
       {/* load modal when categorias get information */}
       {props.categorias !== undefined ? (
-      <ModalConfirmarRota categorias={props.categorias} />
-      ):  (
-        ''
+        <ModalConfirmarRota categorias={props.categorias} />
+      ) : (
+        ""
       )}
 
       {/* load modal when theres clicked information */}
-      {clickedMain !== undefined ? (
-        <ModalRota clicked={clickedMain} />
-      ) : (
-        ''
-      )}
-
+      {clickedMain !== undefined ? <ModalRota clicked={clickedMain} /> : ""}
     </div>
   );
 };

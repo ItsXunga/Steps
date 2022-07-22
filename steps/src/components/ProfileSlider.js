@@ -87,8 +87,6 @@ const ProfileSlider = (props) => {
         .delete(`https://steps-ua.herokuapp.com/circuits/${id_circuit}`)
 
         .then((res) => {
-          console.log(res);
-          console.log(res.data);
           const routes = selectedTabArray.filter(
             (item) => item._id !== id_circuit
           );
@@ -102,10 +100,10 @@ const ProfileSlider = (props) => {
   const changeFav = () => {
     setSelectedTabArray(
       props.favCircuits.filter(function (value) {
-        return value.creator && value.creator.name !== props.user.name;
       })
     );
     setFavSelected(true);
+    setSelectedTabArray(props.favCircuits);
   };
 
   const changeOwn = () => {
@@ -169,59 +167,51 @@ const ProfileSlider = (props) => {
             <section className="cardButton">
               <h3>{props.category.category}</h3>
               <section>
-                <Link to={'/main'}>
-                <button
-                  className="profileButton"
-                  onClick={() => {
-                    dispatch(enterSingleRoute())
-                    dispatch(enterCreation())
-                    dispatch(addRouteID(props._id))
-                    props.pins.map((value) => {
-                      dispatch(addPin({
-                        id: value._id,
-                        lat: value.lat,
-                        lng: value.long,
-                        name: value.pinName,
-                        desc: value.pinDesc
-                      }))
-                    })
-                  }}
-                  style={{ marginRight: "0.6rem" }}
-                >
-                  <svg
-                    style={{ display: "flex", margin: "auto" }}
-                    width="16"
-                    height="15"
-                    viewBox="0 0 15 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                {favSelected === true ? (
+                  ""
+                ) : (
+                  <button
+                    className="profileButton"
+                    onClick={() => editCircuit(props._id)}
+                    style={{ marginRight: "0.6rem" }}
                   >
-                    <path
-                      d="M2.76225 12.0044C2.58693 12.0041 2.41979 11.9351 2.30163 11.8142C2.18128 11.6943 2.12148 11.5322 2.13725 11.3686L2.29038 9.79705L9.36413 3.19722L11.5748 5.25988L4.50288 11.8591L2.81913 12.0021C2.79975 12.0038 2.78038 12.0044 2.76225 12.0044ZM12.016 4.84747L9.806 2.7848L11.1316 1.54755C11.2489 1.43801 11.4079 1.37646 11.5738 1.37646C11.7397 1.37646 11.8988 1.43801 12.016 1.54755L13.3416 2.7848C13.459 2.89421 13.5249 3.04269 13.5249 3.19751C13.5249 3.35233 13.459 3.5008 13.3416 3.61022L12.0166 4.84688L12.016 4.84747Z"
-                      fill="#393C6A"
-                    />
-                  </svg>
-                </button>
-                </Link>
-
-                <button
-                  className="profileButton"
-                  onClick={() => deleteCircuit(props._id)}
-                >
-                  <svg
-                    style={{ display: "flex", margin: "auto" }}
-                    width="16"
-                    height="15"
-                    viewBox="0 0 13 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                    <svg
+                      style={{ display: "flex", margin: "auto" }}
+                      width="16"
+                      height="15"
+                      viewBox="0 0 15 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2.76225 12.0044C2.58693 12.0041 2.41979 11.9351 2.30163 11.8142C2.18128 11.6943 2.12148 11.5322 2.13725 11.3686L2.29038 9.79705L9.36413 3.19722L11.5748 5.25988L4.50288 11.8591L2.81913 12.0021C2.79975 12.0038 2.78038 12.0044 2.76225 12.0044ZM12.016 4.84747L9.806 2.7848L11.1316 1.54755C11.2489 1.43801 11.4079 1.37646 11.5738 1.37646C11.7397 1.37646 11.8988 1.43801 12.016 1.54755L13.3416 2.7848C13.459 2.89421 13.5249 3.04269 13.5249 3.19751C13.5249 3.35233 13.459 3.5008 13.3416 3.61022L12.0166 4.84688L12.016 4.84747Z"
+                        fill="#393C6A"
+                      />
+                    </svg>
+                  </button>
+                )}
+                {favSelected === true ? (
+                  ""
+                ) : (
+                  <button
+                    className="profileButton"
+                    onClick={() => deleteCircuit(props._id)}
                   >
-                    <path
-                      d="M9.625 11.8334H3.375C2.68464 11.8334 2.125 11.3111 2.125 10.6667V3.08341H0.875V1.91675H3.375V1.33341C3.375 0.689083 3.93464 0.166748 4.625 0.166748H8.375C9.06536 0.166748 9.625 0.689083 9.625 1.33341V1.91675H12.125V3.08341H10.875V10.6667C10.875 11.3111 10.3154 11.8334 9.625 11.8334ZM3.375 3.08341V10.6667H9.625V3.08341H3.375ZM4.625 1.33341V1.91675H8.375V1.33341H4.625ZM8.375 9.50008H7.125V4.25008H8.375V9.50008ZM5.875 9.50008H4.625V4.25008H5.875V9.50008Z"
-                      fill="#393C6A"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      style={{ display: "flex", margin: "auto" }}
+                      width="16"
+                      height="15"
+                      viewBox="0 0 13 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9.625 11.8334H3.375C2.68464 11.8334 2.125 11.3111 2.125 10.6667V3.08341H0.875V1.91675H3.375V1.33341C3.375 0.689083 3.93464 0.166748 4.625 0.166748H8.375C9.06536 0.166748 9.625 0.689083 9.625 1.33341V1.91675H12.125V3.08341H10.875V10.6667C10.875 11.3111 10.3154 11.8334 9.625 11.8334ZM3.375 3.08341V10.6667H9.625V3.08341H3.375ZM4.625 1.33341V1.91675H8.375V1.33341H4.625ZM8.375 9.50008H7.125V4.25008H8.375V9.50008ZM5.875 9.50008H4.625V4.25008H5.875V9.50008Z"
+                        fill="#393C6A"
+                      />
+                    </svg>
+                  </button>
+                )}
               </section>
             </section>
 
