@@ -98,10 +98,7 @@ const ProfileSlider = (props) => {
   };
 
   const changeFav = () => {
-    setSelectedTabArray(
-      props.favCircuits.filter(function (value) {
-      })
-    );
+    setSelectedTabArray(props.favCircuits.filter(function (value) {}));
     setFavSelected(true);
     setSelectedTabArray(props.favCircuits);
   };
@@ -170,25 +167,42 @@ const ProfileSlider = (props) => {
                 {favSelected === true ? (
                   ""
                 ) : (
-                  <button
-                    className="profileButton"
-                    onClick={() => editCircuit(props._id)}
-                    style={{ marginRight: "0.6rem" }}
-                  >
-                    <svg
-                      style={{ display: "flex", margin: "auto" }}
-                      width="16"
-                      height="15"
-                      viewBox="0 0 15 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                  <Link to={"/main"}>
+                    <button
+                      className="profileButton"
+                      onClick={() => {
+                        dispatch(enterSingleRoute());
+                        dispatch(enterCreation());
+                        dispatch(addRouteID(props._id));
+                        props.pins.map((value) => {
+                          dispatch(
+                            addPin({
+                              id: value._id,
+                              lat: value.lat,
+                              lng: value.long,
+                              name: value.pinName,
+                              desc: value.pinDesc,
+                            })
+                          );
+                        });
+                      }}
+                      style={{ marginRight: "0.6rem" }}
                     >
-                      <path
-                        d="M2.76225 12.0044C2.58693 12.0041 2.41979 11.9351 2.30163 11.8142C2.18128 11.6943 2.12148 11.5322 2.13725 11.3686L2.29038 9.79705L9.36413 3.19722L11.5748 5.25988L4.50288 11.8591L2.81913 12.0021C2.79975 12.0038 2.78038 12.0044 2.76225 12.0044ZM12.016 4.84747L9.806 2.7848L11.1316 1.54755C11.2489 1.43801 11.4079 1.37646 11.5738 1.37646C11.7397 1.37646 11.8988 1.43801 12.016 1.54755L13.3416 2.7848C13.459 2.89421 13.5249 3.04269 13.5249 3.19751C13.5249 3.35233 13.459 3.5008 13.3416 3.61022L12.0166 4.84688L12.016 4.84747Z"
-                        fill="#393C6A"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        style={{ display: "flex", margin: "auto" }}
+                        width="16"
+                        height="15"
+                        viewBox="0 0 15 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M2.76225 12.0044C2.58693 12.0041 2.41979 11.9351 2.30163 11.8142C2.18128 11.6943 2.12148 11.5322 2.13725 11.3686L2.29038 9.79705L9.36413 3.19722L11.5748 5.25988L4.50288 11.8591L2.81913 12.0021C2.79975 12.0038 2.78038 12.0044 2.76225 12.0044ZM12.016 4.84747L9.806 2.7848L11.1316 1.54755C11.2489 1.43801 11.4079 1.37646 11.5738 1.37646C11.7397 1.37646 11.8988 1.43801 12.016 1.54755L13.3416 2.7848C13.459 2.89421 13.5249 3.04269 13.5249 3.19751C13.5249 3.35233 13.459 3.5008 13.3416 3.61022L12.0166 4.84688L12.016 4.84747Z"
+                          fill="#393C6A"
+                        />
+                      </svg>
+                    </button>
+                  </Link>
                 )}
                 {favSelected === true ? (
                   ""
