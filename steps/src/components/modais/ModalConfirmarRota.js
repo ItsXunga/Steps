@@ -38,7 +38,7 @@ const ModalConfirmarRota = (props) => {
   };
 
   const pinsArray = Object.entries(pinStorage).map((obj) => ({ ...obj }));
-
+  console.log(pinsArray, "AQUI")
   const handleData = () => {
 
     if (editRouteID) {
@@ -47,24 +47,24 @@ const ModalConfirmarRota = (props) => {
     
     if (textArea !== undefined && nameArea !== undefined) {
 
-      let lat = 0;
-      let lng = 0;
+      // let lat = 0;
+      // let lng = 0;
 
-      pinsArray.map(function(value) {
-        if (typeof value[1].lat === 'string' || value[1].lat instanceof String) {
-            return lat = value[1].lat
-        } else {
-          return lat = JSON.stringify(value[1].lat)
-        }
-      })
+      // pinsArray.map(function(value) {
+      //   if (typeof value[1].lat === 'string' || value[1].lat instanceof String) {
+      //       return lat = value[1].lat
+      //   } else {
+      //     return lat = JSON.stringify(value[1].lat)
+      //   }
+      // })
 
-      pinsArray.map(function(value) {
-        if (typeof value[1].lng === 'string' || value[1].lng instanceof String) {
-            return lng = value[1].lng
-        } else {
-          return lng = JSON.stringify(value[1].lng)
-        }
-      })
+      // pinsArray.map(function(value) {
+      //   if (typeof value[1].lng === 'string' || value[1].lng instanceof String) {
+      //       return lng = value[1].lng
+      //   } else {
+      //     return lng = JSON.stringify(value[1].lng)
+      //   }
+      // })
       
       axios.post("https://steps-ua.herokuapp.com/circuits/", {
         name: nameArea,
@@ -74,8 +74,8 @@ const ModalConfirmarRota = (props) => {
         pins: pinsArray.map((value) => ({
           pinName: value[1].name,
           pinDesc: value[1].desc,
-          lat: lat,
-          long: lng
+          lat: JSON.stringify(value[1].lat),
+          long: JSON.stringify(value[1].lng)
         }))
       })
     }
