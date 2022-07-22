@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import ProfileSlider from "./ProfileSlider";
 import ProfileHeader from "./ProfileHeader";
+import authService from "../services/auth.service";
 const axios = require("axios");
 
 const Profile = () => {
@@ -78,6 +79,27 @@ const Profile = () => {
               fill="#393C6A"
             />
           </svg>
+        </Link>
+      </div>
+
+      <div className="logoutProfile" onClick={authService.logout}>
+        <Link to={"/"}>
+            <svg
+              width="26"
+              height="28"
+              viewBox="0 0 26 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.75676 0H15.1622C15.8933 0 16.5945 0.290443 17.1115 0.807435C17.6285 1.32443 17.9189 2.02562 17.9189 2.75676V5.51351H15.1622V2.75676H2.75676V24.8108H15.1622V22.0541H17.9189V24.8108C17.9189 25.5419 17.6285 26.2431 17.1115 26.7601C16.5945 27.2771 15.8933 27.5676 15.1622 27.5676H2.75676C2.02562 27.5676 1.32443 27.2771 0.807435 26.7601C0.290443 26.2431 0 25.5419 0 24.8108V2.75676C0 2.02562 0.290443 1.32443 0.807435 0.807435C1.32443 0.290443 2.02562 0 2.75676 0V0Z"
+                fill="#393C6A"
+              />
+              <path
+                d="M16.6653 18.7321L18.6088 20.6756L25.5007 13.7837L18.6088 6.89185L16.6653 8.83536L20.2215 12.4054H6.89258V15.1621H20.2215L16.6653 18.7321Z"
+                fill="#393C6A"
+              />
+            </svg>
         </Link>
       </div>
 
