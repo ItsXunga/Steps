@@ -154,11 +154,6 @@ const Map = (props) => {
     if (mapState === true) {
       //creation mode
 
-      // Add the geocoder to the map
-      // map.addControl(geocoder);
-      // const adjustGeocoder = document.getElementById("geocoder")
-      // adjustGeocoder.classList.add("instructions")
-
       //map the pins if theres atleast one entry
       if (StorageStatus >= 1) {
         // Json for points being created
@@ -302,7 +297,7 @@ const Map = (props) => {
             case '#C129A9':
               el.className = "markerBares";
                 break;
-            case '#ECDF6D':
+            case '#099F7B':
               el.className = "markerExperiencia";
                 break;
             case '#F69E7C':
@@ -458,7 +453,7 @@ const Map = (props) => {
               case '#C129A9':
                 el.className = "markerBares";
                   break;
-              case '#ECDF6D':
+              case '#099F7B':
                 el.className = "markerExperiencia";
                   break;
               case '#F69E7C':
@@ -550,7 +545,11 @@ const Map = (props) => {
   return (
     <div>
       {/* adionar o drawer assim que um ponto e criado */}
-      {mapState === true && StorageStatus >= 1 && ModalFinalizarRota=== false && ModalRotaTerminada === false ? <Drawertest /> : ""}
+      {
+      mapState === true && StorageStatus >= 1 && ModalFinalizarRota=== false && ModalRotaTerminada === false ? 
+        <Drawertest />
+       : ""}
+
       {/* permitir ao utilizador acabar a rota quando tem 2 ou mais pontos */}
       {StorageStatus >= 2 ? (
         ModalFinalizarRota ||

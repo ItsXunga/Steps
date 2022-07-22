@@ -6,15 +6,14 @@ import axios from "axios";
 import { PinColor } from "../assets/img/profile/pin";
 import { enterSingleRoute } from "./redux/singleRouteState";
 import { routeID } from "./redux/routeID";
+import { enterCreation } from "./redux/creationState";
+import { addPin } from "./redux/pinStorage";
+import { addRouteID } from "./redux/editRouteID";
 
 const ProfileSlider = (props) => {
   const [favSelected, setFavSelected] = useState(false);
   const [selectedTabArray, setSelectedTabArray] = useState([]);
   const dispatch = useDispatch();
-
-  console.log(props.user);
-  console.log(props.rotas);
-  console.log(props.favCircuits);
 
   const settings = {
     dots: true,
@@ -118,15 +117,6 @@ const ProfileSlider = (props) => {
     setFavSelected(false);
   };
 
-  const editCircuit = (id_circuit) => {
-    //TODO encaminhar para editar rota
-    console.log(id_circuit);
-  };
-  const unfavCircuit = (id_circuit) => {
-    //TODO unfav circuit e função em server/controllers/user.js
-    console.log(id_circuit);
-  };
-
   return (
     <>
       <div className="buttonPlacement">
@@ -179,9 +169,23 @@ const ProfileSlider = (props) => {
             <section className="cardButton">
               <h3>{props.category.category}</h3>
               <section>
+                <Link to={'/main'}>
                 <button
                   className="profileButton"
-                  onClick={() => editCircuit(props._id)}
+                  onClick={() => {
+                    dispatch(enterSingleRoute())
+                    dispatch(enterCreation())
+                    dispatch(addRouteID(props._id))
+                    props.pins.map((value) => {
+                      dispatch(addPin({
+                        id: value._id,
+                        lat: value.lat,
+                        lng: value.long,
+                        name: value.pinName,
+                        desc: value.pinDesc
+                      }))
+                    })
+                  }}
                   style={{ marginRight: "0.6rem" }}
                 >
                   <svg
@@ -198,6 +202,7 @@ const ProfileSlider = (props) => {
                     />
                   </svg>
                 </button>
+                </Link>
 
                 <button
                   className="profileButton"

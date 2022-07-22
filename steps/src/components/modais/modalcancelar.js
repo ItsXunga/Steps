@@ -7,6 +7,7 @@ import { closeModal } from "../redux/modalState";
 import { clearStorage } from "../redux/pinStorage";
 import { routeID } from "../redux/routeID";
 import { exitCreation } from "../redux/creationState";
+import { exitSingleRoute } from "../redux/singleRouteState";
 
 function ModalCancelar() {
   const openModalCancelar = useSelector((state) => state.modalState.modalCancelar);
@@ -41,6 +42,7 @@ function ModalCancelar() {
                     dispatch(exitCreation());
                     dispatch(routeID(null));
                     dispatch(closeModal());
+                    dispatch(exitSingleRoute());
                   }}
                 >
                   Sair

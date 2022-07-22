@@ -17,6 +17,7 @@ const ModalConfirmarRota = (props) => {
   const dispatch = useDispatch();
   const openModalConfirmarRota = useSelector((state) => state.modalState.modalConfirmarRota);
   const { pinStorage } = useSelector((state) => state.pinStorage);
+  const { editRouteID } = useSelector((state) => state.editRouteID);
 
   //Get pin storage elements
   const storage = useRef();
@@ -39,7 +40,32 @@ const ModalConfirmarRota = (props) => {
   const pinsArray = Object.entries(pinStorage).map((obj) => ({ ...obj }));
 
   const handleData = () => {
+
+    if (editRouteID) {
+      axios.delete(`https://steps-ua.herokuapp.com/circuits/${editRouteID}`)
+    }
+    
     if (textArea !== undefined && nameArea !== undefined) {
+
+      let lat = 0;
+      let lng = 0;
+
+      pinsArray.map(function(value) {
+        if (typeof value[1].lat === 'string' || value[1].lat instanceof String) {
+            return lat = value[1].lat
+        } else {
+          return lat = JSON.stringify(value[1].lat)
+        }
+      })
+
+      pinsArray.map(function(value) {
+        if (typeof value[1].lng === 'string' || value[1].lng instanceof String) {
+            return lng = value[1].lng
+        } else {
+          return lng = JSON.stringify(value[1].lng)
+        }
+      })
+      
       axios.post("https://steps-ua.herokuapp.com/circuits/", {
         name: nameArea,
         userID: currentUser,
@@ -48,9 +74,9 @@ const ModalConfirmarRota = (props) => {
         pins: pinsArray.map((value) => ({
           pinName: value[1].name,
           pinDesc: value[1].desc,
-          lat: JSON.stringify(value[1].lat),
-          long: JSON.stringify(value[1].lng)
-    }))
+          lat: lat,
+          long: lng
+        }))
       })
     }
 
