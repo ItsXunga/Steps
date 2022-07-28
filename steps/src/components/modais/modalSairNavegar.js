@@ -19,7 +19,7 @@ const ModalSairNavegar = (props) => {
         style={modalStyles}
         contentLabel="Modal"
       >
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", alignSelf: "center" }}>
           <div>
             <p
               style={{
